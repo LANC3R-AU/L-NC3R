@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Performance Development | L@NC3R</title>
+
+    <meta
+        name="description"
+        content="L@NC3R Project 004 — documenting the performance development of my 2009 Mitsubishi Lancer CJ 4B11."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="site-nav">
+
+    <a href="../index.html" class="logo">
+        L<span>@</span>NC3R
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="../index.html">PORTFOLIO</a>
+        </li>
+
+        <li>
+            <a href="../lancer.html">LANCER</a>
+        </li>
+
+        <li>
+            <a href="#baseline">BASELINE</a>
+        </li>
+
+        <li>
+            <a href="#development">DEVELOPMENT</a>
+        </li>
+
+        <li>
+            <a href="#stages">STAGES</a>
+        </li>
+
+        <li>
+            <a href="#roadmap">ROADMAP</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="project-hero"
+    id="top"
+>
+
+    <div class="project-background-text">
+        4B11
+    </div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            L@NC3R / PROJECT 004
+        </div>
+
+        <h1 class="project-title">
+            PERFORMANCE<br>
+            <span>DEVELOPMENT.</span>
+        </h1>
+
+        <div class="hero-subtitle">
+            4B11 • NATURALLY ASPIRATED • FWD • CVT
+        </div>
+
+        <p class="hero-description">
+            Building a proper performance development path for
+            my 2009 Mitsubishi Lancer — starting with the
+            factory baseline and learning how airflow, fuel,
+            ignition, MIVEC, ECU calibration and supporting
+            systems work together.
+        </p>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+                <span>ENGINE</span>
+                <strong>4B11</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>FACTORY POWER</span>
+                <strong>113 kW</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>FACTORY TORQUE</span>
+                <strong>198 Nm</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>STATUS</span>
+                <strong>PLANNING</strong>
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <a
+                href="#baseline"
+                class="btn btn-primary"
+            >
+                VIEW DEVELOPMENT
+            </a>
+
+            <a
+                href="../lancer.html"
+                class="btn btn-secondary"
+            >
+                ← LANCER BUILD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OVERVIEW
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        01 / PROJECT OVERVIEW
+    </div>
+
+
+    <div class="overview-grid">
+
+        <div class="overview-title">
+
+            <h2>
+                PERFORMANCE<br>
+                <span>WITH A PURPOSE.</span>
+            </h2>
+
+        </div>
+
+
+        <div class="overview-copy">
+
+            <p>
+                Project 004 is where I'll document the
+                performance side of the Lancer build.
+            </p>
+
+            <p>
+                Rather than buying parts without understanding
+                what they change, I want to build the car in
+                stages and understand the reason behind each
+                modification.
+            </p>
+
+            <p>
+                That means establishing a stock baseline,
+                understanding the 4B11 engine, collecting data,
+                researching modifications and measuring results
+                whenever possible.
+            </p>
+
+            <p>
+                The project currently begins with the factory
+                naturally aspirated 4B11 configuration. Future
+                modifications will be added here only when
+                they're actually planned, installed or tested.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STOCK BASELINE
+===================================================== -->
+
+<section
+    class="section"
+    id="baseline"
+>
+
+    <div class="section-number">
+        02 / STOCK BASELINE
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            KNOW THE<br>
+            <span>STARTING POINT.</span>
+        </h2>
+
+        <p>
+            Before chasing more performance, I want a clear
+            record of what the car started with.
+        </p>
+
+    </div>
+
+
+    <div class="metric-grid">
+
+        <div class="metric-card">
+
+            <span>
+                FACTORY POWER
+            </span>
+
+            <strong>
+                113 kW
+            </strong>
+
+            <small>
+                @ 6,000 RPM
+            </small>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <span>
+                FACTORY TORQUE
+            </span>
+
+            <strong>
+                198 Nm
+            </strong>
+
+            <small>
+                @ 4,250 RPM
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="spec-grid"
+        style="margin-top: 15px;"
+    >
+
+        <div class="spec-card">
+            <span>ENGINE</span>
+            <strong>4B11</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>DISPLACEMENT</span>
+            <strong>1,998 cc</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>CONFIGURATION</span>
+            <strong>Inline 4</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>VALVETRAIN</span>
+            <strong>DOHC 16V MIVEC</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>ASPIRATION</span>
+            <strong>Naturally Aspirated</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>COMPRESSION</span>
+            <strong>10.0:1</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>TRANSMISSION</span>
+            <strong>CVT</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>DRIVETRAIN</span>
+            <strong>Front-Wheel Drive</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PERFORMANCE PHILOSOPHY
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        03 / DEVELOPMENT METHOD
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            MEASURE.<br>
+            MODIFY.<br>
+            <span>VALIDATE.</span>
+        </h2>
+
+        <p>
+            The goal is to understand what a modification does,
+            not just whether it sounds or feels faster.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+                <h3>BASELINE</h3>
+
+                <p>
+                    Understand the stock vehicle before making
+                    performance changes.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+                <h3>RESEARCH</h3>
+
+                <p>
+                    Understand what a modification changes and
+                    whether it suits the build.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+                <h3>INSTALL</h3>
+
+                <p>
+                    Document each modification and the reason
+                    behind installing it.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+                <h3>LOG</h3>
+
+                <p>
+                    Collect relevant vehicle and engine data
+                    where possible.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                05
+            </div>
+
+            <div>
+                <h3>COMPARE</h3>
+
+                <p>
+                    Compare the new setup with the previous
+                    baseline.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                06
+            </div>
+
+            <div>
+                <h3>VALIDATE</h3>
+
+                <p>
+                    Decide whether the modification achieved
+                    what it was intended to do.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DEVELOPMENT AREAS
+===================================================== -->
+
+<section
+    class="section"
+    id="development"
+>
+
+    <div class="section-number">
+        04 / DEVELOPMENT AREAS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            THE COMPLETE<br>
+            <span>SYSTEM.</span>
+        </h2>
+
+        <p>
+            Performance isn't just one part. Each system needs
+            to work with the rest of the vehicle.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 01
+            </div>
+
+            <h3>
+                AIRFLOW
+            </h3>
+
+            <p>
+                Learning how the intake system, throttle,
+                manifold and engine breathing affect the
+                naturally aspirated 4B11.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCH
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 02
+            </div>
+
+            <h3>
+                EXHAUST
+            </h3>
+
+            <p>
+                Understanding exhaust flow, restriction,
+                sound and how exhaust changes interact with
+                the rest of the engine setup.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCH
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 03
+            </div>
+
+            <h3>
+                FUEL
+            </h3>
+
+            <p>
+                Learning how the ECU manages fuelling and how
+                fuel control relates to engine load and
+                operating conditions.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 04
+            </div>
+
+            <h3>
+                IGNITION
+            </h3>
+
+            <p>
+                Understanding ignition timing, knock control
+                and why timing changes require proper data and
+                validation.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 05
+            </div>
+
+            <h3>
+                MIVEC
+            </h3>
+
+            <p>
+                Learning how Mitsubishi's variable valve
+                timing strategy influences engine operation
+                across different speeds and loads.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCH
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 06
+            </div>
+
+            <h3>
+                ECU CALIBRATION
+            </h3>
+
+            <p>
+                Connecting performance development with the
+                separate SM5220 and 52200013 ECU research
+                project.
+            </p>
+
+            <div class="project-card-status">
+                ● ACTIVE RESEARCH
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 07
+            </div>
+
+            <h3>
+                TRANSMISSION
+            </h3>
+
+            <p>
+                Keeping the CVT and drivetrain in mind when
+                considering future engine and performance
+                changes.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCH
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 08
+            </div>
+
+            <h3>
+                CHASSIS
+            </h3>
+
+            <p>
+                Looking beyond engine output toward tyres,
+                suspension, brakes and the way the complete car
+                performs.
+            </p>
+
+            <div class="project-card-status">
+                ● FUTURE
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                AREA / 09
+            </div>
+
+            <h3>
+                DATA
+            </h3>
+
+            <p>
+                Using diagnostics, logging and eventually
+                measured testing to separate real improvements
+                from assumptions.
+            </p>
+
+            <div class="project-card-status">
+                ● DEVELOPING
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     BUILD STAGES
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="stages"
+>
+
+    <div class="section-number">
+        05 / BUILD STAGES
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            DEVELOPMENT<br>
+            <span>STAGES.</span>
+        </h2>
+
+        <p>
+            These are development stages rather than promises
+            of specific modifications. The plan can change as
+            I learn more about the car.
+        </p>
+
+    </div>
+
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 00
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Factory Baseline
+                </h3>
+
+                <p>
+                    Document the stock engine, drivetrain,
+                    ECU configuration and current condition
+                    before performance modifications.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 01
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Maintenance & Health
+                </h3>
+
+                <p>
+                    Make sure the vehicle is mechanically
+                    healthy before trying to improve
+                    performance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 02
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Data & Logging
+                </h3>
+
+                <p>
+                    Establish useful diagnostic and engine data
+                    that can act as a reference for later
+                    changes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 03
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Supporting Modifications
+                </h3>
+
+                <p>
+                    Research and document modifications that
+                    make sense for the goals of the build.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 04
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    ECU Development
+                </h3>
+
+                <p>
+                    Connect verified ECU definitions, logging
+                    knowledge and vehicle modifications before
+                    any future calibration work.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                FUTURE
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Measured Results
+                </h3>
+
+                <p>
+                    Record real before-and-after results if
+                    dyno testing or other repeatable performance
+                    testing becomes part of the project.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CURRENT SETUP
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        06 / CURRENT PERFORMANCE SETUP
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            CURRENT<br>
+            <span>CONFIGURATION.</span>
+        </h2>
+
+        <p>
+            This section will change as confirmed
+            modifications are added to the car.
+        </p>
+
+    </div>
+
+
+    <div class="mod-grid">
+
+        <div class="mod-card">
+
+            <h3>
+                <span>01.</span> ENGINE
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Engine
+                    <span>4B11 2.0L</span>
+                </li>
+
+                <li>
+                    Aspiration
+                    <span>NATURALLY ASPIRATED</span>
+                </li>
+
+                <li>
+                    Intake
+                    <span>TO DOCUMENT</span>
+                </li>
+
+                <li>
+                    Exhaust
+                    <span>TO DOCUMENT</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>02.</span> ENGINE MANAGEMENT
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    ECU
+                    <span>SM5220</span>
+                </li>
+
+                <li>
+                    Calibration
+                    <span>52200013</span>
+                </li>
+
+                <li>
+                    ECU Research
+                    <span>ACTIVE</span>
+                </li>
+
+                <li>
+                    Custom Calibration
+                    <span>NOT YET</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>03.</span> DRIVETRAIN
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Transmission
+                    <span>CVT</span>
+                </li>
+
+                <li>
+                    Drive
+                    <span>FWD</span>
+                </li>
+
+                <li>
+                    Transmission Mods
+                    <span>TO DOCUMENT</span>
+                </li>
+
+                <li>
+                    Drivetrain Mods
+                    <span>TO DOCUMENT</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>04.</span> CHASSIS
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Tyres
+                    <span>TO DOCUMENT</span>
+                </li>
+
+                <li>
+                    Wheels
+                    <span>TO DOCUMENT</span>
+                </li>
+
+                <li>
+                    Suspension
+                    <span>TO DOCUMENT</span>
+                </li>
+
+                <li>
+                    Brakes
+                    <span>TO DOCUMENT</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TESTING
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        07 / TESTING & RESULTS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            PROVE THE<br>
+            <span>RESULT.</span>
+        </h2>
+
+        <p>
+            This section is intentionally empty of performance
+            claims until I have actual measured results.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DATA / 01
+            </div>
+
+            <h3>
+                ECU LOGS
+            </h3>
+
+            <p>
+                Engine logs and relevant parameters will be
+                documented here as the logging side of the
+                project develops.
+            </p>
+
+            <div class="project-card-status">
+                ● FUTURE DATA
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DATA / 02
+            </div>
+
+            <h3>
+                DYNO
+            </h3>
+
+            <p>
+                If the car is dyno tested, measured wheel
+                output and testing conditions can be recorded
+                here rather than estimated.
+            </p>
+
+            <div class="project-card-status">
+                ● NO DATA YET
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DATA / 03
+            </div>
+
+            <h3>
+                BEFORE / AFTER
+            </h3>
+
+            <p>
+                Future changes can be compared against earlier
+                results to show whether they produced a
+                measurable improvement.
+            </p>
+
+            <div class="project-card-status">
+                ● FUTURE
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROADMAP
+===================================================== -->
+
+<section
+    class="section"
+    id="roadmap"
+>
+
+    <div class="section-number">
+        08 / ROADMAP
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            WHERE IT<br>
+            <span>GOES NEXT.</span>
+        </h2>
+
+        <p>
+            The roadmap stays flexible while I continue
+            learning about the platform.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+                <h3>DOCUMENT CURRENT CAR</h3>
+
+                <p>
+                    Record the complete current engine,
+                    drivetrain and chassis setup.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+                <h3>MECHANICAL BASELINE</h3>
+
+                <p>
+                    Establish the condition of the car before
+                    performance development.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+                <h3>BUILD LOGGING KNOWLEDGE</h3>
+
+                <p>
+                    Connect the diagnostics project with
+                    performance data collection.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+                <h3>PLAN FIRST MODIFICATIONS</h3>
+
+                <p>
+                    Choose modifications based on the actual
+                    goals of the build.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                05
+            </div>
+
+            <div>
+                <h3>ECU DEVELOPMENT</h3>
+
+                <p>
+                    Continue the SM5220 and 52200013 ECU
+                    research alongside the performance project.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                06
+            </div>
+
+            <div>
+                <h3>MEASURE RESULTS</h3>
+
+                <p>
+                    Add real testing data as the project
+                    progresses.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RELATED PROJECTS
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        09 / RELATED PROJECTS
+    </div>
+
+
+    <div class="cards-grid">
+
+        <a
+            href="../lancer.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 001
+                </div>
+
+                <h3>
+                    2009 LANCER
+                </h3>
+
+                <p>
+                    View the complete vehicle build and project
+                    history.
+                </p>
+
+                <div class="project-card-status">
+                    VIEW PROJECT →
+                </div>
+
+            </article>
+
+        </a>
+
+
+        <a
+            href="ecu-project.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 002
+                </div>
+
+                <h3>
+                    ECU TUNING
+                </h3>
+
+                <p>
+                    Follow the SM5220 and 52200013 ECU research
+                    and calibration-definition project.
+                </p>
+
+                <div class="project-card-status">
+                    VIEW PROJECT →
+                </div>
+
+            </article>
+
+        </a>
+
+
+        <a
+            href="diagnostics.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 003
+                </div>
+
+                <h3>
+                    DIAGNOSTICS
+                </h3>
+
+                <p>
+                    Follow the OBD-II, J2534 and vehicle
+                    diagnostics learning project.
+                </p>
+
+                <div class="project-card-status">
+                    VIEW PROJECT →
+                </div>
+
+            </article>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROJECT NOTE
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        10 / PROJECT NOTE
+    </div>
+
+
+    <div class="notice">
+
+        <strong>
+            DEVELOPMENT PROJECT
+        </strong>
+
+        <p>
+            This page documents my personal process of learning
+            about vehicle performance. Factory specifications
+            are used as the starting reference, while future
+            performance figures will only be added when I have
+            actual measurements or documented results.
+            Modifications and ECU calibration can affect
+            reliability and vehicle operation, so research,
+            testing and validation are part of the project.
+        </p>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <a
+            href="../index.html"
+            class="btn btn-primary"
+        >
+            ← PORTFOLIO
+        </a>
+
+        <a
+            href="ecu-project.html"
+            class="btn btn-secondary"
+        >
+            ECU PROJECT
+        </a>
+
+        <a
+            href="diagnostics.html"
+            class="btn btn-secondary"
+        >
+            DIAGNOSTICS
+        </a>
+
+        <a
+            href="#top"
+            class="btn btn-secondary"
+        >
+            BACK TO TOP
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div>
+        L@NC3R / PROJECT 004
+    </div>
+
+    <div>
+        4B11 • PERFORMANCE DEVELOPMENT • AUSTRALIA
+    </div>
+
+</footer>
+
+</body>
+</html>
