@@ -1,4 +1,4 @@
-const CACHE_NAME = "lanc3r-garage-v5";
+const CACHE_NAME = "lanc3r-garage-v6";
 
 const APP_SHELL = [
     "/L-NC3R/garage.html",
@@ -34,15 +34,11 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
     const request = event.request;
 
-    if (request.method !== "GET") {
-        return;
-    }
+    if (request.method !== "GET") return;
 
     const url = new URL(request.url);
 
-    if (url.origin !== self.location.origin) {
-        return;
-    }
+    if (url.origin !== self.location.origin) return;
 
     const isNavigation =
         request.mode === "navigate" ||
@@ -56,11 +52,6 @@ self.addEventListener("fetch", event => {
 
     event.respondWith(staleWhileRevalidate(request));
 });
-
-
-/* =========================
-   NOTIFICATION CLICK
-========================= */
 
 self.addEventListener("notificationclick", event => {
     event.notification.close();
@@ -76,21 +67,13 @@ self.addEventListener("notificationclick", event => {
                 includeUncontrolled: true
             })
             .then(windowClients => {
-
                 for (const client of windowClients) {
-                    const clientUrl =
-                        new URL(client.url);
+                    const clientUrl = new URL(client.url);
 
-                    if (
-                        clientUrl.pathname.startsWith(
-                            "/L-NC3R/"
-                        )
-                    ) {
+                    if (clientUrl.pathname.startsWith("/L-NC3R/")) {
                         return client
                             .focus()
-                            .then(() =>
-                                client.navigate(targetUrl)
-                            );
+                            .then(() => client.navigate(targetUrl));
                     }
                 }
 
@@ -99,32 +82,17 @@ self.addEventListener("notificationclick", event => {
     );
 });
 
-
-/* =========================
-   NETWORK FIRST
-========================= */
-
 async function networkFirst(request) {
     try {
         const freshRequest =
-            new Request(
-                request,
-                {
-                    cache: "no-store"
-                }
-            );
+            new Request(request, { cache: "no-store" });
 
         const response =
             await fetch(freshRequest);
 
-        if (
-            response &&
-            response.ok
-        ) {
+        if (response && response.ok) {
             const cache =
-                await caches.open(
-                    CACHE_NAME
-                );
+                await caches.open(CACHE_NAME);
 
             await cache.put(
                 request,
@@ -135,29 +103,18 @@ async function networkFirst(request) {
         return response;
 
     } catch (error) {
-
         const cached =
             await caches.match(request);
 
-        if (cached) {
-            return cached;
-        }
+        if (cached) return cached;
 
         throw error;
     }
 }
 
-
-/* =========================
-   STALE WHILE REVALIDATE
-========================= */
-
 async function staleWhileRevalidate(request) {
-
     const cache =
-        await caches.open(
-            CACHE_NAME
-        );
+        await caches.open(CACHE_NAME);
 
     const cached =
         await cache.match(request);
@@ -165,11 +122,7 @@ async function staleWhileRevalidate(request) {
     const networkPromise =
         fetch(request)
             .then(async response => {
-
-                if (
-                    response &&
-                    response.ok
-                ) {
+                if (response && response.ok) {
                     await cache.put(
                         request,
                         response.clone()
@@ -188,9 +141,7 @@ async function staleWhileRevalidate(request) {
     const response =
         await networkPromise;
 
-    if (response) {
-        return response;
-    }
+    if (response) return response;
 
     return caches.match(
         "/L-NC3R/garage.html"
