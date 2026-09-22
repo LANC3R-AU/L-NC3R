@@ -1,0 +1,25 @@
+{
+    "name": "L@NC3R Garage",
+    "short_name": "L@NC3R",
+    "description": "Mobile garage app for the L@NC3R 2009 Mitsubishi Lancer project.",
+    "start_url": "/L-NC3R/garage.html",
+    "scope": "/L-NC3R/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#080808",
+    "theme_color": "#080808",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
