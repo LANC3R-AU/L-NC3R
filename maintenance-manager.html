@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>Maintenance Manager | L@NC3R</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        .manager-container {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+            padding: 140px 0 80px;
+        }
+
+        .manager-header {
+            margin-bottom: 50px;
+        }
+
+        .manager-header h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: .9;
+            margin: 10px 0 20px;
+        }
+
+        .manager-header h1 span {
+            color: var(--red);
+        }
+
+        .manager-header p {
+            max-width: 750px;
+        }
+
+        .manager-panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .manager-panel h2 {
+            margin-top: 0;
+        }
+
+        .manager-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 14px;
+            font: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: 1px solid var(--red);
+            border-color: var(--red);
+        }
+
+        .manager-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .manager-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .manager-message.show {
+            display: block;
+        }
+
+        .manager-message.error {
+            border-color: var(--red);
+        }
+
+        .manager-message.success {
+            border-color: #4caf50;
+        }
+
+        .login-box {
+            max-width: 600px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .maintenance-record {
+            padding: 25px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .maintenance-record:first-child {
+            border-top: 0;
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .record-header h3 {
+            margin: 8px 0;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+        }
+
+        .record-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin: 15px 0;
+            color: var(--text-secondary);
+            font-size: .85rem;
+        }
+
+        .record-meta strong {
+            color: var(--text);
+        }
+
+        .status-badge {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            white-space: nowrap;
+        }
+
+        .priority-high {
+            color: var(--red);
+        }
+
+        .record-notes {
+            margin-top: 15px;
+        }
+
+        .record-count {
+            color: var(--red);
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+        }
+
+        .danger-button {
+            border-color: var(--red);
+        }
+
+        @media (max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .manager-topbar,
+            .record-header {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================
+     NAVIGATION
+================================================ -->
+
+<nav class="site-nav">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+        L<span>@</span>NC3R
+    </a>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html">
+                PORTFOLIO
+            </a>
+        </li>
+
+        <li>
+            <a href="lancer.html">
+                LANCER
+            </a>
+        </li>
+
+        <li>
+            <a href="service-history.html">
+                SERVICE HISTORY
+            </a>
+        </li>
+
+        <li>
+            <a href="projects/build-log.html">
+                BUILD LOG
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<main class="manager-container">
+
+
+    <!-- ============================================
+         HEADER
+    ============================================= -->
+
+    <header class="manager-header">
+
+        <div class="eyebrow">
+            L@NC3R / OWNER TOOLS
+        </div>
+
+        <h1>
+            MAINTENANCE<br>
+            <span>MANAGER.</span>
+        </h1>
+
+        <p>
+            Plan upcoming maintenance, inspections and
+            service targets for Project 001 without
+            recording planned work as completed work.
+        </p>
+
+    </header>
+
+
+    <!-- ============================================
+         LOGIN
+    ============================================= -->
+
+    <section
+        class="manager-panel login-box"
+        id="login-panel"
+    >
+
+        <div class="eyebrow">
+            OWNER ACCESS
+        </div>
+
+        <h2>
+            Sign In
+        </h2>
+
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label for="login-email">
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="login-email"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label for="login-password">
+                    PASSWORD
+                </label>
+
+                <input
+                    type="password"
+                    id="login-password"
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="manager-actions">
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="login-button"
+            >
+                SIGN IN
+            </button>
+
+        </div>
+
+
+        <div
+            class="manager-message"
+            id="login-message"
+        ></div>
+
+    </section>
+
+
+    <!-- ============================================
+         DASHBOARD
+    ============================================= -->
+
+    <section
+        id="manager-dashboard"
+        class="hidden"
+    >
+
+
+        <section class="manager-panel">
+
+            <div class="manager-topbar">
+
+                <div>
+
+                    <div class="eyebrow">
+                        AUTHENTICATED
+                    </div>
+
+                    <h2>
+                        Maintenance Plan
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="logout-button"
+                >
+                    LOG OUT
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             EDITOR
+        ========================================= -->
+
+        <section class="manager-panel">
+
+            <div class="eyebrow">
+                PLAN EDITOR
+            </div>
+
+            <h2 id="form-title">
+                Add Maintenance Item
+            </h2>
+
+
+            <form id="maintenance-form">
+
+                <input
+                    type="hidden"
+                    id="record-id"
+                >
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            CATEGORY
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="Engine">
+                                Engine
+                            </option>
+
+                            <option value="Fluids">
+                                Fluids
+                            </option>
+
+                            <option value="Filters">
+                                Filters
+                            </option>
+
+                            <option value="Ignition">
+                                Ignition
+                            </option>
+
+                            <option value="Cooling">
+                                Cooling
+                            </option>
+
+                            <option value="CVT">
+                                CVT
+                            </option>
+
+                            <option value="Brakes">
+                                Brakes
+                            </option>
+
+                            <option value="Tyres">
+                                Tyres
+                            </option>
+
+                            <option value="Suspension">
+                                Suspension
+                            </option>
+
+                            <option value="Electrical">
+                                Electrical
+                            </option>
+
+                            <option value="Inspection">
+                                Inspection
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="priority">
+                            PRIORITY
+                        </label>
+
+                        <select
+                            id="priority"
+                            required
+                        >
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option
+                                value="NORMAL"
+                                selected
+                            >
+                                Normal
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                            <option value="URGENT">
+                                Urgent
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            STATUS
+                        </label>
+
+                        <select
+                            id="status"
+                            required
+                        >
+
+                            <option value="PLANNED">
+                                Planned
+                            </option>
+
+                            <option value="INSPECT">
+                                Inspect
+                            </option>
+
+                            <option value="UPCOMING">
+                                Upcoming
+                            </option>
+
+                            <option value="DUE">
+                                Due
+                            </option>
+
+                            <option value="COMPLETED">
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="target-date">
+                            TARGET DATE
+                        </label>
+
+                        <input
+                            type="date"
+                            id="target-date"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="maintenance-item">
+                            MAINTENANCE ITEM
+                        </label>
+
+                        <input
+                            type="text"
+                            id="maintenance-item"
+                            placeholder="Example: Engine Oil & Filter"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="description">
+                            DESCRIPTION
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="What needs to be serviced, checked or replaced?"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="target-odometer">
+                            TARGET ODOMETER (KM)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="target-odometer"
+                            min="0"
+                            step="1"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="interval-km">
+                            INTERVAL (KM)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="interval-km"
+                            min="0"
+                            step="1"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="interval-months">
+                            INTERVAL (MONTHS)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="interval-months"
+                            min="0"
+                            step="1"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="notes">
+                            NOTES
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            placeholder="Parts to research, observations, service information or other notes."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-actions">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="save-button"
+                    >
+                        SAVE ITEM
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary hidden"
+                        id="cancel-button"
+                    >
+                        CANCEL EDIT
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="manager-message"
+                    id="form-message"
+                ></div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ========================================
+             RECORDS
+        ========================================= -->
+
+        <section class="manager-panel">
+
+            <div class="manager-topbar">
+
+                <div>
+
+                    <div class="eyebrow">
+                        DATABASE
+                    </div>
+
+                    <h2>
+                        Planned Maintenance
+                    </h2>
+
+                </div>
+
+
+                <div
+                    class="record-count"
+                    id="record-count"
+                >
+                    0 ITEMS
+                </div>
+
+            </div>
+
+
+            <div id="records-container">
+
+                <p>
+                    Loading maintenance plan...
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<!-- ================================================
+     SUPABASE
+================================================ -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://dmtzalwtexsstdynpmuk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_9pbNHhwgcmx1u8ZMsd_NlA_He7Xghwu";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const loginPanel =
+    document.getElementById(
+        "login-panel"
+    );
+
+const dashboard =
+    document.getElementById(
+        "manager-dashboard"
+    );
+
+const loginEmail =
+    document.getElementById(
+        "login-email"
+    );
+
+const loginPassword =
+    document.getElementById(
+        "login-password"
+    );
+
+const loginButton =
+    document.getElementById(
+        "login-button"
+    );
+
+const logoutButton =
+    document.getElementById(
+        "logout-button"
+    );
+
+const loginMessage =
+    document.getElementById(
+        "login-message"
+    );
+
+const form =
+    document.getElementById(
+        "maintenance-form"
+    );
+
+const formTitle =
+    document.getElementById(
+        "form-title"
+    );
+
+const formMessage =
+    document.getElementById(
+        "form-message"
+    );
+
+const cancelButton =
+    document.getElementById(
+        "cancel-button"
+    );
+
+const recordsContainer =
+    document.getElementById(
+        "records-container"
+    );
+
+const recordCount =
+    document.getElementById(
+        "record-count"
+    );
+
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function formatDate(value) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    const date =
+        new Date(
+            value + "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "en-AU",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function formatKM(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return (
+        Number(value)
+            .toLocaleString("en-AU") +
+        " km"
+    );
+
+}
+
+
+function showMessage(
+    element,
+    message,
+    type = ""
+) {
+
+    element.textContent =
+        message;
+
+    element.className =
+        "manager-message show " +
+        type;
+
+}
+
+
+function clearMessage(element) {
+
+    element.textContent = "";
+
+    element.className =
+        "manager-message";
+
+}
+
+
+function resetForm() {
+
+    form.reset();
+
+
+    document.getElementById(
+        "record-id"
+    ).value = "";
+
+
+    document.getElementById(
+        "priority"
+    ).value =
+        "NORMAL";
+
+
+    document.getElementById(
+        "status"
+    ).value =
+        "PLANNED";
+
+
+    formTitle.textContent =
+        "Add Maintenance Item";
+
+
+    cancelButton.classList.add(
+        "hidden"
+    );
+
+
+    clearMessage(
+        formMessage
+    );
+
+}
+
+
+async function updateAuthDisplay() {
+
+    const {
+        data: {
+            session
+        }
+    } =
+        await supabaseClient.auth
+            .getSession();
+
+
+    if (session) {
+
+        loginPanel.classList.add(
+            "hidden"
+        );
+
+        dashboard.classList.remove(
+            "hidden"
+        );
+
+        await loadRecords();
+
+    } else {
+
+        dashboard.classList.add(
+            "hidden"
+        );
+
+        loginPanel.classList.remove(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+loginButton.addEventListener(
+    "click",
+    async () => {
+
+        clearMessage(
+            loginMessage
+        );
+
+
+        const email =
+            loginEmail.value.trim();
+
+        const password =
+            loginPassword.value;
+
+
+        if (
+            !email ||
+            !password
+        ) {
+
+            showMessage(
+                loginMessage,
+                "Enter your email and password.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        loginButton.disabled =
+            true;
+
+        loginButton.textContent =
+            "SIGNING IN...";
+
+
+        const {
+            error
+        } =
+            await supabaseClient.auth
+                .signInWithPassword({
+                    email,
+                    password
+                });
+
+
+        loginButton.disabled =
+            false;
+
+        loginButton.textContent =
+            "SIGN IN";
+
+
+        if (error) {
+
+            showMessage(
+                loginMessage,
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        loginPassword.value = "";
+
+
+        await updateAuthDisplay();
+
+    }
+);
+
+
+logoutButton.addEventListener(
+    "click",
+    async () => {
+
+        await supabaseClient.auth
+            .signOut();
+
+
+        resetForm();
+
+
+        await updateAuthDisplay();
+
+    }
+);
+
+
+form.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        clearMessage(
+            formMessage
+        );
+
+
+        const id =
+            document.getElementById(
+                "record-id"
+            ).value;
+
+
+        const targetOdometer =
+            document.getElementById(
+                "target-odometer"
+            ).value;
+
+
+        const intervalKm =
+            document.getElementById(
+                "interval-km"
+            ).value;
+
+
+        const intervalMonths =
+            document.getElementById(
+                "interval-months"
+            ).value;
+
+
+        const record = {
+
+            category:
+                document.getElementById(
+                    "category"
+                ).value,
+
+            maintenance_item:
+                document.getElementById(
+                    "maintenance-item"
+                ).value.trim(),
+
+            description:
+                document.getElementById(
+                    "description"
+                ).value.trim() ||
+                null,
+
+            priority:
+                document.getElementById(
+                    "priority"
+                ).value,
+
+            status:
+                document.getElementById(
+                    "status"
+                ).value,
+
+            target_date:
+                document.getElementById(
+                    "target-date"
+                ).value ||
+                null,
+
+            target_odometer:
+                targetOdometer
+                    ? Number(
+                        targetOdometer
+                    )
+                    : null,
+
+            interval_months:
+                intervalMonths
+                    ? Number(
+                        intervalMonths
+                    )
+                    : null,
+
+            interval_km:
+                intervalKm
+                    ? Number(
+                        intervalKm
+                    )
+                    : null,
+
+            notes:
+                document.getElementById(
+                    "notes"
+                ).value.trim() ||
+                null
+
+        };
+
+
+        if (
+            !record.category ||
+            !record.maintenance_item
+        ) {
+
+            showMessage(
+                formMessage,
+                "Category and maintenance item are required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const saveButton =
+            document.getElementById(
+                "save-button"
+            );
+
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            id
+                ? "UPDATING..."
+                : "SAVING...";
+
+
+        let error;
+
+
+        if (id) {
+
+            const result =
+                await supabaseClient
+                    .from(
+                        "maintenance_plan"
+                    )
+                    .update(record)
+                    .eq(
+                        "id",
+                        Number(id)
+                    );
+
+
+            error =
+                result.error;
+
+        } else {
+
+            const result =
+                await supabaseClient
+                    .from(
+                        "maintenance_plan"
+                    )
+                    .insert(record);
+
+
+            error =
+                result.error;
+
+        }
+
+
+        saveButton.disabled =
+            false;
+
+        saveButton.textContent =
+            "SAVE ITEM";
+
+
+        if (error) {
+
+            console.error(error);
+
+
+            showMessage(
+                formMessage,
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            formMessage,
+            id
+                ? "Maintenance item updated."
+                : "Maintenance item added.",
+            "success"
+        );
+
+
+        await loadRecords();
+
+
+        setTimeout(
+            () => {
+                resetForm();
+            },
+            800
+        );
+
+    }
+);
+
+
+cancelButton.addEventListener(
+    "click",
+    () => {
+
+        resetForm();
+
+    }
+);
+
+
+async function loadRecords() {
+
+    recordsContainer.innerHTML =
+        "<p>Loading maintenance plan...</p>";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from(
+                "maintenance_plan"
+            )
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        recordsContainer.innerHTML = `
+            <p>
+                Could not load the maintenance plan.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    recordCount.textContent =
+        `${data.length} ${
+            data.length === 1
+                ? "ITEM"
+                : "ITEMS"
+        }`;
+
+
+    if (!data.length) {
+
+        recordsContainer.innerHTML = `
+
+            <div class="notice">
+
+                <strong>
+                    NO MAINTENANCE ITEMS YET.
+                </strong>
+
+                <p>
+                    Add planned work above when you're
+                    ready. Nothing will be treated as
+                    completed service history.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    recordsContainer.innerHTML =
+        data.map(
+            record => {
+
+
+                const targetDate =
+                    record.target_date
+                        ? `
+                            <span>
+                                TARGET DATE:
+                                <strong>
+                                    ${escapeHTML(
+                                        formatDate(
+                                            record.target_date
+                                        )
+                                    )}
+                                </strong>
+                            </span>
+                        `
+                        : "";
+
+
+                const targetKM =
+                    record.target_odometer !== null
+                        ? `
+                            <span>
+                                TARGET:
+                                <strong>
+                                    ${escapeHTML(
+                                        formatKM(
+                                            record.target_odometer
+                                        )
+                                    )}
+                                </strong>
+                            </span>
+                        `
+                        : "";
+
+
+                const intervalKM =
+                    record.interval_km !== null
+                        ? `
+                            <span>
+                                INTERVAL:
+                                <strong>
+                                    ${escapeHTML(
+                                        formatKM(
+                                            record.interval_km
+                                        )
+                                    )}
+                                </strong>
+                            </span>
+                        `
+                        : "";
+
+
+                const intervalMonths =
+                    record.interval_months !== null
+                        ? `
+                            <span>
+                                TIME:
+                                <strong>
+                                    ${escapeHTML(
+                                        record.interval_months
+                                    )}
+                                    MONTHS
+                                </strong>
+                            </span>
+                        `
+                        : "";
+
+
+                const description =
+                    record.description
+                        ? `
+                            <p>
+                                ${escapeHTML(
+                                    record.description
+                                )}
+                            </p>
+                        `
+                        : "";
+
+
+                const notes =
+                    record.notes
+                        ? `
+                            <div class="record-notes">
+
+                                <div class="eyebrow">
+                                    NOTES
+                                </div>
+
+                                <p>
+                                    ${escapeHTML(
+                                        record.notes
+                                    )}
+                                </p>
+
+                            </div>
+                        `
+                        : "";
+
+
+                const priorityClass =
+                    record.priority ===
+                        "HIGH" ||
+                    record.priority ===
+                        "URGENT"
+                        ? "priority-high"
+                        : "";
+
+
+                return `
+
+                    <article class="maintenance-record">
+
+                        <div class="record-header">
+
+                            <div>
+
+                                <div class="eyebrow">
+
+                                    ${escapeHTML(
+                                        record.category
+                                    )}
+
+                                    /
+
+                                    <span class="${priorityClass}">
+
+                                        ${escapeHTML(
+                                            record.priority
+                                        )}
+
+                                    </span>
+
+                                </div>
+
+
+                                <h3>
+                                    ${escapeHTML(
+                                        record.maintenance_item
+                                    )}
+                                </h3>
+
+                            </div>
+
+
+                            <div class="status-badge">
+
+                                ${escapeHTML(
+                                    record.status
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        ${description}
+
+
+                        <div class="record-meta">
+
+                            ${targetDate}
+
+                            ${targetKM}
+
+                            ${intervalKM}
+
+                            ${intervalMonths}
+
+                        </div>
+
+
+                        ${notes}
+
+
+                        <div class="manager-actions">
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                onclick="editRecord(${record.id})"
+                            >
+                                EDIT
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary danger-button"
+                                onclick="deleteRecord(${record.id})"
+                            >
+                                DELETE
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+async function editRecord(id) {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from(
+                "maintenance_plan"
+            )
+            .select("*")
+            .eq(
+                "id",
+                id
+            )
+            .single();
+
+
+    if (error) {
+
+        alert(
+            "Could not load the maintenance item."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "record-id"
+    ).value =
+        data.id;
+
+
+    document.getElementById(
+        "category"
+    ).value =
+        data.category;
+
+
+    document.getElementById(
+        "maintenance-item"
+    ).value =
+        data.maintenance_item;
+
+
+    document.getElementById(
+        "description"
+    ).value =
+        data.description || "";
+
+
+    document.getElementById(
+        "priority"
+    ).value =
+        data.priority;
+
+
+    document.getElementById(
+        "status"
+    ).value =
+        data.status;
+
+
+    document.getElementById(
+        "target-date"
+    ).value =
+        data.target_date || "";
+
+
+    document.getElementById(
+        "target-odometer"
+    ).value =
+        data.target_odometer ?? "";
+
+
+    document.getElementById(
+        "interval-km"
+    ).value =
+        data.interval_km ?? "";
+
+
+    document.getElementById(
+        "interval-months"
+    ).value =
+        data.interval_months ?? "";
+
+
+    document.getElementById(
+        "notes"
+    ).value =
+        data.notes || "";
+
+
+    formTitle.textContent =
+        "Edit Maintenance Item";
+
+
+    cancelButton.classList.remove(
+        "hidden"
+    );
+
+
+    clearMessage(
+        formMessage
+    );
+
+
+    form.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+async function deleteRecord(id) {
+
+    const confirmed =
+        window.confirm(
+            "Delete this maintenance item? This cannot be undone."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from(
+                "maintenance_plan"
+            )
+            .delete()
+            .eq(
+                "id",
+                id
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not delete the maintenance item: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    await loadRecords();
+
+}
+
+
+supabaseClient.auth
+    .onAuthStateChange(
+        () => {
+
+            updateAuthDisplay();
+
+        }
+    );
+
+
+resetForm();
+
+updateAuthDisplay();
+
+</script>
+
+
+</body>
+
+</html>
