@@ -164,6 +164,23 @@
             line-height: 1.6;
         }
 
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 9px;
+            border: 1px solid var(--border);
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+        }
+
+        /* CHECKLIST */
+
         .checklist {
             display: none;
             margin-top: 25px;
@@ -180,11 +197,84 @@
             margin-top: 0;
         }
 
-        .checklist ul {
-            padding-left: 20px;
-            color: var(--text-secondary);
-            line-height: 1.8;
+        .checklist-items {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
         }
+
+        .check-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: 16px;
+            cursor: pointer;
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: border-color .15s ease,
+                        opacity .15s ease;
+        }
+
+        .check-item:hover {
+            border-color: var(--red);
+        }
+
+        .check-item input {
+            width: 20px;
+            height: 20px;
+            flex: 0 0 auto;
+            margin-top: 1px;
+            accent-color: var(--red);
+            cursor: pointer;
+        }
+
+        .check-text {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .check-item.completed {
+            border-color: #4caf50;
+        }
+
+        .check-item.completed .check-text {
+            color: var(--text);
+        }
+
+        .check-progress {
+            margin-top: 20px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            background: var(--red);
+            transition: width .2s ease;
+        }
+
+        .progress-fill.complete {
+            background: #4caf50;
+        }
+
+        /* HISTORY */
 
         .history-list {
             display: grid;
@@ -214,29 +304,9 @@
             line-height: 1.6;
         }
 
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 7px 9px;
-            border: 1px solid var(--border);
-            font-size: .62rem;
-            font-weight: 700;
-            letter-spacing: .08em;
-        }
-
-        .badge.attention {
-            color: var(--red);
-            border-color: var(--red);
-        }
-
         .history-details {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px 25px;
             margin-top: 18px;
         }
@@ -256,6 +326,30 @@
         .history-detail strong {
             display: block;
             margin-top: 5px;
+        }
+
+        .saved-checklist {
+            margin-top: 20px;
+            padding: 18px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        .saved-checklist-title {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+        }
+
+        .saved-checklist ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         .empty {
@@ -295,6 +389,7 @@
         <li><a href="index.html">PORTFOLIO</a></li>
         <li><a href="lancer.html">LANCER</a></li>
         <li><a href="maintenance-plan.html">MAINTENANCE</a></li>
+        <li><a href="inspection-history.html">INSPECTIONS</a></li>
         <li><a href="service-history.html">SERVICE</a></li>
     </ul>
 
@@ -303,391 +398,384 @@
 
 <main class="manager">
 
-    <header>
+<header>
 
-        <div class="eyebrow">
-            L@NC3R / OWNER TOOLS
-        </div>
+    <div class="eyebrow">
+        L@NC3R / OWNER TOOLS
+    </div>
 
-        <h1>
-            INSPECTION<br>
-            <span>MANAGER.</span>
-        </h1>
+    <h1>
+        INSPECTION<br>
+        <span>MANAGER.</span>
+    </h1>
 
-        <p>
-            Record real inspection findings against the
-            Lancer's maintenance baseline.
-        </p>
+    <p>
+        Work through physical vehicle checks and record
+        verified findings against the Lancer maintenance baseline.
+    </p>
 
-    </header>
+</header>
 
 
-    <!-- LOGIN -->
+<!-- LOGIN -->
 
-    <section class="panel" id="login-panel">
+<section class="panel" id="login-panel">
 
-        <div class="eyebrow">
-            OWNER ACCESS
-        </div>
+    <div class="eyebrow">
+        OWNER ACCESS
+    </div>
 
-        <h2>Sign In</h2>
+    <h2>Sign In</h2>
 
-        <div class="form-grid">
+    <div class="form-grid">
 
-            <div class="form-group full">
+        <div class="form-group full">
 
-                <label for="email">
-                    EMAIL
-                </label>
+            <label for="email">
+                EMAIL
+            </label>
 
-                <input
-                    type="email"
-                    id="email"
-                    autocomplete="email"
-                >
-
-            </div>
-
-            <div class="form-group full">
-
-                <label for="password">
-                    PASSWORD
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    autocomplete="current-password"
-                >
-
-            </div>
-
-        </div>
-
-        <div class="actions">
-
-            <button
-                type="button"
-                class="btn btn-primary"
-                id="login-button"
-            >
-                SIGN IN
-            </button>
-
-        </div>
-
-        <div
-            class="message"
-            id="login-message"
-        ></div>
-
-    </section>
-
-
-    <!-- DASHBOARD -->
-
-    <section id="dashboard" class="hidden">
-
-        <section class="panel">
-
-            <div class="eyebrow">
-                PROJECT 001 / LIVE VEHICLE
-            </div>
-
-            <h2>
-                2009 Mitsubishi Lancer
-            </h2>
-
-            <div class="vehicle-strip">
-
-                <div class="vehicle-box">
-                    <span>ENGINE</span>
-                    <strong>4B11 2.0L</strong>
-                </div>
-
-                <div class="vehicle-box">
-                    <span>TRANSMISSION</span>
-                    <strong>CVT</strong>
-                </div>
-
-                <div class="vehicle-box odometer">
-                    <span>CURRENT ODOMETER</span>
-                    <strong id="current-odometer">
-                        —
-                    </strong>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- NEW INSPECTION -->
-
-        <section class="panel">
-
-            <div class="eyebrow">
-                NEW INSPECTION
-            </div>
-
-            <h2>
-                Record Inspection
-            </h2>
-
-            <p>
-                Select the maintenance item you are checking.
-                The inspection will be stored separately from
-                completed service work.
-            </p>
-
-
-            <div class="form-grid">
-
-                <div class="form-group full">
-
-                    <label for="maintenance-item">
-                        MAINTENANCE ITEM
-                    </label>
-
-                    <select id="maintenance-item">
-
-                        <option value="">
-                            Select maintenance item
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="selected-item"
-                id="selected-item"
-            ></div>
-
-
-            <div
-                class="checklist"
-                id="checklist"
-            ></div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label for="inspection-date">
-                        INSPECTION DATE
-                    </label>
-
-                    <input
-                        type="date"
-                        id="inspection-date"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="inspection-odometer">
-                        ODOMETER
-                    </label>
-
-                    <input
-                        type="number"
-                        id="inspection-odometer"
-                        min="0"
-                        step="1"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="result">
-                        RESULT
-                    </label>
-
-                    <select id="result">
-
-                        <option value="">
-                            Select result
-                        </option>
-
-                        <option value="PASS">
-                            PASS
-                        </option>
-
-                        <option value="MONITOR">
-                            MONITOR
-                        </option>
-
-                        <option value="SERVICE_REQUIRED">
-                            SERVICE REQUIRED
-                        </option>
-
-                        <option value="REPAIR_REQUIRED">
-                            REPAIR REQUIRED
-                        </option>
-
-                        <option value="UNABLE_TO_VERIFY">
-                            UNABLE TO VERIFY
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="condition">
-                        CONDITION
-                    </label>
-
-                    <input
-                        type="text"
-                        id="condition"
-                        placeholder="Example: Normal / worn / dirty"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label for="findings">
-                        FINDINGS
-                    </label>
-
-                    <textarea
-                        id="findings"
-                        placeholder="Record only what you actually observed."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label for="action-required">
-                        ACTION REQUIRED
-                    </label>
-
-                    <textarea
-                        id="action-required"
-                        placeholder="Optional next action."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="follow-up-date">
-                        FOLLOW-UP DATE
-                    </label>
-
-                    <input
-                        type="date"
-                        id="follow-up-date"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="follow-up-odometer">
-                        FOLLOW-UP ODOMETER
-                    </label>
-
-                    <input
-                        type="number"
-                        id="follow-up-odometer"
-                        min="0"
-                        step="1"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="actions">
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    id="save-button"
-                >
-                    SAVE INSPECTION
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="clear-button"
-                >
-                    CLEAR
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="logout-button"
-                >
-                    LOG OUT
-                </button>
-
-            </div>
-
-
-            <div
-                class="message"
-                id="save-message"
-            ></div>
-
-        </section>
-
-
-        <!-- HISTORY -->
-
-        <section class="panel">
-
-            <div class="eyebrow">
-                INSPECTION HISTORY
-            </div>
-
-            <h2>
-                Recorded Inspections
-            </h2>
-
-            <div
-                class="history-list"
-                id="history-list"
+            <input
+                type="email"
+                id="email"
+                autocomplete="email"
             >
 
-                <p>
-                    Loading inspections...
-                </p>
+        </div>
 
-            </div>
+        <div class="form-group full">
 
-        </section>
+            <label for="password">
+                PASSWORD
+            </label>
 
-    </section>
+            <input
+                type="password"
+                id="password"
+                autocomplete="current-password"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="login-button"
+        >
+            SIGN IN
+        </button>
+
+    </div>
+
+    <div
+        class="message"
+        id="login-message"
+    ></div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="hidden">
+
+<section class="panel">
+
+    <div class="eyebrow">
+        PROJECT 001 / LIVE VEHICLE
+    </div>
+
+    <h2>
+        2009 Mitsubishi Lancer
+    </h2>
+
+    <div class="vehicle-strip">
+
+        <div class="vehicle-box">
+            <span>ENGINE</span>
+            <strong>4B11 2.0L</strong>
+        </div>
+
+        <div class="vehicle-box">
+            <span>TRANSMISSION</span>
+            <strong>CVT</strong>
+        </div>
+
+        <div class="vehicle-box odometer">
+            <span>CURRENT ODOMETER</span>
+            <strong id="current-odometer">
+                —
+            </strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- NEW INSPECTION -->
+
+<section class="panel">
+
+    <div class="eyebrow">
+        NEW INSPECTION
+    </div>
+
+    <h2>
+        Record Inspection
+    </h2>
+
+    <p>
+        Select an item, work through its checklist and record
+        only what you actually observe.
+    </p>
+
+
+    <div class="form-grid">
+
+        <div class="form-group full">
+
+            <label for="maintenance-item">
+                MAINTENANCE ITEM
+            </label>
+
+            <select id="maintenance-item">
+
+                <option value="">
+                    Select maintenance item
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="selected-item"
+        id="selected-item"
+    ></div>
+
+
+    <div
+        class="checklist"
+        id="checklist"
+    ></div>
+
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label for="inspection-date">
+                INSPECTION DATE
+            </label>
+
+            <input
+                type="date"
+                id="inspection-date"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="inspection-odometer">
+                ODOMETER
+            </label>
+
+            <input
+                type="number"
+                id="inspection-odometer"
+                min="0"
+                step="1"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="result">
+                RESULT
+            </label>
+
+            <select id="result">
+
+                <option value="">
+                    Select result
+                </option>
+
+                <option value="PASS">
+                    PASS
+                </option>
+
+                <option value="MONITOR">
+                    MONITOR
+                </option>
+
+                <option value="SERVICE_REQUIRED">
+                    SERVICE REQUIRED
+                </option>
+
+                <option value="REPAIR_REQUIRED">
+                    REPAIR REQUIRED
+                </option>
+
+                <option value="UNABLE_TO_VERIFY">
+                    UNABLE TO VERIFY
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="condition">
+                CONDITION
+            </label>
+
+            <input
+                type="text"
+                id="condition"
+                placeholder="Example: Normal / worn / dirty"
+            >
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label for="findings">
+                FINDINGS
+            </label>
+
+            <textarea
+                id="findings"
+                placeholder="Record what you actually observed."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label for="action-required">
+                ACTION REQUIRED
+            </label>
+
+            <textarea
+                id="action-required"
+                placeholder="Optional next action."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="follow-up-date">
+                FOLLOW-UP DATE
+            </label>
+
+            <input
+                type="date"
+                id="follow-up-date"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="follow-up-odometer">
+                FOLLOW-UP ODOMETER
+            </label>
+
+            <input
+                type="number"
+                id="follow-up-odometer"
+                min="0"
+                step="1"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="save-button"
+        >
+            SAVE INSPECTION
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            id="clear-button"
+        >
+            CLEAR
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            id="logout-button"
+        >
+            LOG OUT
+        </button>
+
+    </div>
+
+
+    <div
+        class="message"
+        id="save-message"
+    ></div>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section class="panel">
+
+    <div class="eyebrow">
+        INSPECTION HISTORY
+    </div>
+
+    <h2>
+        Recorded Inspections
+    </h2>
+
+    <div
+        class="history-list"
+        id="history-list"
+    >
+        <p>Loading inspections...</p>
+    </div>
+
+</section>
+
+</section>
 
 </main>
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -707,6 +795,7 @@ const supabaseClient =
 
 let maintenanceItems = [];
 let currentOdometer = null;
+let currentChecklist = [];
 
 
 const checklistMap = {
@@ -821,18 +910,13 @@ function escapeHTML(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-
 }
 
 
 function formatKM(value) {
 
-    return (
-        Number(value)
-            .toLocaleString("en-AU") +
-        " km"
-    );
-
+    return Number(value)
+        .toLocaleString("en-AU") + " km";
 }
 
 
@@ -852,7 +936,6 @@ function formatDate(value) {
             year: "numeric"
         }
     );
-
 }
 
 
@@ -860,8 +943,7 @@ function localDate() {
 
     const date = new Date();
 
-    const year =
-        date.getFullYear();
+    const year = date.getFullYear();
 
     const month =
         String(
@@ -874,7 +956,6 @@ function localDate() {
         ).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-
 }
 
 
@@ -888,7 +969,6 @@ function showMessage(
 
     element.className =
         `message show ${type}`;
-
 }
 
 
@@ -896,9 +976,7 @@ function clearMessage(element) {
 
     element.textContent = "";
 
-    element.className =
-        "message";
-
+    element.className = "message";
 }
 
 
@@ -938,7 +1016,6 @@ async function loadVehicle() {
         "inspection-odometer"
     ).value =
         currentOdometer;
-
 }
 
 
@@ -990,19 +1067,81 @@ async function loadMaintenanceItems() {
                     "option"
                 );
 
-            option.value =
-                item.id;
+            option.value = item.id;
 
             option.textContent =
                 `${item.category} — ${item.maintenance_item}`;
 
-            select.appendChild(
-                option
-            );
-
+            select.appendChild(option);
         }
     );
+}
 
+
+function updateChecklistProgress() {
+
+    const checkboxes =
+        document.querySelectorAll(
+            ".inspection-check"
+        );
+
+
+    const completed =
+        [...checkboxes].filter(
+            checkbox =>
+                checkbox.checked
+        ).length;
+
+
+    const total =
+        checkboxes.length;
+
+
+    const percent =
+        total
+            ? Math.round(
+                (completed / total) * 100
+            )
+            : 0;
+
+
+    document.getElementById(
+        "checklist-count"
+    ).textContent =
+        `${completed} / ${total} COMPLETE`;
+
+
+    const fill =
+        document.getElementById(
+            "checklist-progress-fill"
+        );
+
+
+    fill.style.width =
+        `${percent}%`;
+
+
+    fill.classList.toggle(
+        "complete",
+        total > 0 &&
+        completed === total
+    );
+
+
+    checkboxes.forEach(
+        checkbox => {
+
+            const row =
+                checkbox.closest(
+                    ".check-item"
+                );
+
+            row.classList.toggle(
+                "completed",
+                checkbox.checked
+            );
+        }
+    );
 }
 
 
@@ -1035,18 +1174,16 @@ function showSelectedItem() {
         );
 
 
+    currentChecklist = [];
+
+
     if (!selected) {
 
-        panel.classList.remove(
-            "show"
-        );
+        panel.classList.remove("show");
 
-        checklist.classList.remove(
-            "show"
-        );
+        checklist.classList.remove("show");
 
         return;
-
     }
 
 
@@ -1091,16 +1228,13 @@ function showSelectedItem() {
                 `
                 : ""
         }
-
     `;
 
 
-    panel.classList.add(
-        "show"
-    );
+    panel.classList.add("show");
 
 
-    const checks =
+    currentChecklist =
         checklistMap[
             selected.maintenance_item
         ] || [
@@ -1116,25 +1250,112 @@ function showSelectedItem() {
             Inspection Checklist
         </h3>
 
-        <ul>
+        <div class="checklist-items">
 
-            ${checks.map(
-                check => `
-                    <li>
-                        ${escapeHTML(check)}
-                    </li>
+            ${currentChecklist.map(
+                (check, index) => `
+
+                    <label class="check-item">
+
+                        <input
+                            type="checkbox"
+                            class="inspection-check"
+                            data-index="${index}"
+                        >
+
+                        <span class="check-text">
+                            ${escapeHTML(check)}
+                        </span>
+
+                    </label>
+
                 `
             ).join("")}
 
-        </ul>
+        </div>
 
+
+        <div class="check-progress">
+
+            <div class="progress-top">
+
+                <span>
+                    CHECKLIST PROGRESS
+                </span>
+
+                <span id="checklist-count">
+                    0 / ${currentChecklist.length} COMPLETE
+                </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="checklist-progress-fill"
+                ></div>
+
+            </div>
+
+        </div>
     `;
 
 
-    checklist.classList.add(
-        "show"
+    checklist.classList.add("show");
+
+
+    document.querySelectorAll(
+        ".inspection-check"
+    ).forEach(
+        checkbox => {
+
+            checkbox.addEventListener(
+                "change",
+                updateChecklistProgress
+            );
+        }
     );
 
+
+    updateChecklistProgress();
+}
+
+
+function getCompletedChecklist() {
+
+    const completed = [];
+
+
+    document.querySelectorAll(
+        ".inspection-check"
+    ).forEach(
+        checkbox => {
+
+            if (!checkbox.checked) {
+                return;
+            }
+
+
+            const index =
+                Number(
+                    checkbox.dataset.index
+                );
+
+
+            if (
+                currentChecklist[index]
+            ) {
+
+                completed.push(
+                    currentChecklist[index]
+                );
+            }
+        }
+    );
+
+
+    return completed;
 }
 
 
@@ -1182,7 +1403,6 @@ async function loadHistory() {
         `;
 
         return;
-
     }
 
 
@@ -1195,13 +1415,20 @@ async function loadHistory() {
         `;
 
         return;
-
     }
 
 
     container.innerHTML =
         data.map(
             record => {
+
+                const completed =
+                    Array.isArray(
+                        record.checklist_completed
+                    )
+                        ? record.checklist_completed
+                        : [];
+
 
                 const attention =
                     record.result ===
@@ -1232,6 +1459,7 @@ async function loadHistory() {
 
                             </div>
 
+
                             <div class="badges">
 
                                 <span class="badge ${
@@ -1239,9 +1467,16 @@ async function loadHistory() {
                                         ? "attention"
                                         : ""
                                 }">
+
                                     ${escapeHTML(
-                                        record.result
+                                        String(
+                                            record.result
+                                        ).replaceAll(
+                                            "_",
+                                            " "
+                                        )
                                     )}
+
                                 </span>
 
                             </div>
@@ -1252,7 +1487,9 @@ async function loadHistory() {
                         <div class="history-details">
 
                             <div class="history-detail">
+
                                 <span>DATE</span>
+
                                 <strong>
                                     ${escapeHTML(
                                         formatDate(
@@ -1260,10 +1497,14 @@ async function loadHistory() {
                                         )
                                     )}
                                 </strong>
+
                             </div>
 
+
                             <div class="history-detail">
+
                                 <span>ODOMETER</span>
+
                                 <strong>
                                     ${escapeHTML(
                                         formatKM(
@@ -1271,65 +1512,48 @@ async function loadHistory() {
                                         )
                                     )}
                                 </strong>
+
                             </div>
 
-                            ${
-                                record.condition
-                                    ? `
-                                        <div class="history-detail">
-                                            <span>CONDITION</span>
-                                            <strong>
-                                                ${escapeHTML(
-                                                    record.condition
-                                                )}
-                                            </strong>
-                                        </div>
-                                    `
-                                    : ""
-                            }
 
-                            ${
-                                record.follow_up_odometer
-                                    ? `
-                                        <div class="history-detail">
-                                            <span>FOLLOW-UP KM</span>
-                                            <strong>
-                                                ${escapeHTML(
-                                                    formatKM(
-                                                        record.follow_up_odometer
-                                                    )
-                                                )}
-                                            </strong>
-                                        </div>
-                                    `
-                                    : ""
-                            }
+                            <div class="history-detail">
 
-                            ${
-                                record.follow_up_date
-                                    ? `
-                                        <div class="history-detail">
-                                            <span>FOLLOW-UP DATE</span>
-                                            <strong>
-                                                ${escapeHTML(
-                                                    formatDate(
-                                                        record.follow_up_date
-                                                    )
-                                                )}
-                                            </strong>
-                                        </div>
-                                    `
-                                    : ""
-                            }
+                                <span>CHECKS COMPLETED</span>
+
+                                <strong>
+                                    ${completed.length}
+                                </strong>
+
+                            </div>
 
                         </div>
+
+
+                        ${
+                            record.condition
+                                ? `
+                                    <p>
+                                        <strong>
+                                            CONDITION:
+                                        </strong>
+
+                                        ${escapeHTML(
+                                            record.condition
+                                        )}
+                                    </p>
+                                `
+                                : ""
+                        }
 
 
                         ${
                             record.findings
                                 ? `
                                     <p>
-                                        <strong>FINDINGS:</strong>
+                                        <strong>
+                                            FINDINGS:
+                                        </strong>
+
                                         ${escapeHTML(
                                             record.findings
                                         )}
@@ -1343,7 +1567,10 @@ async function loadHistory() {
                             record.action_required
                                 ? `
                                     <p>
-                                        <strong>ACTION:</strong>
+                                        <strong>
+                                            ACTION:
+                                        </strong>
+
                                         ${escapeHTML(
                                             record.action_required
                                         )}
@@ -1352,13 +1579,47 @@ async function loadHistory() {
                                 : ""
                         }
 
+
+                        ${
+                            completed.length
+                                ? `
+                                    <div class="saved-checklist">
+
+                                        <div class="saved-checklist-title">
+
+                                            <span>
+                                                COMPLETED CHECKS
+                                            </span>
+
+                                            <span>
+                                                ${completed.length}
+                                            </span>
+
+                                        </div>
+
+                                        <ul>
+
+                                            ${completed.map(
+                                                item => `
+                                                    <li>
+                                                        ${escapeHTML(
+                                                            item
+                                                        )}
+                                                    </li>
+                                                `
+                                            ).join("")}
+
+                                        </ul>
+
+                                    </div>
+                                `
+                                : ""
+                        }
+
                     </article>
-
                 `;
-
             }
         ).join("");
-
 }
 
 
@@ -1368,52 +1629,65 @@ function clearForm() {
         "maintenance-item"
     ).value = "";
 
+
     document.getElementById(
         "result"
     ).value = "";
+
 
     document.getElementById(
         "condition"
     ).value = "";
 
+
     document.getElementById(
         "findings"
     ).value = "";
+
 
     document.getElementById(
         "action-required"
     ).value = "";
 
+
     document.getElementById(
         "follow-up-date"
     ).value = "";
 
+
     document.getElementById(
         "follow-up-odometer"
     ).value = "";
+
 
     document.getElementById(
         "inspection-date"
     ).value =
         localDate();
 
-    if (currentOdometer !== null) {
+
+    if (
+        currentOdometer !== null
+    ) {
 
         document.getElementById(
             "inspection-odometer"
         ).value =
             currentOdometer;
-
     }
+
+
+    currentChecklist = [];
+
 
     document.getElementById(
         "selected-item"
     ).classList.remove("show");
 
+
     document.getElementById(
         "checklist"
     ).classList.remove("show");
-
 }
 
 
@@ -1434,6 +1708,7 @@ async function updateAuthDisplay() {
             "login-panel"
         ).classList.add("hidden");
 
+
         document.getElementById(
             "dashboard"
         ).classList.remove("hidden");
@@ -1451,12 +1726,11 @@ async function updateAuthDisplay() {
             "dashboard"
         ).classList.add("hidden");
 
+
         document.getElementById(
             "login-panel"
         ).classList.remove("hidden");
-
     }
-
 }
 
 
@@ -1481,7 +1755,6 @@ document.getElementById(
         );
 
         clearForm();
-
     }
 );
 
@@ -1513,7 +1786,10 @@ document.getElementById(
             ).value;
 
 
-        if (!email || !password) {
+        if (
+            !email ||
+            !password
+        ) {
 
             showMessage(
                 message,
@@ -1522,7 +1798,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1545,7 +1820,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1555,7 +1829,6 @@ document.getElementById(
 
 
         await updateAuthDisplay();
-
     }
 );
 
@@ -1569,8 +1842,8 @@ document.getElementById(
         await supabaseClient.auth
             .signOut();
 
-        await updateAuthDisplay();
 
+        await updateAuthDisplay();
     }
 );
 
@@ -1615,7 +1888,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1663,18 +1935,20 @@ document.getElementById(
             ).value;
 
 
-        const followUpOdometerRaw =
+        const followUpRaw =
             document.getElementById(
                 "follow-up-odometer"
             ).value;
 
 
         const followUpOdometer =
-            followUpOdometerRaw
-                ? Number(
-                    followUpOdometerRaw
-                )
+            followUpRaw
+                ? Number(followUpRaw)
                 : null;
+
+
+        const completedChecklist =
+            getCompletedChecklist();
 
 
         if (!inspectionDate) {
@@ -1686,7 +1960,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1702,7 +1975,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1715,7 +1987,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1736,7 +2007,27 @@ document.getElementById(
             );
 
             return;
+        }
 
+
+        /*
+        A PASS should only be saved after every checklist
+        item for this inspection has been completed.
+        */
+
+        if (
+            result === "PASS" &&
+            completedChecklist.length !==
+                currentChecklist.length
+        ) {
+
+            showMessage(
+                message,
+                "Complete the full checklist before recording PASS.",
+                "error"
+            );
+
+            return;
         }
 
 
@@ -1795,8 +2086,10 @@ document.getElementById(
                         followUpDate || null,
 
                     follow_up_odometer:
-                        followUpOdometer
+                        followUpOdometer,
 
+                    checklist_completed:
+                        completedChecklist
                 });
 
 
@@ -1818,7 +2111,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1832,7 +2124,6 @@ document.getElementById(
         clearForm();
 
         await loadHistory();
-
     }
 );
 
