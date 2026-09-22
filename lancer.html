@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>2009 Mitsubishi Lancer | L@NC3R</title>
+    <title>2009 Mitsubishi Lancer CJ | L@NC3R</title>
 
     <meta
         name="description"
-        content="The L@NC3R 2009 Mitsubishi Lancer project — modifications, maintenance, diagnostics, tuning progress and future plans."
+        content="L@NC3R's 2009 Mitsubishi Lancer CJ project — 4B11 MIVEC, CVT, ECU research, diagnostics, modifications and build progress."
     >
 
     <style>
@@ -31,29 +31,29 @@
 
         ::selection {
             background: #e21b23;
-            color: #fff;
-        }
-
-        a {
-            color: inherit;
+            color: white;
         }
 
         section {
             scroll-margin-top: 75px;
         }
 
-        /* NAV */
+        a {
+            color: inherit;
+        }
+
+        /* NAVIGATION */
 
         nav {
             height: 75px;
             padding: 0 7%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(8, 8, 8, .96);
+            background: rgba(8, 8, 8, 0.96);
             border-bottom: 1px solid #222;
         }
 
@@ -70,17 +70,17 @@
 
         nav ul {
             display: flex;
+            gap: 27px;
             list-style: none;
-            gap: 28px;
         }
 
         nav ul a {
             text-decoration: none;
-            color: #888;
-            font-size: 11px;
+            color: #777;
+            font-size: 10px;
             font-weight: bold;
             letter-spacing: 1px;
-            transition: .2s;
+            transition: 0.2s;
         }
 
         nav ul a:hover {
@@ -90,31 +90,32 @@
         /* HERO */
 
         .hero {
-            min-height: 85vh;
+            min-height: 88vh;
             padding: 90px 7%;
             display: flex;
             align-items: flex-end;
             position: relative;
             overflow: hidden;
+
             background:
                 radial-gradient(
                     circle at 80% 40%,
-                    rgba(226,27,35,.20),
-                    transparent 35%
+                    rgba(226, 27, 35, 0.22),
+                    transparent 38%
                 ),
                 #080808;
         }
 
         .hero::after {
-            content: "LANCER";
+            content: "4B11";
             position: absolute;
-            right: -25px;
+            right: -30px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: clamp(100px, 18vw, 280px);
-            font-weight: 900;
-            letter-spacing: -12px;
             color: #101010;
+            font-size: clamp(140px, 25vw, 400px);
+            font-weight: 900;
+            letter-spacing: -15px;
             z-index: 0;
         }
 
@@ -129,12 +130,12 @@
             font-size: 11px;
             font-weight: bold;
             letter-spacing: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         h1 {
             font-size: clamp(55px, 9vw, 130px);
-            line-height: .85;
+            line-height: 0.86;
             letter-spacing: -6px;
         }
 
@@ -144,24 +145,24 @@
 
         .hero-subtitle {
             margin-top: 30px;
-            color: #aaa;
-            font-size: clamp(17px, 2vw, 25px);
+            color: #bbb;
+            font-size: clamp(18px, 2.3vw, 27px);
             font-weight: bold;
         }
 
         .hero-description {
             margin-top: 20px;
-            max-width: 650px;
+            max-width: 680px;
             color: #777;
-            line-height: 1.8;
             font-size: 14px;
+            line-height: 1.8;
         }
 
         .hero-stats {
             display: flex;
-            gap: 40px;
+            gap: 38px;
             flex-wrap: wrap;
-            margin-top: 40px;
+            margin-top: 38px;
         }
 
         .hero-stat {
@@ -172,9 +173,9 @@
         .hero-stat span {
             display: block;
             color: #555;
-            font-size: 9px;
-            letter-spacing: 2px;
+            font-size: 8px;
             font-weight: bold;
+            letter-spacing: 2px;
             margin-bottom: 6px;
         }
 
@@ -183,7 +184,44 @@
             letter-spacing: 1px;
         }
 
-        /* COMMON */
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 25px;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: #e21b23;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #b81219;
+        }
+
+        .secondary {
+            border: 1px solid #444;
+            color: white;
+        }
+
+        .secondary:hover {
+            border-color: #e21b23;
+        }
+
+        /* GENERAL */
 
         .section {
             padding: 110px 7%;
@@ -211,9 +249,9 @@
         }
 
         .heading-row h2 {
-            font-size: clamp(40px, 6vw, 75px);
-            line-height: .95;
-            letter-spacing: -3px;
+            font-size: clamp(42px, 6vw, 78px);
+            line-height: 0.94;
+            letter-spacing: -4px;
         }
 
         .heading-row h2 span {
@@ -223,21 +261,21 @@
         .heading-row p {
             max-width: 430px;
             color: #666;
-            line-height: 1.7;
             font-size: 13px;
+            line-height: 1.7;
         }
 
         /* OVERVIEW */
 
         .overview {
             display: grid;
-            grid-template-columns: .8fr 1.2fr;
+            grid-template-columns: 0.8fr 1.2fr;
             gap: 70px;
         }
 
-        .overview-title {
-            font-size: 22px;
-            line-height: 1.4;
+        .overview-title h2 {
+            font-size: clamp(35px, 5vw, 65px);
+            line-height: 1;
         }
 
         .overview-title span {
@@ -251,34 +289,170 @@
             font-size: 15px;
         }
 
-        /* SPECS */
+        /* FACTORY SPECS */
 
         .spec-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             border-top: 1px solid #222;
             border-left: 1px solid #222;
         }
 
         .spec-card {
-            padding: 30px;
-            min-height: 130px;
+            padding: 28px;
+            min-height: 125px;
+            background: #0e0e0e;
             border-right: 1px solid #222;
             border-bottom: 1px solid #222;
-            background: #0e0e0e;
         }
 
         .spec-card span {
             display: block;
             color: #555;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: bold;
             letter-spacing: 2px;
-            margin-bottom: 13px;
+            margin-bottom: 14px;
         }
 
         .spec-card strong {
-            font-size: 18px;
+            font-size: 17px;
+        }
+
+        /* POWER */
+
+        .power-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .power-card {
+            background: #101010;
+            border: 1px solid #222;
+            padding: 45px;
+        }
+
+        .power-card span {
+            display: block;
+            color: #555;
+            font-size: 9px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .power-card strong {
+            display: block;
+            font-size: clamp(50px, 7vw, 90px);
+            line-height: 1;
+            letter-spacing: -5px;
+        }
+
+        .power-card small {
+            display: block;
+            margin-top: 12px;
+            color: #777;
+            font-size: 11px;
+        }
+
+        /* ECU */
+
+        .ecu-panel {
+            border: 1px solid #222;
+            background: #101010;
+        }
+
+        .ecu-header {
+            padding: 35px;
+            border-bottom: 1px solid #222;
+        }
+
+        .ecu-header span {
+            color: #e21b23;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .ecu-header h3 {
+            margin-top: 12px;
+            font-size: clamp(30px, 4vw, 50px);
+        }
+
+        .ecu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .ecu-item {
+            padding: 25px 35px;
+            border-right: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .ecu-item span {
+            display: block;
+            color: #555;
+            font-size: 8px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .ecu-item strong {
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        /* TUNING */
+
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .learning-card {
+            background: #101010;
+            border: 1px solid #222;
+            padding: 30px;
+            min-height: 290px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.2s;
+        }
+
+        .learning-card:hover {
+            border-color: #e21b23;
+            transform: translateY(-3px);
+        }
+
+        .card-number {
+            color: #444;
+            font-size: 9px;
+            letter-spacing: 3px;
+            margin-bottom: 45px;
+        }
+
+        .learning-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .learning-card p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .status {
+            margin-top: 25px;
+            color: #e21b23;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         /* MODIFICATIONS */
@@ -296,7 +470,7 @@
         }
 
         .mod-card h3 {
-            font-size: 19px;
+            font-size: 18px;
             margin-bottom: 22px;
         }
 
@@ -309,11 +483,11 @@
         }
 
         .mod-list li {
-            padding: 14px 0;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-between;
             gap: 20px;
+            padding: 14px 0;
+            border-top: 1px solid #222;
             color: #aaa;
             font-size: 13px;
         }
@@ -326,66 +500,22 @@
             text-align: right;
         }
 
-        /* TUNING */
-
-        .tuning-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .tuning-card {
-            border: 1px solid #222;
-            background: #101010;
-            padding: 30px;
-            min-height: 260px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-number {
-            color: #444;
-            font-size: 10px;
-            letter-spacing: 3px;
-            margin-bottom: 45px;
-        }
-
-        .tuning-card h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .tuning-card p {
-            color: #777;
-            line-height: 1.7;
-            font-size: 13px;
-            flex-grow: 1;
-        }
-
-        .status {
-            margin-top: 25px;
-            color: #e21b23;
-            font-size: 9px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        /* BUILD LOG */
+        /* TIMELINE */
 
         .timeline {
-            max-width: 950px;
+            max-width: 1000px;
         }
 
         .timeline-item {
             display: grid;
-            grid-template-columns: 170px 1fr;
-            border-top: 1px solid #222;
+            grid-template-columns: 190px 1fr;
             padding: 30px 0;
+            border-top: 1px solid #222;
         }
 
         .timeline-date {
             color: #555;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             letter-spacing: 2px;
         }
@@ -401,60 +531,60 @@
             line-height: 1.7;
         }
 
-        /* PLANS */
+        /* ROADMAP */
 
-        .plans-grid {
+        .roadmap-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
-        .plan {
-            border: 1px solid #222;
-            background: #101010;
-            padding: 25px;
+        .roadmap-item {
             display: flex;
-            align-items: center;
             gap: 20px;
+            align-items: center;
+            padding: 25px;
+            background: #101010;
+            border: 1px solid #222;
         }
 
-        .plan-number {
-            width: 45px;
-            height: 45px;
-            min-width: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .roadmap-number {
+            width: 46px;
+            height: 46px;
+            min-width: 46px;
             background: #e21b23;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 11px;
             font-weight: bold;
         }
 
-        .plan h3 {
+        .roadmap-item h3 {
             font-size: 14px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
-        .plan p {
+        .roadmap-item p {
             color: #666;
             font-size: 11px;
             line-height: 1.5;
         }
 
-        /* DISCLAIMER */
+        /* NOTE */
 
         .notice {
-            border-left: 3px solid #e21b23;
-            background: #101010;
-            padding: 25px 30px;
             max-width: 950px;
+            background: #101010;
+            border-left: 3px solid #e21b23;
+            padding: 28px;
         }
 
         .notice strong {
             display: block;
-            margin-bottom: 10px;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 2px;
+            margin-bottom: 10px;
         }
 
         .notice p {
@@ -463,78 +593,50 @@
             line-height: 1.8;
         }
 
-        /* BUTTON */
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 16px 25px;
-            text-decoration: none;
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            transition: .2s;
-        }
-
-        .primary {
-            background: #e21b23;
-            color: white;
-        }
-
-        .primary:hover {
-            background: #b81219;
-        }
-
-        .secondary {
-            border: 1px solid #444;
-            color: white;
-        }
-
-        .secondary:hover {
-            border-color: #e21b23;
-        }
-
         /* FOOTER */
 
         footer {
             padding: 30px 7%;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-between;
             gap: 20px;
+            background: #080808;
+            border-top: 1px solid #222;
             color: #444;
             font-size: 9px;
             letter-spacing: 2px;
         }
 
-        /* MOBILE */
+        /* RESPONSIVE */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
+            .spec-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
+            .learning-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
             .overview {
                 grid-template-columns: 1fr;
                 gap: 35px;
-            }
-
-            .spec-grid,
-            .tuning-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
 
             .heading-row {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
+            .mod-grid,
+            .roadmap-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 700px) {
-
             nav {
                 height: 65px;
             }
@@ -544,7 +646,7 @@
             }
 
             .hero {
-                min-height: 75vh;
+                min-height: 80vh;
                 padding-top: 70px;
                 padding-bottom: 70px;
             }
@@ -558,9 +660,9 @@
             }
 
             .spec-grid,
-            .mod-grid,
-            .tuning-grid,
-            .plans-grid {
+            .power-panel,
+            .ecu-grid,
+            .learning-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -585,18 +687,20 @@
         </a>
 
         <ul>
-            <li><a href="index.html">HOME</a></li>
+            <li><a href="index.html">PORTFOLIO</a></li>
             <li><a href="#overview">OVERVIEW</a></li>
             <li><a href="#specs">SPECS</a></li>
+            <li><a href="#ecu">ECU</a></li>
             <li><a href="#mods">MODS</a></li>
-            <li><a href="#tuning">TUNING</a></li>
             <li><a href="#log">BUILD LOG</a></li>
         </ul>
 
     </nav>
 
 
-    <section class="hero">
+    <!-- HERO -->
+
+    <section class="hero" id="top">
 
         <div class="hero-content">
 
@@ -607,39 +711,39 @@
             <h1>
                 2009<br>
                 MITSUBISHI<br>
-                <span>LANCER.</span>
+                <span>LANCER CJ.</span>
             </h1>
 
             <div class="hero-subtitle">
-                The car I'm learning on.
+                2.0L 4B11 MIVEC • CVT • FRONT-WHEEL DRIVE
             </div>
 
             <p class="hero-description">
-                My main automotive project and the platform I'm using
-                to learn diagnostics, ECU tuning, modifications,
-                maintenance and how modern vehicle systems work.
+                My main project car and learning platform for
+                automotive diagnostics, ECU calibration,
+                modifications, maintenance and vehicle electronics.
             </p>
 
             <div class="hero-stats">
 
                 <div class="hero-stat">
-                    <span>STATUS</span>
-                    <strong>ONGOING</strong>
+                    <span>ENGINE</span>
+                    <strong>4B11</strong>
                 </div>
 
                 <div class="hero-stat">
-                    <span>ENGINE</span>
-                    <strong>MIVEC</strong>
+                    <span>CAPACITY</span>
+                    <strong>2.0L</strong>
                 </div>
 
                 <div class="hero-stat">
                     <span>TRANSMISSION</span>
-                    <strong>AUTOMATIC</strong>
+                    <strong>CVT</strong>
                 </div>
 
                 <div class="hero-stat">
-                    <span>ROLE</span>
-                    <strong>LEARNING PLATFORM</strong>
+                    <span>STATUS</span>
+                    <strong>ACTIVE PROJECT</strong>
                 </div>
 
             </div>
@@ -661,10 +765,12 @@
     </section>
 
 
+    <!-- OVERVIEW -->
+
     <section class="section dark" id="overview">
 
         <div class="section-number">
-            01 / OVERVIEW
+            01 / THE CAR
         </div>
 
         <div class="overview">
@@ -672,8 +778,8 @@
             <div class="overview-title">
 
                 <h2>
-                    MORE THAN<br>
-                    JUST A <span>CAR.</span>
+                    WHERE MY<br>
+                    <span>JOURNEY STARTED.</span>
                 </h2>
 
             </div>
@@ -681,27 +787,28 @@
             <div class="overview-copy">
 
                 <p>
-                    My 2009 Mitsubishi Lancer is the main vehicle
-                    behind the L@NC3R project.
+                    This 2009 Mitsubishi Lancer CJ is the main
+                    project behind L@NC3R.
                 </p>
 
                 <p>
-                    Rather than only modifying the car, I'm using it
-                    as a platform to understand how automotive systems
-                    actually work — from diagnostics and electronic
-                    control systems to mechanical components and
-                    performance modifications.
+                    It's powered by Mitsubishi's naturally aspirated
+                    2.0-litre 4B11 four-cylinder MIVEC engine and
+                    paired with a continuously variable transmission.
                 </p>
 
                 <p>
-                    This page documents what I learn, what I change,
-                    problems I encounter and the progress I make.
+                    I'm using the car to learn how automotive systems
+                    work rather than simply fitting parts. That means
+                    understanding diagnostics, ECU communication,
+                    calibration data, maintenance and the effect
+                    modifications have on the vehicle.
                 </p>
 
                 <p>
-                    I'm still a beginner, so this isn't presented as
-                    professional tuning advice. It's a record of my
-                    own learning journey and projects.
+                    L@NC3R documents that process from a beginner's
+                    perspective — including progress, problems,
+                    research and lessons learned along the way.
                 </p>
 
             </div>
@@ -711,23 +818,25 @@
     </section>
 
 
+    <!-- FACTORY SPECS -->
+
     <section class="section" id="specs">
 
         <div class="section-number">
-            02 / VEHICLE
+            02 / FACTORY SPECIFICATIONS
         </div>
 
         <div class="heading-row">
 
             <h2>
-                VEHICLE<br>
+                FACTORY<br>
                 <span>PROFILE.</span>
             </h2>
 
             <p>
-                The basic information for the current L@NC3R
-                project vehicle. More detailed specifications can
-                be added as they're confirmed.
+                Confirmed core specifications for the Australian
+                CJ-series Lancer platform and this 4B11/CVT
+                configuration.
             </p>
 
         </div>
@@ -735,33 +844,63 @@
         <div class="spec-grid">
 
             <div class="spec-card">
-                <span>YEAR</span>
-                <strong>2009</strong>
+                <span>MODEL YEAR</span>
+                <strong>2009 / MY09</strong>
             </div>
 
             <div class="spec-card">
-                <span>MANUFACTURER</span>
-                <strong>Mitsubishi</strong>
+                <span>GENERATION</span>
+                <strong>CJ Lancer</strong>
             </div>
 
             <div class="spec-card">
-                <span>MODEL</span>
-                <strong>Lancer</strong>
+                <span>ENGINE CODE</span>
+                <strong>4B11</strong>
             </div>
 
             <div class="spec-card">
-                <span>ENGINE</span>
-                <strong>MIVEC</strong>
+                <span>CAPACITY</span>
+                <strong>1,998 cc</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>CONFIGURATION</span>
+                <strong>Inline 4</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>VALVETRAIN</span>
+                <strong>DOHC 16V MIVEC</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>INDUCTION</span>
+                <strong>Naturally Aspirated</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>FUEL</span>
+                <strong>Petrol</strong>
             </div>
 
             <div class="spec-card">
                 <span>TRANSMISSION</span>
-                <strong>Automatic</strong>
+                <strong>CVT Automatic</strong>
             </div>
 
             <div class="spec-card">
-                <span>PROJECT STATUS</span>
-                <strong>Active</strong>
+                <span>DRIVETRAIN</span>
+                <strong>Front-Wheel Drive</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>FACTORY POWER</span>
+                <strong>113 kW @ 6,000 rpm</strong>
+            </div>
+
+            <div class="spec-card">
+                <span>FACTORY TORQUE</span>
+                <strong>198 Nm @ 4,250 rpm</strong>
             </div>
 
         </div>
@@ -769,138 +908,52 @@
     </section>
 
 
-    <section class="section dark" id="mods">
+    <!-- POWER -->
+
+    <section class="section dark">
 
         <div class="section-number">
-            03 / MODIFICATIONS
+            03 / FACTORY OUTPUT
         </div>
 
         <div class="heading-row">
 
             <h2>
-                BUILD<br>
-                <span>SETUP.</span>
+                STOCK<br>
+                <span>BASELINE.</span>
             </h2>
 
             <p>
-                This will become the full record of installed
-                modifications and changes made to the Lancer.
+                Factory-rated Australian 2.0-litre 4B11 output.
+                Future measured results can be compared against
+                this baseline.
             </p>
 
         </div>
 
-        <div class="mod-grid">
+        <div class="power-panel">
 
-            <div class="mod-card">
+            <div class="power-card">
 
-                <h3><span>01.</span> ENGINE</h3>
+                <span>FACTORY POWER</span>
 
-                <ul class="mod-list">
+                <strong>113 kW</strong>
 
-                    <li>
-                        Current engine setup
-                        <span>STOCK / TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Intake
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Exhaust
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        ECU
-                        <span>RESEARCHING</span>
-                    </li>
-
-                </ul>
+                <small>
+                    @ 6,000 RPM
+                </small>
 
             </div>
 
+            <div class="power-card">
 
-            <div class="mod-card">
+                <span>FACTORY TORQUE</span>
 
-                <h3><span>02.</span> EXTERIOR</h3>
+                <strong>198 Nm</strong>
 
-                <ul class="mod-list">
-
-                    <li>
-                        Wheels
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Body
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Lighting
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Styling
-                        <span>TO UPDATE</span>
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-            <div class="mod-card">
-
-                <h3><span>03.</span> INTERIOR</h3>
-
-                <ul class="mod-list">
-
-                    <li>
-                        Interior setup
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Audio
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Electronics
-                        <span>TO UPDATE</span>
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-            <div class="mod-card">
-
-                <h3><span>04.</span> HANDLING</h3>
-
-                <ul class="mod-list">
-
-                    <li>
-                        Suspension
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Brakes
-                        <span>TO UPDATE</span>
-                    </li>
-
-                    <li>
-                        Tyres
-                        <span>TO UPDATE</span>
-                    </li>
-
-                </ul>
+                <small>
+                    @ 4,250 RPM
+                </small>
 
             </div>
 
@@ -909,41 +962,121 @@
     </section>
 
 
-    <section class="section" id="tuning">
+    <!-- ECU -->
+
+    <section class="section" id="ecu">
 
         <div class="section-number">
-            04 / TUNING & DIAGNOSTICS
+            04 / ENGINE CONTROL
+        </div>
+
+        <div class="heading-row">
+
+            <h2>
+                ECU<br>
+                <span>PROJECT.</span>
+            </h2>
+
+            <p>
+                One of the biggest parts of my L@NC3R journey is
+                understanding the Mitsubishi ECU and learning how
+                factory calibration data works.
+            </p>
+
+        </div>
+
+        <div class="ecu-panel">
+
+            <div class="ecu-header">
+
+                <span>
+                    CURRENT ECU IDENTIFICATION
+                </span>
+
+                <h3>
+                    MITSUBISHI SM5220
+                </h3>
+
+            </div>
+
+            <div class="ecu-grid">
+
+                <div class="ecu-item">
+                    <span>ECU MANUFACTURER</span>
+                    <strong>Mitsubishi</strong>
+                </div>
+
+                <div class="ecu-item">
+                    <span>ECU FAMILY</span>
+                    <strong>E6T72xxx</strong>
+                </div>
+
+                <div class="ecu-item">
+                    <span>ECU / UPGRADE ID</span>
+                    <strong>SM5220</strong>
+                </div>
+
+                <div class="ecu-item">
+                    <span>HARDWARE NUMBER</span>
+                    <strong>1860A913</strong>
+                </div>
+
+                <div class="ecu-item">
+                    <span>SOFTWARE NUMBER</span>
+                    <strong>1860A91303</strong>
+                </div>
+
+                <div class="ecu-item">
+                    <span>CALIBRATION ID</span>
+                    <strong>52200013</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ECU LEARNING -->
+
+    <section class="section dark">
+
+        <div class="section-number">
+            05 / TUNING JOURNEY
         </div>
 
         <div class="heading-row">
 
             <h2>
                 LEARNING<br>
-                <span>THE ECU.</span>
+                <span>TO TUNE.</span>
             </h2>
 
             <p>
-                Documenting the process of learning vehicle
-                diagnostics, ECU communication and calibration
-                fundamentals.
+                I'm starting with understanding the factory
+                calibration and vehicle behaviour before making
+                performance changes.
             </p>
 
         </div>
 
-        <div class="tuning-grid">
+        <div class="learning-grid">
 
-            <div class="tuning-card">
+            <div class="learning-card">
 
                 <div class="card-number">
                     01 / DIAGNOSTICS
                 </div>
 
-                <h3>OBD Diagnostics</h3>
+                <h3>
+                    OBD Diagnostics
+                </h3>
 
                 <p>
-                    Learning to read vehicle information,
-                    understand diagnostic trouble codes and
-                    investigate faults correctly.
+                    Learning how to communicate with vehicle
+                    modules, read diagnostic information and
+                    investigate faults systematically.
                 </p>
 
                 <div class="status">
@@ -953,18 +1086,20 @@
             </div>
 
 
-            <div class="tuning-card">
+            <div class="learning-card">
 
                 <div class="card-number">
-                    02 / ECU
+                    02 / ECU READING
                 </div>
 
-                <h3>ECU Communication</h3>
+                <h3>
+                    ECU Data
+                </h3>
 
                 <p>
-                    Learning about ECU interfaces, vehicle
-                    communication protocols and safe methods of
-                    reading vehicle data.
+                    Working with ECU readouts and learning how
+                    software, calibration and definition data
+                    relate to the physical ECU.
                 </p>
 
                 <div class="status">
@@ -974,22 +1109,94 @@
             </div>
 
 
-            <div class="tuning-card">
+            <div class="learning-card">
 
                 <div class="card-number">
-                    03 / CALIBRATION
+                    03 / DEFINITIONS
                 </div>
 
-                <h3>Calibration Research</h3>
+                <h3>
+                    Calibration Definitions
+                </h3>
 
                 <p>
-                    Learning how ECU calibration tables are
-                    structured and what different engine
-                    management parameters control.
+                    Learning how ECU maps and tables are located,
+                    defined and interpreted before any calibration
+                    changes are considered.
+                </p>
+
+                <div class="status">
+                    ● IN PROGRESS
+                </div>
+
+            </div>
+
+
+            <div class="learning-card">
+
+                <div class="card-number">
+                    04 / LOGGING
+                </div>
+
+                <h3>
+                    Data Logging
+                </h3>
+
+                <p>
+                    Building an understanding of the engine data
+                    that needs to be monitored when evaluating
+                    vehicle behaviour and future calibration work.
+                </p>
+
+                <div class="status">
+                    ● LEARNING
+                </div>
+
+            </div>
+
+
+            <div class="learning-card">
+
+                <div class="card-number">
+                    05 / CALIBRATION
+                </div>
+
+                <h3>
+                    ECU Calibration
+                </h3>
+
+                <p>
+                    Studying fuel, ignition, airflow and other
+                    engine-management concepts before moving
+                    toward controlled calibration work.
                 </p>
 
                 <div class="status">
                     ● RESEARCHING
+                </div>
+
+            </div>
+
+
+            <div class="learning-card">
+
+                <div class="card-number">
+                    06 / VALIDATION
+                </div>
+
+                <h3>
+                    Testing & Validation
+                </h3>
+
+                <p>
+                    Learning why changes need to be logged,
+                    compared and validated rather than simply
+                    flashing a modified calibration and hoping
+                    for the best.
+                </p>
+
+                <div class="status">
+                    ● FUTURE STAGE
                 </div>
 
             </div>
@@ -999,10 +1206,174 @@
     </section>
 
 
+    <!-- MODS -->
+
+    <section class="section" id="mods">
+
+        <div class="section-number">
+            06 / BUILD SETUP
+        </div>
+
+        <div class="heading-row">
+
+            <h2>
+                MODS &<br>
+                <span>UPGRADES.</span>
+            </h2>
+
+            <p>
+                This section will become the permanent record of
+                modifications installed on the Lancer. Unknown
+                items are intentionally left unclaimed until
+                they're confirmed.
+            </p>
+
+        </div>
+
+        <div class="mod-grid">
+
+            <div class="mod-card">
+
+                <h3>
+                    <span>01.</span> ENGINE
+                </h3>
+
+                <ul class="mod-list">
+
+                    <li>
+                        Engine
+                        <span>4B11 2.0L</span>
+                    </li>
+
+                    <li>
+                        Aspiration
+                        <span>NATURALLY ASPIRATED</span>
+                    </li>
+
+                    <li>
+                        Intake
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Exhaust
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="mod-card">
+
+                <h3>
+                    <span>02.</span> ECU / ELECTRONICS
+                </h3>
+
+                <ul class="mod-list">
+
+                    <li>
+                        ECU
+                        <span>SM5220</span>
+                    </li>
+
+                    <li>
+                        Calibration
+                        <span>52200013</span>
+                    </li>
+
+                    <li>
+                        Tuning
+                        <span>LEARNING / RESEARCH</span>
+                    </li>
+
+                    <li>
+                        Diagnostics
+                        <span>ACTIVE PROJECT</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="mod-card">
+
+                <h3>
+                    <span>03.</span> CHASSIS
+                </h3>
+
+                <ul class="mod-list">
+
+                    <li>
+                        Suspension
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Wheels
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Tyres
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Brakes
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="mod-card">
+
+                <h3>
+                    <span>04.</span> STYLE
+                </h3>
+
+                <ul class="mod-list">
+
+                    <li>
+                        Exterior
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Interior
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Lighting
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                    <li>
+                        Audio
+                        <span>TO DOCUMENT</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- BUILD LOG -->
+
     <section class="section dark" id="log">
 
         <div class="section-number">
-            05 / BUILD LOG
+            07 / BUILD LOG
         </div>
 
         <div class="heading-row">
@@ -1013,8 +1384,8 @@
             </h2>
 
             <p>
-                A timeline of maintenance, modifications,
-                diagnostics, tuning research and major milestones.
+                This timeline will grow as work is completed,
+                problems are diagnosed and modifications are made.
             </p>
 
         </div>
@@ -1029,12 +1400,14 @@
 
                 <div class="timeline-content">
 
-                    <h3>L@NC3R Project Begins</h3>
+                    <h3>
+                        L@NC3R Begins
+                    </h3>
 
                     <p>
-                        Started documenting the Lancer as my main
-                        platform for learning automotive tuning,
-                        diagnostics and modifications.
+                        Started using the 2009 Lancer as my main
+                        platform for learning automotive diagnostics,
+                        modification and tuning.
                     </p>
 
                 </div>
@@ -1050,12 +1423,13 @@
 
                 <div class="timeline-content">
 
-                    <h3>Learning Vehicle Diagnostics</h3>
+                    <h3>
+                        OBD & ECU Communication
+                    </h3>
 
                     <p>
-                        Began working with automotive diagnostic
-                        equipment and learning how the vehicle
-                        communicates with scan and tuning tools.
+                        Began learning how diagnostic and ECU
+                        interfaces communicate with the vehicle.
                     </p>
 
                 </div>
@@ -1066,17 +1440,42 @@
             <div class="timeline-item">
 
                 <div class="timeline-date">
-                    ECU RESEARCH
+                    ECU IDENTIFIED
                 </div>
 
                 <div class="timeline-content">
 
-                    <h3>ECU Tuning Research</h3>
+                    <h3>
+                        SM5220 ECU Identified
+                    </h3>
 
                     <p>
-                        Started learning about ECU data,
-                        calibration definitions and the process
-                        required before making calibration changes.
+                        Identified the ECU hardware/software family
+                        and calibration information used by the
+                        project vehicle.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    CURRENT
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>
+                        Calibration Research
+                    </h3>
+
+                    <p>
+                        Working toward understanding the factory ECU
+                        definition and calibration tables before
+                        attempting future tuning work.
                     </p>
 
                 </div>
@@ -1088,10 +1487,12 @@
     </section>
 
 
-    <section class="section" id="plans">
+    <!-- ROADMAP -->
+
+    <section class="section">
 
         <div class="section-number">
-            06 / FUTURE PLANS
+            08 / ROADMAP
         </div>
 
         <div class="heading-row">
@@ -1102,68 +1503,80 @@
             </h2>
 
             <p>
-                These will change as I learn more about the car
-                and decide where I want to take the build.
+                The project will evolve as my knowledge and
+                experience with the Lancer increase.
             </p>
 
         </div>
 
-        <div class="plans-grid">
+        <div class="roadmap-grid">
 
-            <div class="plan">
+            <div class="roadmap-item">
 
-                <div class="plan-number">01</div>
+                <div class="roadmap-number">
+                    01
+                </div>
 
                 <div>
-                    <h3>COMPLETE VEHICLE BASELINE</h3>
+                    <h3>DOCUMENT CURRENT SETUP</h3>
+
                     <p>
-                        Document the car's current mechanical and
-                        electronic setup.
+                        Record the Lancer's complete current
+                        mechanical and modification setup.
                     </p>
                 </div>
 
             </div>
 
 
-            <div class="plan">
+            <div class="roadmap-item">
 
-                <div class="plan-number">02</div>
+                <div class="roadmap-number">
+                    02
+                </div>
 
                 <div>
-                    <h3>EXPAND DIAGNOSTIC KNOWLEDGE</h3>
+                    <h3>COMPLETE ECU DEFINITION RESEARCH</h3>
+
                     <p>
-                        Continue learning diagnostic procedures
-                        and vehicle data analysis.
+                        Continue identifying and understanding
+                        calibration data for the ECU.
                     </p>
                 </div>
 
             </div>
 
 
-            <div class="plan">
+            <div class="roadmap-item">
 
-                <div class="plan-number">03</div>
+                <div class="roadmap-number">
+                    03
+                </div>
 
                 <div>
-                    <h3>LEARN ECU CALIBRATION</h3>
+                    <h3>BUILD LOGGING KNOWLEDGE</h3>
+
                     <p>
-                        Develop a better understanding of
-                        calibration maps and safe tuning practices.
+                        Learn which engine parameters should be
+                        monitored and how to interpret them.
                     </p>
                 </div>
 
             </div>
 
 
-            <div class="plan">
+            <div class="roadmap-item">
 
-                <div class="plan-number">04</div>
+                <div class="roadmap-number">
+                    04
+                </div>
 
                 <div>
-                    <h3>CONTINUE THE BUILD</h3>
+                    <h3>FUTURE MODIFICATIONS</h3>
+
                     <p>
-                        Add future modifications and document the
-                        results as the project develops.
+                        Plan modifications around what I learn
+                        rather than changing parts without a goal.
                     </p>
                 </div>
 
@@ -1174,22 +1587,25 @@
     </section>
 
 
+    <!-- DISCLAIMER -->
+
     <section class="section dark">
 
         <div class="section-number">
-            07 / NOTE
+            09 / PROJECT NOTE
         </div>
 
         <div class="notice">
 
-            <strong>LEARNING PROJECT</strong>
+            <strong>
+                BEGINNER AUTOMOTIVE PROJECT
+            </strong>
 
             <p>
                 L@NC3R documents my personal automotive learning
-                journey. Information on this website reflects my
-                own projects and experience as a beginner and
-                shouldn't be treated as professional mechanical
-                or tuning advice.
+                journey. The information here records my own car,
+                research and projects and isn't intended to be
+                professional mechanical or tuning advice.
             </p>
 
         </div>
@@ -1197,7 +1613,7 @@
         <div class="buttons">
 
             <a href="index.html" class="btn primary">
-                ← BACK TO L@NC3R
+                ← BACK TO PORTFOLIO
             </a>
 
             <a href="#top" class="btn secondary">
@@ -1212,11 +1628,11 @@
     <footer>
 
         <div>
-            L@NC3R / 2009 MITSUBISHI LANCER
+            L@NC3R / PROJECT 001
         </div>
 
         <div>
-            AUTOMOTIVE PROJECT • AUSTRALIA
+            2009 MITSUBISHI LANCER CJ • AUSTRALIA
         </div>
 
     </footer>
