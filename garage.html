@@ -4206,7 +4206,7 @@ async function sendGarageNotificationIfNeeded(force = false) {
 
 async function loadDiagnosticScans() {
     const { data, error } =
-        await supabaseClient
+        await db
             .from("diagnostic_scans")
             .select("*")
             .eq("vehicle_key", "lancer-2009")
@@ -4561,7 +4561,7 @@ async function saveDiagnosticScan(event) {
     button.textContent = "SAVING…";
 
     const { error } =
-        await supabaseClient
+        await db
             .from("diagnostic_scans")
             .insert({
                 vehicle_key: "lancer-2009",
