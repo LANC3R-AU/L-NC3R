@@ -965,6 +965,50 @@
 
 
 
+
+        .registry-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .registry-card {
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .registry-card:active {
+            transform: scale(.99);
+        }
+
+        .registry-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: .92rem;
+        }
+
+        .registry-card p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: .72rem;
+            line-height: 1.45;
+        }
+
+        .registry-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .registry-summary .stat {
+            margin: 0;
+        }
+
         .timeline-list {
             position: relative;
             display: grid;
@@ -2470,6 +2514,182 @@
     </section>
 
 
+    <!-- PARTS & FLUIDS REGISTRY -->
+
+    <section class="screen" id="parts-screen">
+        <button class="back" type="button" onclick="garageNav('more')">
+            ← MORE
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">VEHICLE REFERENCE</div>
+            <h2>
+                PARTS &amp;<br>
+                <span>FLUIDS.</span>
+            </h2>
+            <p>
+                Store verified parts, fluids, specifications and quantities for the Lancer. Unknown information stays unverified until confirmed.
+            </p>
+        </div>
+
+        <div class="registry-summary">
+            <div class="stat">
+                <strong id="registry-total">0</strong>
+                <span>ITEMS</span>
+            </div>
+            <div class="stat">
+                <strong id="registry-verified">0</strong>
+                <span>VERIFIED</span>
+            </div>
+            <div class="stat">
+                <strong id="registry-unverified">0</strong>
+                <span>UNVERIFIED</span>
+            </div>
+        </div>
+
+        <button class="button" type="button" onclick="openRegistryEditor()">
+            ADD PART / FLUID
+        </button>
+
+        <div class="subheading">VEHICLE REGISTRY</div>
+        <div class="registry-list" id="registry-list">
+            <div class="empty-state">Loading parts and fluids…</div>
+        </div>
+    </section>
+
+
+    <!-- PART / FLUID EDITOR -->
+
+    <section class="screen" id="registry-editor-screen">
+        <button class="back" type="button" onclick="openPartsRegistry()">
+            ← PARTS &amp; FLUIDS
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">VEHICLE REFERENCE</div>
+            <h2 id="registry-editor-title">
+                ADD<br>
+                <span>ITEM.</span>
+            </h2>
+            <p>
+                Record only specifications or part information you have actually verified.
+            </p>
+        </div>
+
+        <div class="message" id="registry-message"></div>
+
+        <form id="registry-form">
+            <input id="registry-id" type="hidden">
+
+            <div class="field">
+                <label for="registry-type">TYPE</label>
+                <select id="registry-type" required>
+                    <option value="">Select type</option>
+                    <option value="PART">PART</option>
+                    <option value="FLUID">FLUID</option>
+                    <option value="CONSUMABLE">CONSUMABLE</option>
+                    <option value="SPECIFICATION">SPECIFICATION</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="registry-category">CATEGORY</label>
+                <select id="registry-category" required>
+                    <option value="">Select category</option>
+                    <option value="Engine">Engine</option>
+                    <option value="CVT">CVT / Transmission</option>
+                    <option value="Cooling">Cooling</option>
+                    <option value="Ignition">Ignition</option>
+                    <option value="Filters">Filters</option>
+                    <option value="Fluids">Fluids</option>
+                    <option value="Brakes">Brakes</option>
+                    <option value="Tyres">Tyres</option>
+                    <option value="Suspension">Suspension</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="registry-name">ITEM NAME</label>
+                <input
+                    id="registry-name"
+                    type="text"
+                    placeholder="e.g. Engine oil filter"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label for="registry-specification">SPECIFICATION</label>
+                <input
+                    id="registry-specification"
+                    type="text"
+                    placeholder="Leave blank until verified"
+                >
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="registry-brand">BRAND</label>
+                    <input id="registry-brand" type="text" placeholder="Optional">
+                </div>
+
+                <div class="field">
+                    <label for="registry-part-number">PART NUMBER</label>
+                    <input id="registry-part-number" type="text" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="registry-quantity">QUANTITY / CAPACITY</label>
+                    <input id="registry-quantity" type="text" placeholder="Optional">
+                </div>
+
+                <div class="field">
+                    <label for="registry-status">VERIFICATION</label>
+                    <select id="registry-status" required>
+                        <option value="UNVERIFIED">UNVERIFIED</option>
+                        <option value="VERIFIED">VERIFIED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="registry-source">VERIFICATION SOURCE</label>
+                <input
+                    id="registry-source"
+                    type="text"
+                    placeholder="e.g. owner manual, part packaging, workshop manual"
+                >
+            </div>
+
+            <div class="field">
+                <label for="registry-notes">NOTES</label>
+                <textarea
+                    id="registry-notes"
+                    placeholder="Optional notes."
+                ></textarea>
+            </div>
+
+            <button class="button" id="save-registry-item" type="submit">
+                SAVE ITEM
+            </button>
+
+            <button
+                class="button secondary hidden"
+                id="delete-registry-item"
+                type="button"
+                onclick="deleteRegistryItem()"
+                style="margin-top:10px"
+            >
+                DELETE ITEM
+            </button>
+        </form>
+    </section>
+
+
     <!-- VEHICLE TIMELINE -->
 
     <section class="screen" id="timeline-screen">
@@ -2823,6 +3043,23 @@
             <button
                 class="more-card"
                 type="button"
+                onclick="openPartsRegistry()"
+            >
+                <div>
+                    <span class="more-card-title">
+                        Parts &amp; Fluids
+                    </span>
+                    <span class="more-card-description">
+                        Store verified vehicle parts, fluids, specifications and quantities.
+                    </span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
                 onclick="openNotifications()"
             >
                 <div>
@@ -2976,7 +3213,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • VEHICLE TIMELINE v1
+            L@NC3R GARAGE • PARTS & FLUIDS v1
         </div>
 
     </section>
@@ -3079,6 +3316,7 @@ let diagnosticScans = [];
 let diagnosticDTCs = [];
 let vehicleTimeline = [];
 let timelineFilter = "ALL";
+let partsRegistry = [];
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -4364,6 +4602,262 @@ async function sendGarageNotificationIfNeeded(force = false) {
             error
         );
     }
+}
+
+
+async function loadPartsRegistry() {
+    const { data, error } =
+        await db
+            .from("parts_registry")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("category", { ascending: true })
+            .order("item_name", { ascending: true });
+
+    if (error) {
+        console.error("Parts registry load failed:", error);
+        partsRegistry = [];
+        renderPartsRegistry();
+
+        const list = document.getElementById("registry-list");
+        if (list) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    Parts &amp; Fluids database is not ready yet.
+                </div>
+            `;
+        }
+        return;
+    }
+
+    partsRegistry = data || [];
+    renderPartsRegistry();
+}
+
+
+function openPartsRegistry() {
+    showScreen("parts-screen");
+    loadPartsRegistry();
+}
+
+
+function renderPartsRegistry() {
+    const list = document.getElementById("registry-list");
+    const total = document.getElementById("registry-total");
+    const verified = document.getElementById("registry-verified");
+    const unverified = document.getElementById("registry-unverified");
+
+    const verifiedCount =
+        partsRegistry.filter(
+            item => item.verification_status === "VERIFIED"
+        ).length;
+
+    if (total) total.textContent = String(partsRegistry.length);
+    if (verified) verified.textContent = String(verifiedCount);
+    if (unverified) {
+        unverified.textContent =
+            String(partsRegistry.length - verifiedCount);
+    }
+
+    if (!list) return;
+
+    if (!partsRegistry.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No parts or fluids have been recorded yet.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML =
+        partsRegistry.map(item => {
+            const statusClass =
+                item.verification_status === "VERIFIED"
+                    ? "green"
+                    : "yellow";
+
+            const detail = [
+                item.specification,
+                item.brand,
+                item.part_number
+            ].filter(Boolean).join(" • ");
+
+            return `
+                <button
+                    class="registry-card"
+                    type="button"
+                    onclick="openRegistryEditor(${Number(item.id)})"
+                >
+                    <strong>${escapeHTML(item.item_name || "Unnamed item")}</strong>
+                    <div class="maintenance-meta">
+                        <span class="tag">${escapeHTML(item.item_type || "ITEM")}</span>
+                        <span class="tag">${escapeHTML(item.category || "Other")}</span>
+                        <span class="tag ${statusClass}">
+                            ${escapeHTML(item.verification_status || "UNVERIFIED")}
+                        </span>
+                    </div>
+                    <p>${escapeHTML(detail || "Specification not yet verified.")}</p>
+                </button>
+            `;
+        }).join("");
+}
+
+
+function openRegistryEditor(id = null) {
+    const form = document.getElementById("registry-form");
+    form.reset();
+
+    document.getElementById("registry-id").value = "";
+    document.getElementById("registry-status").value = "UNVERIFIED";
+    document.getElementById("registry-editor-title").innerHTML =
+        'ADD<br><span>ITEM.</span>';
+
+    const deleteButton =
+        document.getElementById("delete-registry-item");
+
+    deleteButton.classList.add("hidden");
+
+    if (id !== null) {
+        const item =
+            partsRegistry.find(
+                row => Number(row.id) === Number(id)
+            );
+
+        if (item) {
+            document.getElementById("registry-id").value = item.id;
+            document.getElementById("registry-type").value = item.item_type || "";
+            document.getElementById("registry-category").value = item.category || "";
+            document.getElementById("registry-name").value = item.item_name || "";
+            document.getElementById("registry-specification").value = item.specification || "";
+            document.getElementById("registry-brand").value = item.brand || "";
+            document.getElementById("registry-part-number").value = item.part_number || "";
+            document.getElementById("registry-quantity").value = item.quantity || "";
+            document.getElementById("registry-status").value = item.verification_status || "UNVERIFIED";
+            document.getElementById("registry-source").value = item.verification_source || "";
+            document.getElementById("registry-notes").value = item.notes || "";
+
+            document.getElementById("registry-editor-title").innerHTML =
+                'EDIT<br><span>ITEM.</span>';
+
+            deleteButton.classList.remove("hidden");
+        }
+    }
+
+    showScreen("registry-editor-screen");
+}
+
+
+async function saveRegistryItem(event) {
+    event.preventDefault();
+
+    const id =
+        document.getElementById("registry-id").value;
+
+    const payload = {
+        vehicle_key: "lancer-2009",
+        item_type:
+            document.getElementById("registry-type").value,
+        category:
+            document.getElementById("registry-category").value,
+        item_name:
+            document.getElementById("registry-name").value.trim(),
+        specification:
+            document.getElementById("registry-specification").value.trim() || null,
+        brand:
+            document.getElementById("registry-brand").value.trim() || null,
+        part_number:
+            document.getElementById("registry-part-number").value.trim() || null,
+        quantity:
+            document.getElementById("registry-quantity").value.trim() || null,
+        verification_status:
+            document.getElementById("registry-status").value,
+        verification_source:
+            document.getElementById("registry-source").value.trim() || null,
+        notes:
+            document.getElementById("registry-notes").value.trim() || null
+    };
+
+    if (
+        payload.verification_status === "VERIFIED" &&
+        !payload.verification_source
+    ) {
+        showMessage(
+            "registry-message",
+            "Add the source used to verify this item before marking it VERIFIED.",
+            "error"
+        );
+        return;
+    }
+
+    const button =
+        document.getElementById("save-registry-item");
+
+    button.disabled = true;
+    button.textContent = "SAVING…";
+
+    let result;
+
+    if (id) {
+        result =
+            await db
+                .from("parts_registry")
+                .update(payload)
+                .eq("id", id)
+                .eq("vehicle_key", "lancer-2009");
+    } else {
+        result =
+            await db
+                .from("parts_registry")
+                .insert(payload);
+    }
+
+    button.disabled = false;
+    button.textContent = "SAVE ITEM";
+
+    if (result.error) {
+        console.error(result.error);
+        showMessage(
+            "registry-message",
+            result.error.message || "Unable to save item.",
+            "error"
+        );
+        return;
+    }
+
+    await loadPartsRegistry();
+    openPartsRegistry();
+}
+
+
+async function deleteRegistryItem() {
+    const id =
+        document.getElementById("registry-id").value;
+
+    if (!id) return;
+
+    if (!confirm("Delete this parts / fluids registry item?")) {
+        return;
+    }
+
+    const { error } =
+        await db
+            .from("parts_registry")
+            .delete()
+            .eq("id", id)
+            .eq("vehicle_key", "lancer-2009");
+
+    if (error) {
+        showMessage(
+            "registry-message",
+            error.message || "Unable to delete item.",
+            "error"
+        );
+        return;
+    }
+
+    await loadPartsRegistry();
+    openPartsRegistry();
 }
 
 
@@ -6392,6 +6886,18 @@ if (diagnosticDtcInput) {
                 addDiagnosticDTC();
             }
         }
+    );
+}
+
+
+
+const registryForm =
+    document.getElementById("registry-form");
+
+if (registryForm) {
+    registryForm.addEventListener(
+        "submit",
+        saveRegistryItem
     );
 }
 
