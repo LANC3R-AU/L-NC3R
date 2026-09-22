@@ -1,4 +1,4 @@
-const CACHE_NAME = "lanc3r-garage-v3";
+const CACHE_NAME = "lanc3r-garage-v5";
 
 const APP_SHELL = [
     "/L-NC3R/garage.html",
@@ -40,7 +40,6 @@ self.addEventListener("fetch", event => {
 
     const url = new URL(request.url);
 
-    // Leave Supabase and other external requests alone.
     if (url.origin !== self.location.origin) {
         return;
     }
@@ -58,16 +57,74 @@ self.addEventListener("fetch", event => {
     event.respondWith(staleWhileRevalidate(request));
 });
 
+
+/* =========================
+   NOTIFICATION CLICK
+========================= */
+
+self.addEventListener("notificationclick", event => {
+    event.notification.close();
+
+    const targetUrl =
+        event.notification.data?.url ||
+        "/L-NC3R/garage.html";
+
+    event.waitUntil(
+        clients
+            .matchAll({
+                type: "window",
+                includeUncontrolled: true
+            })
+            .then(windowClients => {
+
+                for (const client of windowClients) {
+                    const clientUrl =
+                        new URL(client.url);
+
+                    if (
+                        clientUrl.pathname.startsWith(
+                            "/L-NC3R/"
+                        )
+                    ) {
+                        return client
+                            .focus()
+                            .then(() =>
+                                client.navigate(targetUrl)
+                            );
+                    }
+                }
+
+                return clients.openWindow(targetUrl);
+            })
+    );
+});
+
+
+/* =========================
+   NETWORK FIRST
+========================= */
+
 async function networkFirst(request) {
     try {
-        const freshRequest = new Request(request, {
-            cache: "no-store"
-        });
+        const freshRequest =
+            new Request(
+                request,
+                {
+                    cache: "no-store"
+                }
+            );
 
-        const response = await fetch(freshRequest);
+        const response =
+            await fetch(freshRequest);
 
-        if (response && response.ok) {
-            const cache = await caches.open(CACHE_NAME);
+        if (
+            response &&
+            response.ok
+        ) {
+            const cache =
+                await caches.open(
+                    CACHE_NAME
+                );
 
             await cache.put(
                 request,
@@ -76,8 +133,11 @@ async function networkFirst(request) {
         }
 
         return response;
+
     } catch (error) {
-        const cached = await caches.match(request);
+
+        const cached =
+            await caches.match(request);
 
         if (cached) {
             return cached;
@@ -87,30 +147,46 @@ async function networkFirst(request) {
     }
 }
 
+
+/* =========================
+   STALE WHILE REVALIDATE
+========================= */
+
 async function staleWhileRevalidate(request) {
-    const cache = await caches.open(CACHE_NAME);
 
-    const cached = await cache.match(request);
+    const cache =
+        await caches.open(
+            CACHE_NAME
+        );
 
-    const networkPromise = fetch(request)
-        .then(async response => {
-            if (response && response.ok) {
-                await cache.put(
-                    request,
-                    response.clone()
-                );
-            }
+    const cached =
+        await cache.match(request);
 
-            return response;
-        })
-        .catch(() => null);
+    const networkPromise =
+        fetch(request)
+            .then(async response => {
+
+                if (
+                    response &&
+                    response.ok
+                ) {
+                    await cache.put(
+                        request,
+                        response.clone()
+                    );
+                }
+
+                return response;
+            })
+            .catch(() => null);
 
     if (cached) {
         networkPromise.catch(() => {});
         return cached;
     }
 
-    const response = await networkPromise;
+    const response =
+        await networkPromise;
 
     if (response) {
         return response;
