@@ -968,6 +968,81 @@
 
 
 
+
+        .document-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .document-summary .stat { margin: 0; }
+
+        .document-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .document-card {
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .document-card:active { transform: scale(.99); }
+
+        .document-card.expiring {
+            border-color: rgba(216, 167, 46, .65);
+        }
+
+        .document-card.expired {
+            border-color: rgba(226, 27, 35, .65);
+        }
+
+        .document-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .document-card strong {
+            display: block;
+            margin-top: 8px;
+            font-size: .9rem;
+            line-height: 1.35;
+        }
+
+        .document-card p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: .7rem;
+            line-height: 1.45;
+        }
+
+        .document-expiry {
+            flex: 0 0 auto;
+            font-size: .6rem;
+            font-weight: 900;
+            text-align: right;
+        }
+
+        .document-expiry.expiring { color: var(--yellow); }
+        .document-expiry.expired { color: #ff767b; }
+
+        .document-link {
+            display: block;
+            margin-top: 12px;
+            color: #7eb7ff;
+            font-size: .7rem;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
         .expense-summary {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1161,6 +1236,7 @@
         .timeline-entry.diagnostic::before { background: var(--yellow); }
         .timeline-entry.fuel::before { background: #d7d7d7; }
         .timeline-entry.expense::before { background: #c68cff; }
+        .timeline-entry.document::before { background: #63d7c6; }
 
         .timeline-top {
             display: flex;
@@ -2631,6 +2707,119 @@
     </section>
 
 
+    <!-- DOCUMENTS & VEHICLE RECORDS -->
+
+    <section class="screen" id="documents-screen">
+        <button class="back" type="button" onclick="garageNav('more')">← MORE</button>
+
+        <div class="section-title">
+            <div class="eyebrow">VEHICLE RECORDS</div>
+            <h2>DOCUMENTS<br><span>& RECORDS.</span></h2>
+            <p>Keep a private index of registration, insurance, receipts, invoices, manuals and other vehicle paperwork.</p>
+        </div>
+
+        <div class="document-summary">
+            <div class="stat"><strong id="document-total">0</strong><span>RECORDS</span></div>
+            <div class="stat"><strong id="document-expiring">0</strong><span>EXPIRING</span></div>
+            <div class="stat"><strong id="document-expired">0</strong><span>EXPIRED</span></div>
+        </div>
+
+        <button class="button" type="button" onclick="openDocumentEditor()">ADD DOCUMENT RECORD</button>
+
+        <div class="subheading">DOCUMENT RECORDS</div>
+        <div class="document-list" id="document-list">
+            <div class="empty-state">Loading document records…</div>
+        </div>
+    </section>
+
+    <!-- DOCUMENT EDITOR -->
+
+    <section class="screen" id="document-editor-screen">
+        <button class="back" type="button" onclick="openDocuments()">← DOCUMENTS</button>
+
+        <div class="section-title">
+            <div class="eyebrow">VEHICLE RECORD</div>
+            <h2 id="document-editor-title">ADD<br><span>DOCUMENT.</span></h2>
+            <p>Create a record for real vehicle paperwork. A file link is optional.</p>
+        </div>
+
+        <div class="message" id="document-message"></div>
+
+        <form id="document-form">
+            <input id="document-id" type="hidden">
+
+            <div class="field">
+                <label for="document-type">DOCUMENT TYPE</label>
+                <select id="document-type" required>
+                    <option value="">Select type</option>
+                    <option value="REGISTRATION">REGISTRATION</option>
+                    <option value="INSURANCE">INSURANCE</option>
+                    <option value="RECEIPT">RECEIPT</option>
+                    <option value="INVOICE">INVOICE</option>
+                    <option value="SERVICE_RECORD">SERVICE RECORD</option>
+                    <option value="MANUAL">MANUAL</option>
+                    <option value="INSPECTION">INSPECTION</option>
+                    <option value="PURCHASE_RECORD">PURCHASE RECORD</option>
+                    <option value="WARRANTY">WARRANTY</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="document-title">TITLE</label>
+                <input id="document-title" type="text" placeholder="e.g. Registration renewal" required>
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="document-date">DOCUMENT DATE</label>
+                    <input id="document-date" type="date">
+                </div>
+
+                <div class="field">
+                    <label for="document-expiry-date">EXPIRY DATE</label>
+                    <input id="document-expiry-date" type="date">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="document-reference">REFERENCE NUMBER</label>
+                <input id="document-reference" type="text" placeholder="Optional">
+            </div>
+
+            <div class="field">
+                <label for="document-provider">PROVIDER / ISSUER</label>
+                <input id="document-provider" type="text" placeholder="Optional">
+            </div>
+
+            <div class="field">
+                <label for="document-amount">AMOUNT ($)</label>
+                <input id="document-amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional">
+            </div>
+
+            <div class="field">
+                <label for="document-file-url">DOCUMENT LINK</label>
+                <input id="document-file-url" type="url" inputmode="url" placeholder="https://... (optional)">
+            </div>
+
+            <div class="field">
+                <label for="document-notes">NOTES</label>
+                <textarea id="document-notes" placeholder="Optional notes. Avoid storing passwords or sensitive account credentials."></textarea>
+            </div>
+
+            <button class="button" id="save-document-record" type="submit">SAVE DOCUMENT RECORD</button>
+
+            <button
+                class="button secondary hidden"
+                id="delete-document-record"
+                type="button"
+                onclick="deleteDocumentRecord()"
+                style="margin-top:10px"
+            >DELETE DOCUMENT RECORD</button>
+        </form>
+    </section>
+
+
     <!-- EXPENSES & OWNERSHIP COSTS -->
 
     <section class="screen" id="expenses-screen">
@@ -3090,6 +3279,7 @@
             <button type="button" data-filter="DIAGNOSTIC" onclick="setTimelineFilter('DIAGNOSTIC', this)">DIAGNOSTICS</button>
             <button type="button" data-filter="FUEL" onclick="setTimelineFilter('FUEL', this)">FUEL</button>
             <button type="button" data-filter="EXPENSE" onclick="setTimelineFilter('EXPENSE', this)">EXPENSES</button>
+            <button type="button" data-filter="DOCUMENT" onclick="setTimelineFilter('DOCUMENT', this)">DOCUMENTS</button>
             <button type="button" data-filter="ODOMETER" onclick="setTimelineFilter('ODOMETER', this)">ODOMETER</button>
         </div>
 
@@ -3417,6 +3607,15 @@
 
         <div class="more-menu">
 
+            <button class="more-card" type="button" onclick="openDocuments()">
+                <div>
+                    <span class="more-card-title">Documents & Vehicle Records</span>
+                    <span class="more-card-description">Registration, insurance, receipts, invoices, manuals and other paperwork.</span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+
             <button class="more-card" type="button" onclick="openExpenses()">
                 <div>
                     <span class="more-card-title">Expenses & Ownership Costs</span>
@@ -3616,7 +3815,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • EXPENSES v1
+            L@NC3R GARAGE • DOCUMENTS v1
         </div>
 
     </section>
@@ -3722,6 +3921,7 @@ let timelineFilter = "ALL";
 let partsRegistry = [];
 let fuelRecords = [];
 let expenseRecords = [];
+let documentRecords = [];
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -5010,6 +5210,285 @@ async function sendGarageNotificationIfNeeded(force = false) {
 }
 
 
+async function loadDocumentRecords() {
+    const { data, error } = await db
+        .from("vehicle_documents")
+        .select("*")
+        .eq("vehicle_key", "lancer-2009")
+        .order("document_date", { ascending: false, nullsFirst: false })
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.error("Document load failed:", error);
+        documentRecords = [];
+    } else {
+        documentRecords = data || [];
+    }
+
+    renderDocumentRecords();
+}
+
+function openDocuments() {
+    showScreen("documents-screen");
+    loadDocumentRecords();
+}
+
+function documentExpiryState(expiryDate) {
+    if (!expiryDate) return { state: "NONE", days: null };
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const expiry = new Date(`${expiryDate}T00:00:00`);
+    if (Number.isNaN(expiry.getTime())) {
+        return { state: "NONE", days: null };
+    }
+
+    const days = Math.ceil((expiry - today) / 86400000);
+
+    if (days < 0) return { state: "EXPIRED", days };
+    if (days <= 30) return { state: "EXPIRING", days };
+    return { state: "CURRENT", days };
+}
+
+function renderDocumentRecords() {
+    const list = document.getElementById("document-list");
+
+    let expiring = 0;
+    let expired = 0;
+
+    documentRecords.forEach(row => {
+        const status = documentExpiryState(row.expiry_date);
+        if (status.state === "EXPIRING") expiring += 1;
+        if (status.state === "EXPIRED") expired += 1;
+    });
+
+    document.getElementById("document-total").textContent =
+        String(documentRecords.length);
+    document.getElementById("document-expiring").textContent =
+        String(expiring);
+    document.getElementById("document-expired").textContent =
+        String(expired);
+
+    if (!list) return;
+
+    if (!documentRecords.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No document records have been added yet.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = documentRecords.map(row => {
+        const expiry = documentExpiryState(row.expiry_date);
+        const cardClass =
+            expiry.state === "EXPIRED"
+                ? " expired"
+                : expiry.state === "EXPIRING"
+                    ? " expiring"
+                    : "";
+
+        let expiryLabel = "";
+
+        if (expiry.state === "EXPIRED") {
+            expiryLabel = `<span class="document-expiry expired">EXPIRED</span>`;
+        } else if (expiry.state === "EXPIRING") {
+            expiryLabel = `<span class="document-expiry expiring">${expiry.days === 0 ? "EXPIRES TODAY" : `${expiry.days} DAYS`}</span>`;
+        }
+
+        const metadata = [
+            row.document_date ? formatDate(row.document_date) : null,
+            row.provider || null,
+            row.reference_number ? `REF ${row.reference_number}` : null,
+            row.amount !== null && row.amount !== undefined
+                ? `$${Number(row.amount).toFixed(2)}`
+                : null
+        ].filter(Boolean).join(" • ");
+
+        return `
+            <button
+                class="document-card${cardClass}"
+                type="button"
+                onclick="openDocumentEditor(${Number(row.id)})"
+            >
+                <div class="document-card-top">
+                    <div>
+                        <span class="tag">${escapeHTML((row.document_type || "OTHER").replaceAll("_", " "))}</span>
+                        <strong>${escapeHTML(row.title || "Document")}</strong>
+                    </div>
+                    ${expiryLabel}
+                </div>
+                <p>${escapeHTML(metadata || "No additional details")}</p>
+                ${row.expiry_date ? `<p>Expiry: ${escapeHTML(formatDate(row.expiry_date))}</p>` : ""}
+                ${row.file_url ? `<span class="document-link">DOCUMENT LINK SAVED</span>` : ""}
+            </button>
+        `;
+    }).join("");
+}
+
+function openDocumentEditor(id = null) {
+    const form = document.getElementById("document-form");
+    form.reset();
+
+    document.getElementById("document-id").value = "";
+    document.getElementById("document-editor-title").innerHTML =
+        'ADD<br><span>DOCUMENT.</span>';
+    document.getElementById("delete-document-record").classList.add("hidden");
+
+    if (id !== null) {
+        const row = documentRecords.find(item => Number(item.id) === Number(id));
+
+        if (row) {
+            document.getElementById("document-id").value = row.id;
+            document.getElementById("document-type").value = row.document_type || "";
+            document.getElementById("document-title").value = row.title || "";
+            document.getElementById("document-date").value = row.document_date || "";
+            document.getElementById("document-expiry-date").value = row.expiry_date || "";
+            document.getElementById("document-reference").value = row.reference_number || "";
+            document.getElementById("document-provider").value = row.provider || "";
+            document.getElementById("document-amount").value = row.amount ?? "";
+            document.getElementById("document-file-url").value = row.file_url || "";
+            document.getElementById("document-notes").value = row.notes || "";
+
+            document.getElementById("document-editor-title").innerHTML =
+                'EDIT<br><span>DOCUMENT.</span>';
+
+            document.getElementById("delete-document-record").classList.remove("hidden");
+        }
+    }
+
+    showScreen("document-editor-screen");
+}
+
+async function saveDocumentRecord(event) {
+    event.preventDefault();
+
+    const id = document.getElementById("document-id").value;
+    const type = document.getElementById("document-type").value;
+    const title = document.getElementById("document-title").value.trim();
+    const amountText = document.getElementById("document-amount").value;
+    const fileUrl = document.getElementById("document-file-url").value.trim();
+
+    if (!type || !title) {
+        showMessage(
+            "document-message",
+            "Choose a document type and enter a title.",
+            "error"
+        );
+        return;
+    }
+
+    if (amountText !== "" && (!Number.isFinite(Number(amountText)) || Number(amountText) < 0)) {
+        showMessage(
+            "document-message",
+            "Enter a valid amount or leave it blank.",
+            "error"
+        );
+        return;
+    }
+
+    if (fileUrl) {
+        try {
+            const parsed = new URL(fileUrl);
+            if (!["https:", "http:"].includes(parsed.protocol)) {
+                throw new Error("Unsupported URL");
+            }
+        } catch {
+            showMessage(
+                "document-message",
+                "Enter a valid http or https document link.",
+                "error"
+            );
+            return;
+        }
+    }
+
+    const payload = {
+        vehicle_key: "lancer-2009",
+        document_type: type,
+        title,
+        document_date: document.getElementById("document-date").value || null,
+        expiry_date: document.getElementById("document-expiry-date").value || null,
+        reference_number: document.getElementById("document-reference").value.trim() || null,
+        provider: document.getElementById("document-provider").value.trim() || null,
+        amount: amountText === "" ? null : Number(amountText),
+        file_url: fileUrl || null,
+        notes: document.getElementById("document-notes").value.trim() || null,
+        updated_at: new Date().toISOString()
+    };
+
+    const button = document.getElementById("save-document-record");
+    button.disabled = true;
+    button.textContent = "SAVING…";
+
+    const result = id
+        ? await db
+            .from("vehicle_documents")
+            .update(payload)
+            .eq("id", id)
+            .eq("vehicle_key", "lancer-2009")
+        : await db
+            .from("vehicle_documents")
+            .insert(payload);
+
+    button.disabled = false;
+    button.textContent = "SAVE DOCUMENT RECORD";
+
+    if (result.error) {
+        console.error(result.error);
+        showMessage(
+            "document-message",
+            result.error.message || "Unable to save document record.",
+            "error"
+        );
+        return;
+    }
+
+    await loadDocumentRecords();
+    openDocuments();
+}
+
+async function deleteDocumentRecord() {
+    const id = document.getElementById("document-id").value;
+    if (!id) return;
+
+    if (!confirm("Delete this document record?")) return;
+
+    const { error } = await db
+        .from("vehicle_documents")
+        .delete()
+        .eq("id", id)
+        .eq("vehicle_key", "lancer-2009");
+
+    if (error) {
+        showMessage(
+            "document-message",
+            error.message || "Unable to delete document record.",
+            "error"
+        );
+        return;
+    }
+
+    await loadDocumentRecords();
+    openDocuments();
+}
+
+function openSavedDocumentLink(id) {
+    const row = documentRecords.find(item => Number(item.id) === Number(id));
+    if (!row?.file_url) return;
+
+    try {
+        const parsed = new URL(row.file_url);
+        if (!["https:", "http:"].includes(parsed.protocol)) return;
+        window.open(parsed.href, "_blank", "noopener,noreferrer");
+    } catch {
+        return;
+    }
+}
+
+
 async function loadExpenseRecords() {
     const [expenseResult, fuelResult] = await Promise.all([
         db
@@ -5899,7 +6378,8 @@ async function loadVehicleTimeline() {
         diagnosticResult,
         odometerResult,
         fuelResult,
-        expenseResult
+        expenseResult,
+        documentResult
     ] = await Promise.all([
         db
             .from("inspection_records")
@@ -5936,7 +6416,13 @@ async function loadVehicleTimeline() {
             .from("vehicle_expenses")
             .select("*")
             .eq("vehicle_key", "lancer-2009")
-            .order("expense_date", { ascending: false })
+            .order("expense_date", { ascending: false }),
+
+        db
+            .from("vehicle_documents")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("document_date", { ascending: false, nullsFirst: false })
     ]);
 
     const errors = [
@@ -5945,7 +6431,8 @@ async function loadVehicleTimeline() {
         diagnosticResult.error,
         odometerResult.error,
         fuelResult.error,
-        expenseResult.error
+        expenseResult.error,
+        documentResult.error
     ].filter(Boolean);
 
     if (errors.length) {
@@ -5958,6 +6445,7 @@ async function loadVehicleTimeline() {
     const odometers = odometerResult.data || [];
     const fuel = fuelResult.data || [];
     const expenses = expenseResult.data || [];
+    const documents = documentResult.data || [];
 
     const events = [];
 
@@ -6000,6 +6488,22 @@ async function loadVehicleTimeline() {
             detail: codes.length
                 ? codes.join(", ")
                 : `CEL ${row.check_engine_light || "UNKNOWN"}`,
+            id: row.id,
+            raw: row
+        });
+    });
+
+    documents.forEach(row => {
+        events.push({
+            type: "DOCUMENT",
+            date: row.document_date || (row.created_at ? String(row.created_at).slice(0, 10) : null),
+            odometer: null,
+            title: row.title || "Vehicle Document",
+            detail: [
+                row.document_type ? row.document_type.replaceAll("_", " ") : null,
+                row.provider || null,
+                row.expiry_date ? `Expires ${formatDate(row.expiry_date)}` : null
+            ].filter(Boolean).join(" • "),
             id: row.id,
             raw: row
         });
@@ -6186,6 +6690,11 @@ function openTimelineEvent(index) {
 
     if (event.type === "SERVICE") {
         window.location.href = "service-history.html";
+        return;
+    }
+
+    if (event.type === "DOCUMENT") {
+        openDocuments();
         return;
     }
 
@@ -8013,6 +8522,14 @@ const expenseForm = document.getElementById("expense-form");
 
 if (expenseForm) {
     expenseForm.addEventListener("submit", saveExpenseRecord);
+}
+
+
+
+const documentForm = document.getElementById("document-form");
+
+if (documentForm) {
+    documentForm.addEventListener("submit", saveDocumentRecord);
 }
 
 </script>
