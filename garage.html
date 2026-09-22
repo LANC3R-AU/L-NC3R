@@ -966,6 +966,63 @@
 
 
 
+
+        .fuel-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .fuel-summary .stat {
+            margin: 0;
+        }
+
+        .fuel-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .fuel-card {
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .fuel-card:active {
+            transform: scale(.99);
+        }
+
+        .fuel-card strong {
+            display: block;
+            font-size: .9rem;
+            line-height: 1.35;
+        }
+
+        .fuel-card p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: .7rem;
+            line-height: 1.45;
+        }
+
+        .fuel-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .fuel-card-top span {
+            color: var(--muted);
+            font-size: .62rem;
+            font-weight: 900;
+        }
+
         .registry-list {
             display: grid;
             gap: 9px;
@@ -1044,6 +1101,7 @@
         .timeline-entry.service::before { background: var(--green); }
         .timeline-entry.odometer::before { background: #7eb7ff; }
         .timeline-entry.diagnostic::before { background: var(--yellow); }
+        .timeline-entry.fuel::before { background: #d7d7d7; }
 
         .timeline-top {
             display: flex;
@@ -2514,6 +2572,148 @@
     </section>
 
 
+    <!-- FUEL TRACKER -->
+
+    <section class="screen" id="fuel-screen">
+        <button class="back" type="button" onclick="garageNav('more')">
+            ← MORE
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">RUNNING COSTS</div>
+            <h2>
+                FUEL<br>
+                <span>TRACKER.</span>
+            </h2>
+            <p>
+                Record real fill-ups and build fuel economy and cost data over time.
+            </p>
+        </div>
+
+        <div class="fuel-summary">
+            <div class="stat">
+                <strong id="fuel-total-fillups">0</strong>
+                <span>FILL-UPS</span>
+            </div>
+            <div class="stat">
+                <strong id="fuel-total-spend">$0.00</strong>
+                <span>FUEL SPEND</span>
+            </div>
+            <div class="stat">
+                <strong id="fuel-latest-economy">—</strong>
+                <span>L/100 KM</span>
+            </div>
+            <div class="stat">
+                <strong id="fuel-average-economy">—</strong>
+                <span>AVG L/100 KM</span>
+            </div>
+        </div>
+
+        <button class="button" type="button" onclick="openFuelEditor()">
+            ADD FILL-UP
+        </button>
+
+        <div class="subheading">FILL-UP HISTORY</div>
+        <div class="fuel-list" id="fuel-list">
+            <div class="empty-state">Loading fuel records…</div>
+        </div>
+    </section>
+
+
+    <!-- FUEL EDITOR -->
+
+    <section class="screen" id="fuel-editor-screen">
+        <button class="back" type="button" onclick="openFuelTracker()">
+            ← FUEL TRACKER
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">FUEL RECORD</div>
+            <h2 id="fuel-editor-title">
+                ADD<br>
+                <span>FILL-UP.</span>
+            </h2>
+            <p>
+                Enter the figures from the pump and your vehicle odometer. Economy is only calculated between qualifying full-tank records.
+            </p>
+        </div>
+
+        <div class="message" id="fuel-message"></div>
+
+        <form id="fuel-form">
+            <input id="fuel-id" type="hidden">
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="fuel-date">DATE</label>
+                    <input id="fuel-date" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="fuel-odometer">ODOMETER (KM)</label>
+                    <input id="fuel-odometer" type="number" min="0" step="1" required>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="fuel-litres">LITRES</label>
+                    <input id="fuel-litres" type="number" min="0.001" step="0.001" inputmode="decimal" required>
+                </div>
+
+                <div class="field">
+                    <label for="fuel-price">PRICE / LITRE ($)</label>
+                    <input id="fuel-price" type="number" min="0" step="0.001" inputmode="decimal">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="fuel-total-cost">TOTAL COST ($)</label>
+                <input id="fuel-total-cost" type="number" min="0" step="0.01" inputmode="decimal" required>
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="fuel-fill-type">FILL TYPE</label>
+                    <select id="fuel-fill-type" required>
+                        <option value="FULL">FULL TANK</option>
+                        <option value="PARTIAL">PARTIAL TANK</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="fuel-type">FUEL TYPE</label>
+                    <input id="fuel-type" type="text" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="fuel-station">STATION</label>
+                <input id="fuel-station" type="text" placeholder="Optional">
+            </div>
+
+            <div class="field">
+                <label for="fuel-notes">NOTES</label>
+                <textarea id="fuel-notes" placeholder="Optional notes."></textarea>
+            </div>
+
+            <button class="button" id="save-fuel-record" type="submit">
+                SAVE FILL-UP
+            </button>
+
+            <button
+                class="button secondary hidden"
+                id="delete-fuel-record"
+                type="button"
+                onclick="deleteFuelRecord()"
+                style="margin-top:10px"
+            >
+                DELETE FILL-UP
+            </button>
+        </form>
+    </section>
+
+
     <!-- PARTS & FLUIDS REGISTRY -->
 
     <section class="screen" id="parts-screen">
@@ -2713,6 +2913,7 @@
             <button type="button" data-filter="INSPECTION" onclick="setTimelineFilter('INSPECTION', this)">INSPECTIONS</button>
             <button type="button" data-filter="SERVICE" onclick="setTimelineFilter('SERVICE', this)">SERVICE</button>
             <button type="button" data-filter="DIAGNOSTIC" onclick="setTimelineFilter('DIAGNOSTIC', this)">DIAGNOSTICS</button>
+            <button type="button" data-filter="FUEL" onclick="setTimelineFilter('FUEL', this)">FUEL</button>
             <button type="button" data-filter="ODOMETER" onclick="setTimelineFilter('ODOMETER', this)">ODOMETER</button>
         </div>
 
@@ -3043,6 +3244,23 @@
             <button
                 class="more-card"
                 type="button"
+                onclick="openFuelTracker()"
+            >
+                <div>
+                    <span class="more-card-title">
+                        Fuel Tracker
+                    </span>
+                    <span class="more-card-description">
+                        Log fill-ups, fuel spend and measured fuel economy.
+                    </span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
                 onclick="openPartsRegistry()"
             >
                 <div>
@@ -3213,7 +3431,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • PARTS & FLUIDS v1
+            L@NC3R GARAGE • FUEL TRACKER v1
         </div>
 
     </section>
@@ -3317,6 +3535,7 @@ let diagnosticDTCs = [];
 let vehicleTimeline = [];
 let timelineFilter = "ALL";
 let partsRegistry = [];
+let fuelRecords = [];
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -4605,6 +4824,374 @@ async function sendGarageNotificationIfNeeded(force = false) {
 }
 
 
+async function loadFuelRecords() {
+    const { data, error } =
+        await db
+            .from("fuel_log")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("odometer", { ascending: false })
+            .order("fill_date", { ascending: false });
+
+    if (error) {
+        console.error("Fuel log load failed:", error);
+        fuelRecords = [];
+        renderFuelRecords();
+
+        const list = document.getElementById("fuel-list");
+        if (list) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    Fuel database is not ready yet.
+                </div>
+            `;
+        }
+        return;
+    }
+
+    fuelRecords = data || [];
+    renderFuelRecords();
+}
+
+
+function openFuelTracker() {
+    showScreen("fuel-screen");
+    loadFuelRecords();
+}
+
+
+function calculateFuelEconomy(records) {
+    const ascending = [...records].sort((a, b) => {
+        const km = Number(a.odometer) - Number(b.odometer);
+        if (km !== 0) return km;
+        return new Date(a.fill_date) - new Date(b.fill_date);
+    });
+
+    const economyById = new Map();
+    let anchor = null;
+    let litresSinceAnchor = 0;
+
+    for (const record of ascending) {
+        const litres = Number(record.litres);
+
+        if (!Number.isFinite(litres) || litres <= 0) {
+            continue;
+        }
+
+        if (!anchor) {
+            if (record.fill_type === "FULL") {
+                anchor = record;
+                litresSinceAnchor = 0;
+            }
+            continue;
+        }
+
+        litresSinceAnchor += litres;
+
+        if (record.fill_type === "FULL") {
+            const distance =
+                Number(record.odometer) - Number(anchor.odometer);
+
+            if (distance > 0) {
+                economyById.set(
+                    Number(record.id),
+                    (litresSinceAnchor / distance) * 100
+                );
+            }
+
+            anchor = record;
+            litresSinceAnchor = 0;
+        }
+    }
+
+    return economyById;
+}
+
+
+function renderFuelRecords() {
+    const list = document.getElementById("fuel-list");
+    const totalFillups =
+        document.getElementById("fuel-total-fillups");
+    const totalSpend =
+        document.getElementById("fuel-total-spend");
+    const latestEconomy =
+        document.getElementById("fuel-latest-economy");
+    const averageEconomy =
+        document.getElementById("fuel-average-economy");
+
+    const economy = calculateFuelEconomy(fuelRecords);
+
+    const spend =
+        fuelRecords.reduce(
+            (sum, row) => sum + (Number(row.total_cost) || 0),
+            0
+        );
+
+    const economyValues =
+        [...economy.values()].filter(Number.isFinite);
+
+    if (totalFillups) {
+        totalFillups.textContent = String(fuelRecords.length);
+    }
+
+    if (totalSpend) {
+        totalSpend.textContent = `$${spend.toFixed(2)}`;
+    }
+
+    if (latestEconomy) {
+        const latestMeasured =
+            fuelRecords.find(row => economy.has(Number(row.id)));
+
+        latestEconomy.textContent =
+            latestMeasured
+                ? economy.get(Number(latestMeasured.id)).toFixed(1)
+                : "—";
+    }
+
+    if (averageEconomy) {
+        averageEconomy.textContent =
+            economyValues.length
+                ? (
+                    economyValues.reduce((a, b) => a + b, 0) /
+                    economyValues.length
+                  ).toFixed(1)
+                : "—";
+    }
+
+    if (!list) return;
+
+    if (!fuelRecords.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No fill-ups recorded yet. Fuel economy will appear after enough real full-tank data is available.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML =
+        fuelRecords.map(row => {
+            const measured =
+                economy.get(Number(row.id));
+
+            const economyText =
+                Number.isFinite(measured)
+                    ? `${measured.toFixed(1)} L/100 km`
+                    : "Economy not available";
+
+            const litres =
+                Number(row.litres);
+
+            const cost =
+                Number(row.total_cost);
+
+            return `
+                <button
+                    class="fuel-card"
+                    type="button"
+                    onclick="openFuelEditor(${Number(row.id)})"
+                >
+                    <div class="fuel-card-top">
+                        <span>${escapeHTML(formatDate(row.fill_date))}</span>
+                        <span>${escapeHTML(formatKM(row.odometer))}</span>
+                    </div>
+                    <strong>
+                        ${Number.isFinite(litres) ? litres.toFixed(2) : "—"} L
+                        •
+                        ${Number.isFinite(cost) ? "$" + cost.toFixed(2) : "—"}
+                    </strong>
+                    <p>
+                        ${escapeHTML(row.fill_type === "FULL" ? "Full tank" : "Partial tank")}
+                        •
+                        ${escapeHTML(economyText)}
+                    </p>
+                </button>
+            `;
+        }).join("");
+}
+
+
+function openFuelEditor(id = null) {
+    const form = document.getElementById("fuel-form");
+    form.reset();
+
+    document.getElementById("fuel-id").value = "";
+    document.getElementById("fuel-date").value = todayLocal();
+    document.getElementById("fuel-fill-type").value = "FULL";
+
+    const currentOdometer =
+        document.getElementById("fuel-odometer");
+
+    if (
+        currentOdometer &&
+        typeof vehicleStatus !== "undefined" &&
+        vehicleStatus &&
+        vehicleStatus.odometer
+    ) {
+        currentOdometer.value = vehicleStatus.odometer;
+    }
+
+    document.getElementById("fuel-editor-title").innerHTML =
+        'ADD<br><span>FILL-UP.</span>';
+
+    const deleteButton =
+        document.getElementById("delete-fuel-record");
+
+    deleteButton.classList.add("hidden");
+
+    if (id !== null) {
+        const row =
+            fuelRecords.find(
+                item => Number(item.id) === Number(id)
+            );
+
+        if (row) {
+            document.getElementById("fuel-id").value = row.id;
+            document.getElementById("fuel-date").value = row.fill_date || "";
+            document.getElementById("fuel-odometer").value = row.odometer ?? "";
+            document.getElementById("fuel-litres").value = row.litres ?? "";
+            document.getElementById("fuel-price").value = row.price_per_litre ?? "";
+            document.getElementById("fuel-total-cost").value = row.total_cost ?? "";
+            document.getElementById("fuel-fill-type").value = row.fill_type || "FULL";
+            document.getElementById("fuel-type").value = row.fuel_type || "";
+            document.getElementById("fuel-station").value = row.station || "";
+            document.getElementById("fuel-notes").value = row.notes || "";
+
+            document.getElementById("fuel-editor-title").innerHTML =
+                'EDIT<br><span>FILL-UP.</span>';
+
+            deleteButton.classList.remove("hidden");
+        }
+    }
+
+    showScreen("fuel-editor-screen");
+}
+
+
+async function saveFuelRecord(event) {
+    event.preventDefault();
+
+    const id =
+        document.getElementById("fuel-id").value;
+
+    const odometer =
+        Number(document.getElementById("fuel-odometer").value);
+
+    const litres =
+        Number(document.getElementById("fuel-litres").value);
+
+    const priceField =
+        document.getElementById("fuel-price").value;
+
+    const cost =
+        Number(document.getElementById("fuel-total-cost").value);
+
+    if (
+        !Number.isFinite(odometer) ||
+        odometer < 0 ||
+        !Number.isFinite(litres) ||
+        litres <= 0 ||
+        !Number.isFinite(cost) ||
+        cost < 0
+    ) {
+        showMessage(
+            "fuel-message",
+            "Check the odometer, litres and total cost.",
+            "error"
+        );
+        return;
+    }
+
+    const payload = {
+        vehicle_key: "lancer-2009",
+        fill_date:
+            document.getElementById("fuel-date").value,
+        odometer,
+        litres,
+        price_per_litre:
+            priceField === "" ? null : Number(priceField),
+        total_cost: cost,
+        fill_type:
+            document.getElementById("fuel-fill-type").value,
+        fuel_type:
+            document.getElementById("fuel-type").value.trim() || null,
+        station:
+            document.getElementById("fuel-station").value.trim() || null,
+        notes:
+            document.getElementById("fuel-notes").value.trim() || null
+    };
+
+    const button =
+        document.getElementById("save-fuel-record");
+
+    button.disabled = true;
+    button.textContent = "SAVING…";
+
+    let result;
+
+    if (id) {
+        result =
+            await db
+                .from("fuel_log")
+                .update(payload)
+                .eq("id", id)
+                .eq("vehicle_key", "lancer-2009");
+    } else {
+        result =
+            await db
+                .from("fuel_log")
+                .insert(payload);
+    }
+
+    button.disabled = false;
+    button.textContent = "SAVE FILL-UP";
+
+    if (result.error) {
+        console.error(result.error);
+        showMessage(
+            "fuel-message",
+            result.error.message || "Unable to save fill-up.",
+            "error"
+        );
+        return;
+    }
+
+    await loadFuelRecords();
+    openFuelTracker();
+}
+
+
+async function deleteFuelRecord() {
+    const id =
+        document.getElementById("fuel-id").value;
+
+    if (!id) return;
+
+    if (!confirm("Delete this fuel record?")) {
+        return;
+    }
+
+    const { error } =
+        await db
+            .from("fuel_log")
+            .delete()
+            .eq("id", id)
+            .eq("vehicle_key", "lancer-2009");
+
+    if (error) {
+        showMessage(
+            "fuel-message",
+            error.message || "Unable to delete fill-up.",
+            "error"
+        );
+        return;
+    }
+
+    await loadFuelRecords();
+    openFuelTracker();
+}
+
+
 async function loadPartsRegistry() {
     const { data, error } =
         await db
@@ -4866,7 +5453,8 @@ async function loadVehicleTimeline() {
         inspectionResult,
         serviceResult,
         diagnosticResult,
-        odometerResult
+        odometerResult,
+        fuelResult
     ] = await Promise.all([
         db
             .from("inspection_records")
@@ -4891,14 +5479,21 @@ async function loadVehicleTimeline() {
             .from("odometer_history")
             .select("*")
             .eq("vehicle_key", "lancer-2009")
-            .order("recorded_at", { ascending: false })
+            .order("recorded_at", { ascending: false }),
+
+        db
+            .from("fuel_log")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("fill_date", { ascending: false })
     ]);
 
     const errors = [
         inspectionResult.error,
         serviceResult.error,
         diagnosticResult.error,
-        odometerResult.error
+        odometerResult.error,
+        fuelResult.error
     ].filter(Boolean);
 
     if (errors.length) {
@@ -4909,6 +5504,7 @@ async function loadVehicleTimeline() {
     const services = serviceResult.data || [];
     const diagnostics = diagnosticResult.data || [];
     const odometers = odometerResult.data || [];
+    const fuel = fuelResult.data || [];
 
     const events = [];
 
@@ -4951,6 +5547,25 @@ async function loadVehicleTimeline() {
             detail: codes.length
                 ? codes.join(", ")
                 : `CEL ${row.check_engine_light || "UNKNOWN"}`,
+            id: row.id,
+            raw: row
+        });
+    });
+
+    fuel.forEach(row => {
+        const litres = Number(row.litres);
+        const cost = Number(row.total_cost);
+
+        events.push({
+            type: "FUEL",
+            date: row.fill_date,
+            odometer: row.odometer,
+            title: "Fuel Fill-up",
+            detail: [
+                Number.isFinite(litres) ? `${litres.toFixed(2)} L` : null,
+                Number.isFinite(cost) ? `$${cost.toFixed(2)}` : null,
+                row.fill_type === "FULL" ? "Full tank" : "Partial tank"
+            ].filter(Boolean).join(" • "),
             id: row.id,
             raw: row
         });
@@ -5102,6 +5717,11 @@ function openTimelineEvent(index) {
 
     if (event.type === "SERVICE") {
         window.location.href = "service-history.html";
+        return;
+    }
+
+    if (event.type === "FUEL") {
+        openFuelTracker();
         return;
     }
 
@@ -6898,6 +7518,18 @@ if (registryForm) {
     registryForm.addEventListener(
         "submit",
         saveRegistryItem
+    );
+}
+
+
+
+const fuelForm =
+    document.getElementById("fuel-form");
+
+if (fuelForm) {
+    fuelForm.addEventListener(
+        "submit",
+        saveFuelRecord
     );
 }
 
