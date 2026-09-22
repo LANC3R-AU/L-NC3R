@@ -964,6 +964,118 @@
         }
 
 
+
+        .timeline-list {
+            position: relative;
+            display: grid;
+            gap: 10px;
+        }
+
+        .timeline-entry {
+            position: relative;
+            width: 100%;
+            padding: 17px 17px 17px 20px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        button.timeline-entry:active {
+            transform: scale(.99);
+        }
+
+        .timeline-entry::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 14px;
+            bottom: 14px;
+            width: 3px;
+            background: var(--red);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .timeline-entry.service::before { background: var(--green); }
+        .timeline-entry.odometer::before { background: #7eb7ff; }
+        .timeline-entry.diagnostic::before { background: var(--yellow); }
+
+        .timeline-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-date {
+            color: var(--muted);
+            font-size: .62rem;
+            font-weight: 900;
+            letter-spacing: .06em;
+        }
+
+        .timeline-km {
+            color: var(--muted);
+            font-size: .62rem;
+            font-weight: 900;
+        }
+
+        .timeline-type {
+            display: inline-block;
+            margin-bottom: 7px;
+            padding: 4px 6px;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: .53rem;
+            font-weight: 900;
+            letter-spacing: .07em;
+        }
+
+        .timeline-entry strong {
+            display: block;
+            font-size: .9rem;
+            line-height: 1.35;
+        }
+
+        .timeline-entry p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: .7rem;
+            line-height: 1.45;
+        }
+
+        .timeline-filter {
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            padding-bottom: 3px;
+            scrollbar-width: none;
+        }
+
+        .timeline-filter::-webkit-scrollbar {
+            display: none;
+        }
+
+        .timeline-filter button {
+            flex: 0 0 auto;
+            padding: 8px 10px;
+            color: var(--muted);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: .58rem;
+            font-weight: 900;
+            letter-spacing: .05em;
+        }
+
+        .timeline-filter button.active {
+            color: white;
+            border-color: var(--red);
+        }
+
         .diagnostic-summary {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -2358,6 +2470,38 @@
     </section>
 
 
+    <!-- VEHICLE TIMELINE -->
+
+    <section class="screen" id="timeline-screen">
+        <button class="back" type="button" onclick="garageNav('history')">
+            ← HISTORY
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">COMPLETE VEHICLE RECORD</div>
+            <h2>
+                VEHICLE<br>
+                <span>TIMELINE.</span>
+            </h2>
+            <p>
+                Odometer readings, inspections, completed services and diagnostic scans in one chronological record.
+            </p>
+        </div>
+
+        <div class="timeline-filter" id="timeline-filter">
+            <button class="active" type="button" data-filter="ALL" onclick="setTimelineFilter('ALL', this)">ALL</button>
+            <button type="button" data-filter="INSPECTION" onclick="setTimelineFilter('INSPECTION', this)">INSPECTIONS</button>
+            <button type="button" data-filter="SERVICE" onclick="setTimelineFilter('SERVICE', this)">SERVICE</button>
+            <button type="button" data-filter="DIAGNOSTIC" onclick="setTimelineFilter('DIAGNOSTIC', this)">DIAGNOSTICS</button>
+            <button type="button" data-filter="ODOMETER" onclick="setTimelineFilter('ODOMETER', this)">ODOMETER</button>
+        </div>
+
+        <div class="timeline-list" id="vehicle-timeline-list">
+            <div class="empty-state">Loading vehicle history…</div>
+        </div>
+    </section>
+
+
     <!-- HISTORY -->
 
     <section
@@ -2377,13 +2521,30 @@
             </h2>
 
             <p>
-                Open your inspection and service records.
+                Review the complete vehicle timeline or open individual record types.
             </p>
 
         </div>
 
 
         <div class="more-menu">
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="openVehicleTimeline()"
+            >
+                <div>
+                    <span class="more-card-title">
+                        Vehicle Timeline
+                    </span>
+                    <span class="more-card-description">
+                        See inspections, services, diagnostics and odometer readings together.
+                    </span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
 
             <button
                 class="more-card"
@@ -2815,7 +2976,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • DIAGNOSTICS v1
+            L@NC3R GARAGE • VEHICLE TIMELINE v1
         </div>
 
     </section>
@@ -2916,6 +3077,8 @@ let currentUser = null;
 let garageAlerts = [];
 let diagnosticScans = [];
 let diagnosticDTCs = [];
+let vehicleTimeline = [];
+let timelineFilter = "ALL";
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -4200,6 +4363,256 @@ async function sendGarageNotificationIfNeeded(force = false) {
             "Garage notification failed:",
             error
         );
+    }
+}
+
+
+async function loadVehicleTimeline() {
+    const [
+        inspectionResult,
+        serviceResult,
+        diagnosticResult,
+        odometerResult
+    ] = await Promise.all([
+        db
+            .from("inspection_records")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("inspection_date", { ascending: false }),
+
+        db
+            .from("service_records")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .eq("status", "COMPLETED")
+            .order("service_date", { ascending: false }),
+
+        db
+            .from("diagnostic_scans")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("scan_date", { ascending: false }),
+
+        db
+            .from("odometer_history")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("recorded_at", { ascending: false })
+    ]);
+
+    const errors = [
+        inspectionResult.error,
+        serviceResult.error,
+        diagnosticResult.error,
+        odometerResult.error
+    ].filter(Boolean);
+
+    if (errors.length) {
+        console.error("Timeline load error:", errors);
+    }
+
+    const inspections = inspectionResult.data || [];
+    const services = serviceResult.data || [];
+    const diagnostics = diagnosticResult.data || [];
+    const odometers = odometerResult.data || [];
+
+    const events = [];
+
+    inspections.forEach(row => {
+        events.push({
+            type: "INSPECTION",
+            date: row.inspection_date,
+            odometer: row.odometer,
+            title: row.inspection_item || row.category || "Vehicle Inspection",
+            detail: row.result
+                ? String(row.result).replaceAll("_", " ")
+                : "Inspection recorded",
+            id: row.id,
+            raw: row
+        });
+    });
+
+    services.forEach(row => {
+        events.push({
+            type: "SERVICE",
+            date: row.service_date,
+            odometer: row.odometer,
+            title: row.service_item || row.category || "Completed Service",
+            detail: row.description || "Completed service recorded",
+            id: row.id,
+            raw: row
+        });
+    });
+
+    diagnostics.forEach(row => {
+        const codes = Array.isArray(row.dtc_codes) ? row.dtc_codes : [];
+
+        events.push({
+            type: "DIAGNOSTIC",
+            date: row.scan_date,
+            odometer: row.odometer,
+            title: codes.length
+                ? `${codes.length} DTC${codes.length === 1 ? "" : "S"} RECORDED`
+                : "No DTCs Recorded",
+            detail: codes.length
+                ? codes.join(", ")
+                : `CEL ${row.check_engine_light || "UNKNOWN"}`,
+            id: row.id,
+            raw: row
+        });
+    });
+
+    odometers.forEach(row => {
+        const eventDate =
+            row.reading_date ||
+            row.recorded_at ||
+            row.created_at;
+
+        events.push({
+            type: "ODOMETER",
+            date: eventDate,
+            odometer:
+                row.odometer ??
+                row.reading ??
+                row.odometer_km ??
+                null,
+            title: "Odometer Reading",
+            detail: row.notes || "Vehicle odometer recorded",
+            id: row.id,
+            raw: row
+        });
+    });
+
+    vehicleTimeline = events.sort((a, b) => {
+        const dateA = new Date(a.date || 0).getTime();
+        const dateB = new Date(b.date || 0).getTime();
+
+        if (dateB !== dateA) {
+            return dateB - dateA;
+        }
+
+        return Number(b.id || 0) - Number(a.id || 0);
+    });
+
+    renderVehicleTimeline();
+}
+
+
+function openVehicleTimeline() {
+    timelineFilter = "ALL";
+
+    document
+        .querySelectorAll("#timeline-filter button")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.filter === "ALL"
+            );
+        });
+
+    showScreen("timeline-screen");
+    loadVehicleTimeline();
+}
+
+
+function setTimelineFilter(filter, button) {
+    timelineFilter = filter;
+
+    document
+        .querySelectorAll("#timeline-filter button")
+        .forEach(item => item.classList.remove("active"));
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    renderVehicleTimeline();
+}
+
+
+function renderVehicleTimeline() {
+    const list =
+        document.getElementById("vehicle-timeline-list");
+
+    if (!list) {
+        return;
+    }
+
+    const events =
+        timelineFilter === "ALL"
+            ? vehicleTimeline
+            : vehicleTimeline.filter(
+                event => event.type === timelineFilter
+            );
+
+    if (!events.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No ${timelineFilter === "ALL" ? "vehicle history" : timelineFilter.toLowerCase() + " records"} recorded yet.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML =
+        events.map((event, index) => {
+            const cssType =
+                event.type.toLowerCase();
+
+            const dateText =
+                event.date
+                    ? formatDate(String(event.date).slice(0, 10))
+                    : "DATE NOT RECORDED";
+
+            const kmText =
+                event.odometer !== null &&
+                event.odometer !== undefined
+                    ? formatKM(event.odometer)
+                    : "KM NOT RECORDED";
+
+            return `
+                <button
+                    class="timeline-entry ${cssType}"
+                    type="button"
+                    onclick="openTimelineEvent(${vehicleTimeline.indexOf(event)})"
+                >
+                    <div class="timeline-top">
+                        <span class="timeline-date">${escapeHTML(dateText)}</span>
+                        <span class="timeline-km">${escapeHTML(kmText)}</span>
+                    </div>
+                    <span class="timeline-type">${escapeHTML(event.type)}</span>
+                    <strong>${escapeHTML(event.title)}</strong>
+                    <p>${escapeHTML(event.detail || "")}</p>
+                </button>
+            `;
+        }).join("");
+}
+
+
+function openTimelineEvent(index) {
+    const event = vehicleTimeline[index];
+
+    if (!event) {
+        return;
+    }
+
+    if (event.type === "DIAGNOSTIC") {
+        openDiagnosticDetail(event.id);
+        return;
+    }
+
+    if (event.type === "INSPECTION") {
+        window.location.href = "inspection-history.html";
+        return;
+    }
+
+    if (event.type === "SERVICE") {
+        window.location.href = "service-history.html";
+        return;
+    }
+
+    if (event.type === "ODOMETER") {
+        showOdometer();
     }
 }
 
