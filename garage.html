@@ -18,10 +18,12 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
     <meta
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
     >
+
     <meta
         name="apple-mobile-web-app-title"
         content="L@NC3R Garage"
@@ -76,8 +78,7 @@
 
         body {
             margin: 0;
-            padding-bottom:
-                calc(88px + env(safe-area-inset-bottom));
+            padding-bottom: calc(88px + env(safe-area-inset-bottom));
 
             background: var(--bg);
             color: var(--text);
@@ -141,7 +142,6 @@
         .topbar-actions {
             display: flex;
             align-items: center;
-
             gap: 8px;
         }
 
@@ -179,11 +179,7 @@
         h1 {
             margin-bottom: 10px;
 
-            font-size: clamp(
-                2.3rem,
-                10vw,
-                4rem
-            );
+            font-size: clamp(2.3rem, 10vw, 4rem);
 
             line-height: .92;
             letter-spacing: -.065em;
@@ -202,7 +198,8 @@
             line-height: 1.55;
         }
 
-        .vehicle-card {
+        .vehicle-card,
+        .panel {
             margin-bottom: 16px;
 
             padding: 22px;
@@ -254,9 +251,7 @@
 
         .stats {
             display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
 
             gap: 8px;
 
@@ -294,14 +289,12 @@
         .menu,
         .more-menu {
             display: grid;
-
             gap: 10px;
         }
 
         .menu-button,
         .more-card {
             width: 100%;
-
             min-height: 78px;
 
             padding: 17px;
@@ -348,19 +341,11 @@
             color: var(--muted);
 
             font-size: .72rem;
-
             line-height: 1.4;
         }
 
-        .menu-button.primary
-        .menu-subtitle {
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .75
-                );
+        .menu-button.primary .menu-subtitle {
+            color: rgba(255, 255, 255, .75);
         }
 
         .arrow {
@@ -407,7 +392,6 @@
 
         .section-title p {
             color: var(--muted);
-
             line-height: 1.5;
         }
 
@@ -446,7 +430,6 @@
 
         textarea {
             min-height: 110px;
-
             resize: vertical;
         }
 
@@ -456,9 +439,15 @@
             border-color: var(--red);
         }
 
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
         .button {
             width: 100%;
-
             min-height: 54px;
 
             padding: 14px;
@@ -472,9 +461,15 @@
             font-weight: 900;
         }
 
+        .button.secondary {
+            color: var(--text);
+            background: var(--panel-2);
+
+            border: 1px solid var(--border);
+        }
+
         .button:disabled {
             opacity: .45;
-
             cursor: not-allowed;
         }
 
@@ -482,13 +477,11 @@
             display: none;
 
             margin-bottom: 15px;
-
             padding: 13px;
 
             border-radius: 10px;
 
             font-size: .78rem;
-
             line-height: 1.45;
         }
 
@@ -499,52 +492,27 @@
         .message.error {
             color: #ff8b8b;
 
-            background:
-                rgba(
-                    226,
-                    27,
-                    35,
-                    .12
-                );
+            background: rgba(226, 27, 35, .12);
 
-            border:
-                1px solid
-                rgba(
-                    226,
-                    27,
-                    35,
-                    .4
-                );
+            border: 1px solid rgba(226, 27, 35, .4);
         }
 
         .message.success {
             color: #7cda95;
 
-            background:
-                rgba(
-                    63,
-                    164,
-                    91,
-                    .12
-                );
+            background: rgba(63, 164, 91, .12);
 
-            border:
-                1px solid
-                rgba(
-                    63,
-                    164,
-                    91,
-                    .4
-                );
+            border: 1px solid rgba(63, 164, 91, .4);
         }
 
-        .maintenance-list {
+        .maintenance-list,
+        .service-list {
             display: grid;
-
             gap: 9px;
         }
 
-        .maintenance-item {
+        .maintenance-item,
+        .service-record {
             width: 100%;
 
             padding: 16px;
@@ -558,13 +526,15 @@
             border-radius: 14px;
         }
 
-        .maintenance-item strong {
+        .maintenance-item strong,
+        .service-record strong {
             display: block;
 
             margin-bottom: 6px;
         }
 
-        .maintenance-meta {
+        .maintenance-meta,
+        .service-meta {
             display: flex;
             flex-wrap: wrap;
 
@@ -590,13 +560,13 @@
         .tag.red {
             color: #ff767b;
 
-            border-color:
-                rgba(
-                    226,
-                    27,
-                    35,
-                    .65
-                );
+            border-color: rgba(226, 27, 35, .65);
+        }
+
+        .tag.green {
+            color: #7cda95;
+
+            border-color: rgba(63, 164, 91, .55);
         }
 
         .inspection-head {
@@ -655,8 +625,7 @@
 
             background: var(--red);
 
-            transition:
-                width .2s ease;
+            transition: width .2s ease;
         }
 
         .checklist {
@@ -682,13 +651,7 @@
         }
 
         .check.complete {
-            border-color:
-                rgba(
-                    63,
-                    164,
-                    91,
-                    .55
-                );
+            border-color: rgba(63, 164, 91, .55);
         }
 
         .check input {
@@ -704,7 +667,6 @@
 
         .check span {
             font-size: .85rem;
-
             line-height: 1.45;
         }
 
@@ -727,7 +689,6 @@
             margin-bottom: 20px;
 
             color: var(--muted);
-
             line-height: 1.5;
         }
 
@@ -748,6 +709,41 @@
             display: none !important;
         }
 
+        .subheading {
+            margin: 30px 0 12px;
+
+            color: white;
+
+            font-size: .75rem;
+            font-weight: 900;
+
+            letter-spacing: .1em;
+        }
+
+        .service-record p {
+            margin: 10px 0 0;
+
+            color: var(--muted);
+
+            font-size: .75rem;
+            line-height: 1.5;
+        }
+
+        .empty-state {
+            padding: 25px;
+
+            text-align: center;
+
+            color: var(--muted);
+            background: var(--panel);
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            font-size: .8rem;
+            line-height: 1.5;
+        }
+
         .app-version {
             margin-top: 30px;
 
@@ -761,9 +757,6 @@
             letter-spacing: .08em;
         }
 
-
-        /* BOTTOM APP NAVIGATION */
-
         .bottom-nav {
             position: fixed;
 
@@ -775,41 +768,22 @@
             width: 100%;
             max-width: 600px;
 
-            transform:
-                translateX(-50%);
+            transform: translateX(-50%);
 
             display: grid;
-
-            grid-template-columns:
-                repeat(5, 1fr);
+            grid-template-columns: repeat(5, 1fr);
 
             padding:
                 8px
                 8px
-                calc(
-                    8px +
-                    env(
-                        safe-area-inset-bottom
-                    )
-                );
+                calc(8px + env(safe-area-inset-bottom));
 
-            background:
-                rgba(
-                    8,
-                    8,
-                    8,
-                    .96
-                );
+            background: rgba(8, 8, 8, .96);
 
-            border-top:
-                1px solid
-                var(--border);
+            border-top: 1px solid var(--border);
 
-            backdrop-filter:
-                blur(18px);
-
-            -webkit-backdrop-filter:
-                blur(18px);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         .nav-item {
@@ -861,13 +835,11 @@
             width: 22px;
             height: 3px;
 
-            transform:
-                translateX(-50%);
+            transform: translateX(-50%);
 
             background: var(--red);
 
-            border-radius:
-                0 0 4px 4px;
+            border-radius: 0 0 4px 4px;
         }
 
         .nav-icon {
@@ -884,13 +856,18 @@
             line-height: 1;
         }
 
-        .nav-item.active
-        .nav-icon {
+        .nav-item.active .nav-icon {
             color: var(--red);
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 430px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
 
+        @media (max-width: 380px) {
             .logo {
                 font-size: 1.2rem;
             }
@@ -914,21 +891,15 @@
         }
 
         @media (min-width: 601px) {
-
             .bottom-nav {
-                border-left:
-                    1px solid var(--border);
+                border-left: 1px solid var(--border);
+                border-right: 1px solid var(--border);
 
-                border-right:
-                    1px solid var(--border);
-
-                border-radius:
-                    18px 18px 0 0;
+                border-radius: 18px 18px 0 0;
             }
         }
     </style>
 </head>
-
 
 <body>
 
@@ -984,9 +955,7 @@
 
         <div class="login-card">
 
-            <h2>
-                Sign In
-            </h2>
+            <h2>Sign In</h2>
 
             <p>
                 This app writes directly to the L@NC3R vehicle database.
@@ -1043,7 +1012,7 @@
     </section>
 
 
-    <!-- GARAGE HOME -->
+    <!-- GARAGE -->
 
     <section
         class="screen"
@@ -1090,47 +1059,24 @@
 
         </div>
 
-
         <div class="stats">
 
             <div class="stat">
-
-                <strong id="home-inspected">
-                    —
-                </strong>
-
-                <span>
-                    INSPECTED
-                </span>
-
+                <strong id="home-inspected">—</strong>
+                <span>INSPECTED</span>
             </div>
 
             <div class="stat">
-
-                <strong id="home-remaining">
-                    —
-                </strong>
-
-                <span>
-                    REMAINING
-                </span>
-
+                <strong id="home-remaining">—</strong>
+                <span>REMAINING</span>
             </div>
 
             <div class="stat">
-
-                <strong id="home-due">
-                    —
-                </strong>
-
-                <span>
-                    DUE
-                </span>
-
+                <strong id="home-due">—</strong>
+                <span>DUE</span>
             </div>
 
         </div>
-
 
         <div class="menu">
 
@@ -1155,9 +1101,30 @@
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
+
+            </button>
+
+
+            <button
+                class="menu-button"
+                type="button"
+                onclick="garageNav('service')"
+            >
+
+                <div>
+
+                    <span class="menu-title">
+                        RECORD SERVICE
+                    </span>
+
+                    <span class="menu-subtitle">
+                        Add maintenance or servicing work
+                    </span>
+
+                </div>
+
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1180,34 +1147,7 @@
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
-
-            </button>
-
-
-            <button
-                class="menu-button"
-                type="button"
-                onclick="window.location.href='maintenance-plan.html'"
-            >
-
-                <div>
-
-                    <span class="menu-title">
-                        MAINTENANCE PLAN
-                    </span>
-
-                    <span class="menu-subtitle">
-                        View the full maintenance dashboard
-                    </span>
-
-                </div>
-
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1340,7 +1280,6 @@
 
             </div>
 
-
             <div class="field">
 
                 <label for="inspection-condition">
@@ -1355,7 +1294,6 @@
 
             </div>
 
-
             <div class="field">
 
                 <label for="inspection-findings">
@@ -1368,7 +1306,6 @@
                 ></textarea>
 
             </div>
-
 
             <div class="field">
 
@@ -1383,7 +1320,6 @@
 
             </div>
 
-
             <button
                 class="button"
                 id="save-inspection"
@@ -1393,6 +1329,410 @@
             </button>
 
         </form>
+
+    </section>
+
+
+    <!-- SERVICE -->
+
+    <section
+        class="screen"
+        id="service-screen"
+    >
+
+        <div class="section-title">
+
+            <div class="eyebrow">
+                MAINTENANCE RECORDS
+            </div>
+
+            <h2>
+                RECORD<br>
+                <span>SERVICE.</span>
+            </h2>
+
+            <p>
+                Record work only after it has actually been completed.
+            </p>
+
+        </div>
+
+
+        <div class="vehicle-card">
+
+            <span class="odo-label">
+                CURRENT ODOMETER
+            </span>
+
+            <div
+                class="odo-value"
+                id="service-current-odometer"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div
+            class="message"
+            id="service-message"
+        ></div>
+
+
+        <form id="service-form">
+
+            <div class="two-column">
+
+                <div class="field">
+
+                    <label for="service-date">
+                        SERVICE DATE
+                    </label>
+
+                    <input
+                        id="service-date"
+                        type="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="service-odometer">
+                        ODOMETER
+                    </label>
+
+                    <input
+                        id="service-odometer"
+                        type="number"
+                        inputmode="numeric"
+                        min="0"
+                        step="1"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-category">
+                    CATEGORY
+                </label>
+
+                <select
+                    id="service-category"
+                    required
+                >
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option value="Engine">
+                        Engine
+                    </option>
+
+                    <option value="CVT">
+                        CVT / Transmission
+                    </option>
+
+                    <option value="Cooling">
+                        Cooling
+                    </option>
+
+                    <option value="Ignition">
+                        Ignition
+                    </option>
+
+                    <option value="Filters">
+                        Filters
+                    </option>
+
+                    <option value="Fluids">
+                        Fluids
+                    </option>
+
+                    <option value="Brakes">
+                        Brakes
+                    </option>
+
+                    <option value="Tyres">
+                        Tyres
+                    </option>
+
+                    <option value="Suspension">
+                        Suspension
+                    </option>
+
+                    <option value="Electrical">
+                        Electrical
+                    </option>
+
+                    <option value="Mechanical">
+                        Mechanical
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-item">
+                    SERVICE ITEM
+                </label>
+
+                <input
+                    id="service-item"
+                    type="text"
+                    placeholder="e.g. Engine Oil & Oil Filter"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-description">
+                    DESCRIPTION
+                </label>
+
+                <textarea
+                    id="service-description"
+                    placeholder="Describe the work that was actually completed."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-parts">
+                    PARTS
+                </label>
+
+                <input
+                    id="service-parts"
+                    type="text"
+                    placeholder="Comma separated, e.g. Oil filter, sump washer"
+                >
+
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="field">
+
+                    <label for="service-fluid">
+                        FLUID
+                    </label>
+
+                    <input
+                        id="service-fluid"
+                        type="text"
+                        placeholder="Optional"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="service-quantity">
+                        QUANTITY
+                    </label>
+
+                    <input
+                        id="service-quantity"
+                        type="text"
+                        placeholder="Optional"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="field">
+
+                    <label for="next-service-date">
+                        NEXT SERVICE DATE
+                    </label>
+
+                    <input
+                        id="next-service-date"
+                        type="date"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="next-service-odometer">
+                        NEXT SERVICE KM
+                    </label>
+
+                    <input
+                        id="next-service-odometer"
+                        type="number"
+                        inputmode="numeric"
+                        min="0"
+                        step="1"
+                        placeholder="Optional"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-status">
+                    STATUS
+                </label>
+
+                <select
+                    id="service-status"
+                    required
+                >
+
+                    <option value="COMPLETED">
+                        COMPLETED
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="service-notes">
+                    NOTES
+                </label>
+
+                <textarea
+                    id="service-notes"
+                    placeholder="Optional notes, observations or receipt information."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                class="button"
+                id="save-service"
+                type="submit"
+            >
+                SAVE SERVICE RECORD
+            </button>
+
+        </form>
+
+
+        <div class="subheading">
+            RECENT SERVICE RECORDS
+        </div>
+
+        <div
+            class="service-list"
+            id="service-list"
+        ></div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section
+        class="screen"
+        id="history-screen"
+    >
+
+        <div class="section-title">
+
+            <div class="eyebrow">
+                VEHICLE RECORDS
+            </div>
+
+            <h2>
+                GARAGE<br>
+                <span>HISTORY.</span>
+            </h2>
+
+            <p>
+                Open your inspection and service records.
+            </p>
+
+        </div>
+
+
+        <div class="more-menu">
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='inspection-history.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Inspection History
+                    </span>
+
+                    <span class="more-card-description">
+                        Review recorded physical inspections.
+                    </span>
+
+                </div>
+
+                <span class="arrow">→</span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='service-history.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Service History
+                    </span>
+
+                    <span class="more-card-description">
+                        View the complete servicing record.
+                    </span>
+
+                </div>
+
+                <span class="arrow">→</span>
+
+            </button>
+
+        </div>
 
     </section>
 
@@ -1560,9 +1900,7 @@
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1580,64 +1918,12 @@
                     </span>
 
                     <span class="more-card-description">
-                        View the complete Lancer maintenance baseline.
+                        View the complete maintenance baseline.
                     </span>
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
-
-            </button>
-
-
-            <button
-                class="more-card"
-                type="button"
-                onclick="window.location.href='service-history.html'"
-            >
-
-                <div>
-
-                    <span class="more-card-title">
-                        Service History
-                    </span>
-
-                    <span class="more-card-description">
-                        View recorded servicing and maintenance work.
-                    </span>
-
-                </div>
-
-                <span class="arrow">
-                    →
-                </span>
-
-            </button>
-
-
-            <button
-                class="more-card"
-                type="button"
-                onclick="window.location.href='inspection-history.html'"
-            >
-
-                <div>
-
-                    <span class="more-card-title">
-                        Inspection History
-                    </span>
-
-                    <span class="more-card-description">
-                        Review previous physical inspections.
-                    </span>
-
-                </div>
-
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1655,14 +1941,12 @@
                     </span>
 
                     <span class="more-card-description">
-                        Open the main L@NC3R project page.
+                        Open the main L@NC3R vehicle project page.
                     </span>
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1685,9 +1969,7 @@
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1710,9 +1992,7 @@
 
                 </div>
 
-                <span class="arrow">
-                    →
-                </span>
+                <span class="arrow">→</span>
 
             </button>
 
@@ -1728,7 +2008,7 @@
 </div>
 
 
-<!-- BOTTOM NAVIGATION -->
+<!-- BOTTOM NAV -->
 
 <nav
     class="bottom-nav hidden"
@@ -1743,13 +2023,8 @@
         onclick="garageNav('garage')"
     >
 
-        <span class="nav-icon">
-            ⌂
-        </span>
-
-        <span>
-            GARAGE
-        </span>
+        <span class="nav-icon">⌂</span>
+        <span>GARAGE</span>
 
     </button>
 
@@ -1761,13 +2036,8 @@
         onclick="garageNav('inspect')"
     >
 
-        <span class="nav-icon">
-            ✓
-        </span>
-
-        <span>
-            INSPECT
-        </span>
+        <span class="nav-icon">✓</span>
+        <span>INSPECT</span>
 
     </button>
 
@@ -1779,13 +2049,8 @@
         onclick="garageNav('service')"
     >
 
-        <span class="nav-icon">
-            ⚙
-        </span>
-
-        <span>
-            SERVICE
-        </span>
+        <span class="nav-icon">⚙</span>
+        <span>SERVICE</span>
 
     </button>
 
@@ -1797,13 +2062,8 @@
         onclick="garageNav('history')"
     >
 
-        <span class="nav-icon">
-            ≡
-        </span>
-
-        <span>
-            HISTORY
-        </span>
+        <span class="nav-icon">≡</span>
+        <span>HISTORY</span>
 
     </button>
 
@@ -1815,13 +2075,8 @@
         onclick="garageNav('more')"
     >
 
-        <span class="nav-icon">
-            •••
-        </span>
-
-        <span>
-            MORE
-        </span>
+        <span class="nav-icon">•••</span>
+        <span>MORE</span>
 
     </button>
 
@@ -1847,6 +2102,7 @@ let currentOdometer = null;
 
 let maintenanceItems = [];
 let inspectionRecords = [];
+let serviceRecords = [];
 
 let selectedMaintenance = null;
 
@@ -1953,24 +2209,17 @@ function showScreen(id) {
     document
         .querySelectorAll(".screen")
         .forEach(screen => {
-            screen.classList.remove(
-                "active"
-            );
+            screen.classList.remove("active");
         });
 
     const screen =
         document.getElementById(id);
 
     if (screen) {
-        screen.classList.add(
-            "active"
-        );
+        screen.classList.add("active");
     }
 
-    window.scrollTo(
-        0,
-        0
-    );
+    window.scrollTo(0, 0);
 }
 
 
@@ -1979,9 +2228,7 @@ function setActiveNav(name) {
     document
         .querySelectorAll(".nav-item")
         .forEach(item => {
-            item.classList.remove(
-                "active"
-            );
+            item.classList.remove("active");
         });
 
     const active =
@@ -1990,24 +2237,20 @@ function setActiveNav(name) {
         );
 
     if (active) {
-        active.classList.add(
-            "active"
-        );
+        active.classList.add("active");
     }
 }
 
 
-function garageNav(destination) {
+async function garageNav(destination) {
 
     if (destination === "garage") {
 
-        setActiveNav(
-            "garage"
-        );
+        setActiveNav("garage");
 
-        showScreen(
-            "home-screen"
-        );
+        await refreshGarage();
+
+        showScreen("home-screen");
 
         return;
     }
@@ -2015,9 +2258,7 @@ function garageNav(destination) {
 
     if (destination === "inspect") {
 
-        setActiveNav(
-            "inspect"
-        );
+        setActiveNav("inspect");
 
         openInspectionList();
 
@@ -2027,12 +2268,13 @@ function garageNav(destination) {
 
     if (destination === "service") {
 
-        setActiveNav(
-            "service"
-        );
+        setActiveNav("service");
 
-        window.location.href =
-            "service-history.html";
+        await loadServiceRecords();
+
+        prepareServiceForm();
+
+        showScreen("service-screen");
 
         return;
     }
@@ -2040,12 +2282,9 @@ function garageNav(destination) {
 
     if (destination === "history") {
 
-        setActiveNav(
-            "history"
-        );
+        setActiveNav("history");
 
-        window.location.href =
-            "inspection-history.html";
+        showScreen("history-screen");
 
         return;
     }
@@ -2053,26 +2292,18 @@ function garageNav(destination) {
 
     if (destination === "more") {
 
-        setActiveNav(
-            "more"
-        );
+        setActiveNav("more");
 
-        showScreen(
-            "more-screen"
-        );
+        showScreen("more-screen");
     }
 }
 
 
 function showOdometer() {
 
-    setActiveNav(
-        "more"
-    );
+    setActiveNav("more");
 
-    showScreen(
-        "odometer-screen"
-    );
+    showScreen("odometer-screen");
 }
 
 
@@ -2099,8 +2330,7 @@ function clearMessage(id) {
 
     box.textContent = "";
 
-    box.className =
-        "message";
+    box.className = "message";
 }
 
 
@@ -2115,18 +2345,32 @@ function formatKM(value) {
 
     return (
         Number(value)
-            .toLocaleString(
-                "en-AU"
-            ) +
+            .toLocaleString("en-AU") +
         " km"
     );
 }
 
 
+function formatDate(value) {
+
+    if (!value) {
+        return "Unknown date";
+    }
+
+    const parts =
+        value.split("-");
+
+    if (parts.length !== 3) {
+        return value;
+    }
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+
 function todayLocal() {
 
-    const date =
-        new Date();
+    const date = new Date();
 
     const offset =
         date.getTimezoneOffset();
@@ -2139,38 +2383,27 @@ function todayLocal() {
 
     return local
         .toISOString()
-        .slice(
-            0,
-            10
-        );
+        .slice(0, 10);
 }
 
 
 function escapeHTML(value) {
 
-    return String(
-        value ?? ""
-    )
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+function parseParts(value) {
+
+    return value
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
 }
 
 
@@ -2181,12 +2414,19 @@ async function initialise() {
     ).value =
         todayLocal();
 
+    document.getElementById(
+        "service-date"
+    ).value =
+        todayLocal();
+
+
     const {
         data: {
             session
         }
     } =
         await db.auth.getSession();
+
 
     if (
         session &&
@@ -2200,9 +2440,7 @@ async function initialise() {
 
     } else {
 
-        showScreen(
-            "login-screen"
-        );
+        showScreen("login-screen");
 
         document.getElementById(
             "connection"
@@ -2226,11 +2464,13 @@ async function enterGarage() {
         "online"
     );
 
+
     document.getElementById(
         "logout-button"
     ).classList.remove(
         "hidden"
     );
+
 
     document.getElementById(
         "bottom-nav"
@@ -2238,15 +2478,12 @@ async function enterGarage() {
         "hidden"
     );
 
-    setActiveNav(
-        "garage"
-    );
+
+    setActiveNav("garage");
 
     await refreshGarage();
 
-    showScreen(
-        "home-screen"
-    );
+    showScreen("home-screen");
 }
 
 
@@ -2260,9 +2497,7 @@ async function refreshGarage() {
         await Promise.all([
 
             db
-                .from(
-                    "vehicle_status"
-                )
+                .from("vehicle_status")
                 .select(
                     "odometer, odometer_updated_at"
                 )
@@ -2273,9 +2508,7 @@ async function refreshGarage() {
                 .single(),
 
             db
-                .from(
-                    "maintenance_plan"
-                )
+                .from("maintenance_plan")
                 .select("*")
                 .order(
                     "id",
@@ -2285,9 +2518,7 @@ async function refreshGarage() {
                 ),
 
             db
-                .from(
-                    "inspection_records"
-                )
+                .from("inspection_records")
                 .select(
                     "id, maintenance_item_id, inspection_date, result"
                 )
@@ -2323,6 +2554,7 @@ async function refreshGarage() {
                     .odometer
             );
 
+
         document.getElementById(
             "home-odometer"
         ).textContent =
@@ -2330,8 +2562,17 @@ async function refreshGarage() {
                 currentOdometer
             );
 
+
         document.getElementById(
             "odo-current"
+        ).textContent =
+            formatKM(
+                currentOdometer
+            );
+
+
+        document.getElementById(
+            "service-current-odometer"
         ).textContent =
             formatKM(
                 currentOdometer
@@ -2342,6 +2583,7 @@ async function refreshGarage() {
     maintenanceItems =
         maintenanceResponse.data ||
         [];
+
 
     inspectionRecords =
         inspectionResponse.data ||
@@ -2365,9 +2607,7 @@ async function refreshGarage() {
         maintenanceItems.filter(
             item =>
                 inspectedIDs.has(
-                    Number(
-                        item.id
-                    )
+                    Number(item.id)
                 )
         ).length;
 
@@ -2452,9 +2692,7 @@ function renderMaintenanceList() {
 
                 const inspected =
                     inspectedIDs.has(
-                        Number(
-                            item.id
-                        )
+                        Number(item.id)
                     );
 
 
@@ -2514,16 +2752,12 @@ function startInspection(id) {
     selectedMaintenance =
         maintenanceItems.find(
             item =>
-                Number(
-                    item.id
-                ) ===
+                Number(item.id) ===
                 Number(id)
         );
 
 
-    if (
-        !selectedMaintenance
-    ) {
+    if (!selectedMaintenance) {
         return;
     }
 
@@ -2541,8 +2775,7 @@ function startInspection(id) {
 
         <div class="eyebrow">
             ${escapeHTML(
-                selectedMaintenance
-                    .category
+                selectedMaintenance.category
             )}
         </div>
 
@@ -2568,10 +2801,7 @@ function startInspection(id) {
     ).innerHTML =
         checklist
             .map(
-                (
-                    text,
-                    index
-                ) => `
+                (text, index) => `
 
                     <label
                         class="check"
@@ -2607,15 +2837,9 @@ function startInspection(id) {
 
     updateChecklistProgress();
 
+    setActiveNav("inspect");
 
-    setActiveNav(
-        "inspect"
-    );
-
-
-    showScreen(
-        "inspection-screen"
-    );
+    showScreen("inspection-screen");
 }
 
 
@@ -2637,10 +2861,7 @@ function updateChecklistProgress() {
 
 
     checks.forEach(
-        (
-            check,
-            index
-        ) => {
+        (check, index) => {
 
             const row =
                 document.getElementById(
@@ -2687,11 +2908,267 @@ function completedChecklist() {
             ".inspection-check:checked"
         )
     ].map(
-        check =>
-            check.value
+        check => check.value
     );
 }
 
+
+/* ==============================
+   SERVICE SYSTEM
+   ============================== */
+
+function prepareServiceForm() {
+
+    document.getElementById(
+        "service-date"
+    ).value =
+        todayLocal();
+
+
+    if (
+        currentOdometer !== null
+    ) {
+
+        document.getElementById(
+            "service-odometer"
+        ).value =
+            currentOdometer;
+
+
+        document.getElementById(
+            "service-current-odometer"
+        ).textContent =
+            formatKM(
+                currentOdometer
+            );
+    }
+}
+
+
+async function loadServiceRecords() {
+
+    const {
+        data,
+        error
+    } =
+        await db
+            .from("service_records")
+            .select("*")
+            .order(
+                "service_date",
+                {
+                    ascending: false
+                }
+            )
+            .order(
+                "id",
+                {
+                    ascending: false
+                }
+            )
+            .limit(10);
+
+
+    if (error) {
+
+        console.error(
+            "Service records:",
+            error
+        );
+
+        document.getElementById(
+            "service-list"
+        ).innerHTML = `
+            <div class="empty-state">
+                Service records could not be loaded.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    serviceRecords =
+        data || [];
+
+
+    renderServiceRecords();
+}
+
+
+function renderServiceRecords() {
+
+    const container =
+        document.getElementById(
+            "service-list"
+        );
+
+
+    if (
+        serviceRecords.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                No completed service records have been added yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        serviceRecords
+            .map(record => {
+
+                const parts =
+                    Array.isArray(
+                        record.parts
+                    )
+                        ? record.parts
+                        : [];
+
+
+                return `
+                    <article class="service-record">
+
+                        <strong>
+                            ${escapeHTML(
+                                record.service_item
+                            )}
+                        </strong>
+
+                        <div class="service-meta">
+
+                            <span class="tag green">
+                                ${escapeHTML(
+                                    record.status ||
+                                    "COMPLETED"
+                                )}
+                            </span>
+
+                            <span class="tag">
+                                ${escapeHTML(
+                                    record.category
+                                )}
+                            </span>
+
+                            <span class="tag">
+                                ${escapeHTML(
+                                    formatDate(
+                                        record.service_date
+                                    )
+                                )}
+                            </span>
+
+                            ${
+                                record.odometer !== null &&
+                                record.odometer !== undefined
+
+                                    ? `
+                                        <span class="tag">
+                                            ${escapeHTML(
+                                                formatKM(
+                                                    record.odometer
+                                                )
+                                            )}
+                                        </span>
+                                    `
+
+                                    : ""
+                            }
+
+                        </div>
+
+                        <p>
+                            ${escapeHTML(
+                                record.description
+                            )}
+                        </p>
+
+                        ${
+                            parts.length
+
+                                ? `
+                                    <p>
+                                        <strong>Parts:</strong>
+                                        ${escapeHTML(
+                                            parts.join(", ")
+                                        )}
+                                    </p>
+                                `
+
+                                : ""
+                        }
+
+                        ${
+                            record.fluid
+
+                                ? `
+                                    <p>
+                                        <strong>Fluid:</strong>
+                                        ${escapeHTML(
+                                            record.fluid
+                                        )}
+                                        ${
+                                            record.quantity
+                                                ? ` • ${escapeHTML(record.quantity)}`
+                                                : ""
+                                        }
+                                    </p>
+                                `
+
+                                : ""
+                        }
+
+                        ${
+                            record.next_service_date ||
+                            record.next_service_odometer
+
+                                ? `
+                                    <p>
+                                        <strong>Next:</strong>
+                                        ${
+                                            record.next_service_date
+                                                ? escapeHTML(
+                                                    formatDate(
+                                                        record.next_service_date
+                                                    )
+                                                )
+                                                : ""
+                                        }
+                                        ${
+                                            record.next_service_date &&
+                                            record.next_service_odometer
+                                                ? " • "
+                                                : ""
+                                        }
+                                        ${
+                                            record.next_service_odometer
+                                                ? escapeHTML(
+                                                    formatKM(
+                                                        record.next_service_odometer
+                                                    )
+                                                )
+                                                : ""
+                                        }
+                                    </p>
+                                `
+
+                                : ""
+                        }
+
+                    </article>
+                `;
+            })
+            .join("");
+}
+
+
+/* ==============================
+   LOGIN
+   ============================== */
 
 document.getElementById(
     "login-form"
@@ -2700,7 +3177,6 @@ document.getElementById(
     async event => {
 
         event.preventDefault();
-
 
         clearMessage(
             "login-message"
@@ -2768,6 +3244,10 @@ document.getElementById(
 );
 
 
+/* ==============================
+   SAVE INSPECTION
+   ============================== */
+
 document.getElementById(
     "inspection-form"
 ).addEventListener(
@@ -2776,15 +3256,12 @@ document.getElementById(
 
         event.preventDefault();
 
-
         clearMessage(
             "inspection-message"
         );
 
 
-        if (
-            !selectedMaintenance
-        ) {
+        if (!selectedMaintenance) {
 
             showMessage(
                 "inspection-message",
@@ -2845,7 +3322,6 @@ document.getElementById(
 
 
         button.disabled = true;
-
         button.textContent =
             "SAVING...";
 
@@ -2911,9 +3387,7 @@ document.getElementById(
 
         if (error) {
 
-            console.error(
-                error
-            );
+            console.error(error);
 
             showMessage(
                 "inspection-message",
@@ -2947,6 +3421,267 @@ document.getElementById(
     }
 );
 
+
+/* ==============================
+   SAVE SERVICE
+   ============================== */
+
+document.getElementById(
+    "service-form"
+).addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        clearMessage(
+            "service-message"
+        );
+
+
+        const serviceDate =
+            document.getElementById(
+                "service-date"
+            ).value;
+
+
+        const odometer =
+            Number(
+                document.getElementById(
+                    "service-odometer"
+                ).value
+            );
+
+
+        const category =
+            document.getElementById(
+                "service-category"
+            ).value;
+
+
+        const serviceItem =
+            document.getElementById(
+                "service-item"
+            ).value.trim();
+
+
+        const description =
+            document.getElementById(
+                "service-description"
+            ).value.trim();
+
+
+        const parts =
+            parseParts(
+                document.getElementById(
+                    "service-parts"
+                ).value
+            );
+
+
+        const fluid =
+            document.getElementById(
+                "service-fluid"
+            ).value.trim();
+
+
+        const quantity =
+            document.getElementById(
+                "service-quantity"
+            ).value.trim();
+
+
+        const nextDate =
+            document.getElementById(
+                "next-service-date"
+            ).value;
+
+
+        const nextOdometerRaw =
+            document.getElementById(
+                "next-service-odometer"
+            ).value;
+
+
+        const nextOdometer =
+            nextOdometerRaw
+                ? Number(
+                    nextOdometerRaw
+                )
+                : null;
+
+
+        const status =
+            document.getElementById(
+                "service-status"
+            ).value;
+
+
+        const notes =
+            document.getElementById(
+                "service-notes"
+            ).value.trim();
+
+
+        if (
+            !Number.isInteger(
+                odometer
+            ) ||
+            odometer < 0
+        ) {
+
+            showMessage(
+                "service-message",
+                "Enter a valid odometer reading."
+            );
+
+            return;
+        }
+
+
+        if (
+            nextOdometer !== null &&
+            (
+                !Number.isInteger(
+                    nextOdometer
+                ) ||
+                nextOdometer < 0
+            )
+        ) {
+
+            showMessage(
+                "service-message",
+                "Enter a valid next-service odometer or leave it blank."
+            );
+
+            return;
+        }
+
+
+        const button =
+            document.getElementById(
+                "save-service"
+            );
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "SAVING...";
+
+
+        const {
+            error
+        } =
+            await db
+                .from(
+                    "service_records"
+                )
+                .insert({
+
+                    service_date:
+                        serviceDate,
+
+                    odometer,
+
+                    category,
+
+                    service_item:
+                        serviceItem,
+
+                    description,
+
+                    parts,
+
+                    fluid:
+                        fluid ||
+                        null,
+
+                    quantity:
+                        quantity ||
+                        null,
+
+                    next_service_date:
+                        nextDate ||
+                        null,
+
+                    next_service_odometer:
+                        nextOdometer,
+
+                    status,
+
+                    notes:
+                        notes ||
+                        null
+                });
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "SAVE SERVICE RECORD";
+
+
+        if (error) {
+
+            console.error(
+                error
+            );
+
+
+            showMessage(
+                "service-message",
+                error.message
+            );
+
+            return;
+        }
+
+
+        document.getElementById(
+            "service-form"
+        ).reset();
+
+
+        document.getElementById(
+            "service-date"
+        ).value =
+            todayLocal();
+
+
+        document.getElementById(
+            "service-status"
+        ).value =
+            "COMPLETED";
+
+
+        if (
+            currentOdometer !== null
+        ) {
+
+            document.getElementById(
+                "service-odometer"
+            ).value =
+                currentOdometer;
+        }
+
+
+        showMessage(
+            "service-message",
+            "Service record saved successfully.",
+            "success"
+        );
+
+
+        await loadServiceRecords();
+    }
+);
+
+
+/* ==============================
+   ODOMETER
+   ============================== */
 
 document.getElementById(
     "odometer-form"
@@ -3000,8 +3735,7 @@ document.getElementById(
 
         if (
             currentOdometer !== null &&
-            newReading <=
-                currentOdometer
+            newReading <= currentOdometer
         ) {
 
             showMessage(
@@ -3048,7 +3782,8 @@ document.getElementById(
                         "GARAGE APP",
 
                     notes:
-                        notes || null
+                        notes ||
+                        null
                 })
                 .select("id")
                 .single();
@@ -3095,9 +3830,7 @@ document.getElementById(
 
         if (statusError) {
 
-            if (
-                historyRow?.id
-            ) {
+            if (historyRow?.id) {
 
                 await db
                     .from(
@@ -3154,9 +3887,9 @@ document.getElementById(
 );
 
 
-/*
-    PWA SERVICE WORKER
-*/
+/* ==============================
+   PWA SERVICE WORKER
+   ============================== */
 
 if (
     "serviceWorker" in navigator
