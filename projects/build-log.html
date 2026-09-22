@@ -13,13 +13,64 @@
 
     <meta
         name="description"
-        content="L@NC3R Project 006 — chronological build log documenting the development of my 2009 Mitsubishi Lancer CJ."
+        content="The complete build history of the L@NC3R 2009 Mitsubishi Lancer project."
     >
 
     <link
         rel="stylesheet"
         href="../css/style.css"
     >
+
+    <style>
+
+        .log-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin: 18px 0;
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        .log-meta strong {
+            color: #fff;
+        }
+
+        .log-parts {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #242424;
+        }
+
+        .log-parts-title {
+            color: #e21b23;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+        }
+
+        .log-status {
+            display: inline-block;
+            margin-top: 18px;
+            color: #e21b23;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .log-error {
+            padding: 30px;
+            border: 1px solid #e21b23;
+            background: #101010;
+        }
+
+        .log-error h3 {
+            margin-top: 0;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -38,27 +89,27 @@
     <ul class="nav-links">
 
         <li>
-            <a href="../index.html">PORTFOLIO</a>
+            <a href="../index.html">
+                PORTFOLIO
+            </a>
         </li>
 
         <li>
-            <a href="../lancer.html">LANCER</a>
+            <a href="../lancer.html">
+                LANCER
+            </a>
         </li>
 
         <li>
-            <a href="#overview">OVERVIEW</a>
+            <a href="#log">
+                BUILD LOG
+            </a>
         </li>
 
         <li>
-            <a href="#log">BUILD LOG</a>
-        </li>
-
-        <li>
-            <a href="#milestones">MILESTONES</a>
-        </li>
-
-        <li>
-            <a href="#projects">PROJECTS</a>
+            <a href="#projects">
+                PROJECTS
+            </a>
         </li>
 
     </ul>
@@ -96,9 +147,9 @@
 
         <p class="hero-description">
             The chronological history of my 2009 Mitsubishi
-            Lancer project — bringing together mechanical work,
-            diagnostics, ECU research, performance development
-            and future modifications.
+            Lancer project — bringing together mechanical
+            work, diagnostics, ECU research, performance
+            development and future modifications.
         </p>
 
 
@@ -115,8 +166,8 @@
             </div>
 
             <div class="hero-stat">
-                <span>PROJECT</span>
-                <strong>006</strong>
+                <span>LOG ENTRIES</span>
+                <strong id="log-count">...</strong>
             </div>
 
             <div class="hero-stat">
@@ -140,7 +191,7 @@
                 href="../lancer.html"
                 class="btn btn-secondary"
             >
-                ← LANCER BUILD
+                LANCER
             </a>
 
         </div>
@@ -154,13 +205,10 @@
      OVERVIEW
 ===================================================== -->
 
-<section
-    class="section section-alt"
-    id="overview"
->
+<section class="section section-alt">
 
     <div class="section-number">
-        01 / OVERVIEW
+        01 / BUILD HISTORY
     </div>
 
 
@@ -184,113 +232,16 @@
             </p>
 
             <p>
-                The other project pages focus on individual
-                areas such as ECU research, diagnostics,
-                performance and mechanical work.
+                Maintenance, repairs, diagnostics, ECU
+                research, modifications and performance
+                milestones can all be recorded here.
             </p>
 
             <p>
-                This page brings those areas together and
-                records the development of the actual car in
-                chronological order.
+                The log is connected directly to the L@NC3R
+                database. New entries can be added through the
+                private Log Manager without editing this page.
             </p>
-
-            <p>
-                As work is completed, new entries can record
-                what happened, why it was done, what was
-                learned and which part of the project it
-                belongs to.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     VEHICLE
-===================================================== -->
-
-<section class="section">
-
-    <div class="section-number">
-        02 / VEHICLE
-    </div>
-
-
-    <div class="section-heading">
-
-        <h2>
-            THE<br>
-            <span>BUILD.</span>
-        </h2>
-
-        <p>
-            The build log currently follows one main vehicle:
-            my 2009 Mitsubishi Lancer CJ.
-        </p>
-
-    </div>
-
-
-    <div class="info-panel">
-
-        <div class="info-panel-header">
-
-            <span>
-                PROJECT 001
-            </span>
-
-            <h3>
-                2009 MITSUBISHI LANCER CJ
-            </h3>
-
-        </div>
-
-
-        <div class="info-grid">
-
-            <div class="info-item">
-                <span>ENGINE</span>
-                <strong>4B11</strong>
-            </div>
-
-            <div class="info-item">
-                <span>CAPACITY</span>
-                <strong>2.0L</strong>
-            </div>
-
-            <div class="info-item">
-                <span>VALVETRAIN</span>
-                <strong>DOHC 16V MIVEC</strong>
-            </div>
-
-            <div class="info-item">
-                <span>ASPIRATION</span>
-                <strong>Naturally Aspirated</strong>
-            </div>
-
-            <div class="info-item">
-                <span>TRANSMISSION</span>
-                <strong>CVT</strong>
-            </div>
-
-            <div class="info-item">
-                <span>DRIVETRAIN</span>
-                <strong>FWD</strong>
-            </div>
-
-            <div class="info-item">
-                <span>ECU</span>
-                <strong>SM5220</strong>
-            </div>
-
-            <div class="info-item">
-                <span>CALIBRATION</span>
-                <strong>52200013</strong>
-            </div>
 
         </div>
 
@@ -304,310 +255,48 @@
 ===================================================== -->
 
 <section
-    class="section section-alt"
+    class="section"
     id="log"
 >
 
     <div class="section-number">
-        03 / BUILD LOG
+        02 / LOG ENTRIES
     </div>
 
 
     <div class="section-heading">
 
         <h2>
-            PROJECT<br>
+            BUILD<br>
             <span>HISTORY.</span>
         </h2>
 
         <p>
-            The current history of the L@NC3R project. More
-            entries will be added as real work is completed.
+            Latest entries are displayed first.
         </p>
 
     </div>
 
 
-    <div class="timeline">
-
-
-        <!-- ENTRY 001 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 001
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    PROJECT START
-                </div>
-
-                <h3>
-                    L@NC3R Begins
-                </h3>
-
-                <p>
-                    The 2009 Mitsubishi Lancer becomes the main
-                    platform for my automotive learning
-                    project.
-                </p>
-
-                <p>
-                    The goal is to use the car to develop
-                    knowledge across diagnostics, ECU systems,
-                    mechanical work and performance
-                    development.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 002 -->
+    <div
+        class="timeline"
+        id="build-log-container"
+    >
 
         <div class="timeline-item">
 
             <div class="timeline-date">
-                ENTRY 002
+                LOADING
             </div>
 
             <div class="timeline-content">
 
-                <div class="eyebrow">
-                    DIAGNOSTICS
-                </div>
-
                 <h3>
-                    OBD-II Learning Begins
+                    Loading Build History...
                 </h3>
 
                 <p>
-                    Started exploring vehicle diagnostics,
-                    OBD-II communication and the tools used to
-                    communicate with automotive control
-                    modules.
-                </p>
-
-                <p>
-                    This became the foundation for the separate
-                    Vehicle Diagnostics project.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 003 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 003
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    INTERFACE RESEARCH
-                </div>
-
-                <h3>
-                    J2534 Communication
-                </h3>
-
-                <p>
-                    Began learning how J2534 pass-thru
-                    interfaces communicate between a Windows
-                    computer and vehicle control modules.
-                </p>
-
-                <p>
-                    This expanded the project beyond basic
-                    diagnostic scanning toward ECU
-                    communication and calibration research.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 004 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 004
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    ECU IDENTIFICATION
-                </div>
-
-                <h3>
-                    SM5220 Identified
-                </h3>
-
-                <p>
-                    ECU research identified the Mitsubishi
-                    SM5220 family used for the current Lancer
-                    ECU project.
-                </p>
-
-                <p>
-                    This created a clearer starting point for
-                    researching the ECU's hardware, software
-                    and calibration structure.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 005 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 005
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    ECU RESEARCH
-                </div>
-
-                <h3>
-                    Calibration 52200013
-                </h3>
-
-                <p>
-                    The ECU project progressed to researching
-                    calibration ID 52200013.
-                </p>
-
-                <p>
-                    Work shifted toward understanding ROM
-                    definitions, calibration tables, axes,
-                    scaling and how the factory engine
-                    management strategy is represented inside
-                    the calibration.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 006 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 006
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    PERFORMANCE
-                </div>
-
-                <h3>
-                    Factory Baseline Established
-                </h3>
-
-                <p>
-                    The performance project was created around
-                    the stock naturally aspirated 4B11
-                    configuration.
-                </p>
-
-                <p>
-                    The focus is on understanding the vehicle's
-                    starting point before future modifications
-                    are selected or performance claims are
-                    made.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- ENTRY 007 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                ENTRY 007
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    MECHANICAL
-                </div>
-
-                <h3>
-                    Mechanical Learning Project
-                </h3>
-
-                <p>
-                    A dedicated mechanical project was created
-                    to document maintenance, inspections,
-                    servicing, repairs and hands-on learning.
-                </p>
-
-                <p>
-                    Future completed mechanical work will be
-                    added to this build log as individual
-                    entries.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- CURRENT -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                CURRENT
-            </div>
-
-            <div class="timeline-content">
-
-                <div class="eyebrow">
-                    CURRENT STAGE
-                </div>
-
-                <h3>
-                    Building the Foundation
-                </h3>
-
-                <p>
-                    The current stage of L@NC3R is focused on
-                    learning the platform before major
-                    modifications.
-                </p>
-
-                <p>
-                    ECU research, diagnostics, mechanical
-                    knowledge and performance development are
-                    now being documented as connected parts of
-                    the same build.
+                    Connecting to the L@NC3R build database.
                 </p>
 
             </div>
@@ -620,181 +309,13 @@
 
 
 <!-- =====================================================
-     MILESTONES
-===================================================== -->
-
-<section
-    class="section"
-    id="milestones"
->
-
-    <div class="section-number">
-        04 / MILESTONES
-    </div>
-
-
-    <div class="section-heading">
-
-        <h2>
-            PROJECT<br>
-            <span>MILESTONES.</span>
-        </h2>
-
-        <p>
-            Major stages reached during the development of
-            L@NC3R so far.
-        </p>
-
-    </div>
-
-
-    <div class="roadmap-grid">
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                01
-            </div>
-
-            <div>
-
-                <h3>
-                    PROJECT STARTED
-                </h3>
-
-                <p>
-                    The Lancer becomes the main automotive
-                    learning platform.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                02
-            </div>
-
-            <div>
-
-                <h3>
-                    DIAGNOSTICS STARTED
-                </h3>
-
-                <p>
-                    OBD-II and vehicle communication become
-                    part of the project.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                03
-            </div>
-
-            <div>
-
-                <h3>
-                    ECU IDENTIFIED
-                </h3>
-
-                <p>
-                    SM5220 ECU information becomes the basis
-                    for deeper ECU research.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                04
-            </div>
-
-            <div>
-
-                <h3>
-                    ROM IDENTIFIED
-                </h3>
-
-                <p>
-                    Calibration 52200013 becomes the current
-                    calibration research target.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                05
-            </div>
-
-            <div>
-
-                <h3>
-                    PERFORMANCE PROJECT
-                </h3>
-
-                <p>
-                    A measured development approach is created
-                    around the stock 4B11 baseline.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                06
-            </div>
-
-            <div>
-
-                <h3>
-                    MECHANICAL PROJECT
-                </h3>
-
-                <p>
-                    Hands-on maintenance and mechanical
-                    learning become their own project area.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ENTRY CATEGORIES
+     LOG CATEGORIES
 ===================================================== -->
 
 <section class="section section-alt">
 
     <div class="section-number">
-        05 / LOG CATEGORIES
+        03 / LOG CATEGORIES
     </div>
 
 
@@ -802,19 +323,18 @@
 
         <h2>
             WHAT GETS<br>
-            <span>LOGGED.</span>
+            <span>DOCUMENTED.</span>
         </h2>
 
         <p>
-            Future entries can cover everything that changes
-            or teaches me something about the car.
+            The build log follows the different areas of the
+            Lancer project.
         </p>
 
     </div>
 
 
     <div class="cards-grid">
-
 
         <article class="project-card">
 
@@ -827,13 +347,9 @@
             </h3>
 
             <p>
-                Completed servicing, fluid changes,
-                inspections and preventative maintenance.
+                Servicing, fluids, filters, inspections and
+                preventative maintenance.
             </p>
-
-            <div class="project-card-status">
-                SERVICE HISTORY
-            </div>
 
         </article>
 
@@ -849,13 +365,9 @@
             </h3>
 
             <p>
-                Problems found, repairs completed and the
-                results after the vehicle is checked.
+                Problems found, work completed and confirmed
+                results.
             </p>
-
-            <div class="project-card-status">
-                REPAIR HISTORY
-            </div>
 
         </article>
 
@@ -871,13 +383,9 @@
             </h3>
 
             <p>
-                Fault codes, diagnostic sessions, live data
-                investigation and confirmed findings.
+                Fault codes, live data, testing and diagnostic
+                investigations.
             </p>
-
-            <div class="project-card-status">
-                DIAGNOSTIC HISTORY
-            </div>
 
         </article>
 
@@ -893,13 +401,9 @@
             </h3>
 
             <p>
-                ECU identification, ROM research, definitions,
-                logging and future calibration milestones.
+                ECU identification, definitions, data logging
+                and calibration research.
             </p>
-
-            <div class="project-card-status">
-                ECU HISTORY
-            </div>
 
         </article>
 
@@ -915,13 +419,9 @@
             </h3>
 
             <p>
-                Confirmed modifications can be documented with
-                their purpose, installation and results.
+                Confirmed changes and parts installed on the
+                vehicle.
             </p>
-
-            <div class="project-card-status">
-                BUILD HISTORY
-            </div>
 
         </article>
 
@@ -937,13 +437,9 @@
             </h3>
 
             <p>
-                Future logs, measurements, testing and
-                before-and-after performance results.
+                Testing, measurements and future
+                before-and-after results.
             </p>
-
-            <div class="project-card-status">
-                PERFORMANCE DATA
-            </div>
 
         </article>
 
@@ -953,106 +449,16 @@
 
 
 <!-- =====================================================
-     FUTURE ENTRY FORMAT
-===================================================== -->
-
-<section class="section">
-
-    <div class="section-number">
-        06 / ENTRY FORMAT
-    </div>
-
-
-    <div class="section-heading">
-
-        <h2>
-            EVERY ENTRY<br>
-            <span>TELLS THE STORY.</span>
-        </h2>
-
-        <p>
-            As the build progresses, entries can record more
-            than just the name of a modification.
-        </p>
-
-    </div>
-
-
-    <div class="info-panel">
-
-        <div class="info-panel-header">
-
-            <span>
-                FUTURE LOG FORMAT
-            </span>
-
-            <h3>
-                BUILD ENTRY
-            </h3>
-
-        </div>
-
-
-        <div class="info-grid">
-
-            <div class="info-item">
-                <span>DATE</span>
-                <strong>WHEN</strong>
-            </div>
-
-            <div class="info-item">
-                <span>ODOMETER</span>
-                <strong>IF RECORDED</strong>
-            </div>
-
-            <div class="info-item">
-                <span>CATEGORY</span>
-                <strong>WHAT TYPE</strong>
-            </div>
-
-            <div class="info-item">
-                <span>PROBLEM / GOAL</span>
-                <strong>WHY</strong>
-            </div>
-
-            <div class="info-item">
-                <span>WORK COMPLETED</span>
-                <strong>WHAT CHANGED</strong>
-            </div>
-
-            <div class="info-item">
-                <span>PARTS</span>
-                <strong>WHAT WAS USED</strong>
-            </div>
-
-            <div class="info-item">
-                <span>RESULT</span>
-                <strong>WHAT HAPPENED</strong>
-            </div>
-
-            <div class="info-item">
-                <span>LESSONS</span>
-                <strong>WHAT I LEARNED</strong>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PROJECT CONNECTIONS
+     CONNECTED PROJECTS
 ===================================================== -->
 
 <section
-    class="section section-alt"
+    class="section"
     id="projects"
 >
 
     <div class="section-number">
-        07 / CONNECTED PROJECTS
+        04 / CONNECTED PROJECTS
     </div>
 
 
@@ -1060,13 +466,8 @@
 
         <h2>
             ONE BUILD.<br>
-            <span>MULTIPLE PROJECTS.</span>
+            <span>SIX PROJECTS.</span>
         </h2>
-
-        <p>
-            Each technical project contributes to the history
-            recorded in this build log.
-        </p>
 
     </div>
 
@@ -1086,16 +487,15 @@
                 </div>
 
                 <h3>
-                    2009 LANCER
+                    LANCER
                 </h3>
 
                 <p>
-                    Main vehicle page and overall build
-                    overview.
+                    Main vehicle overview.
                 </p>
 
                 <div class="project-card-status">
-                    VIEW PROJECT →
+                    VIEW →
                 </div>
 
             </article>
@@ -1115,16 +515,15 @@
                 </div>
 
                 <h3>
-                    ECU TUNING
+                    ECU
                 </h3>
 
                 <p>
-                    SM5220 ECU and calibration 52200013
-                    research.
+                    Engine-management research.
                 </p>
 
                 <div class="project-card-status">
-                    VIEW PROJECT →
+                    VIEW →
                 </div>
 
             </article>
@@ -1148,12 +547,11 @@
                 </h3>
 
                 <p>
-                    OBD-II, J2534 and structured vehicle fault
-                    finding.
+                    Vehicle communication and fault finding.
                 </p>
 
                 <div class="project-card-status">
-                    VIEW PROJECT →
+                    VIEW →
                 </div>
 
             </article>
@@ -1177,11 +575,11 @@
                 </h3>
 
                 <p>
-                    4B11 baseline and performance development.
+                    Measured 4B11 development.
                 </p>
 
                 <div class="project-card-status">
-                    VIEW PROJECT →
+                    VIEW →
                 </div>
 
             </article>
@@ -1205,182 +603,16 @@
                 </h3>
 
                 <p>
-                    Maintenance, servicing and hands-on
-                    mechanical learning.
+                    Hands-on mechanical learning.
                 </p>
 
                 <div class="project-card-status">
-                    VIEW PROJECT →
+                    VIEW →
                 </div>
 
             </article>
 
         </a>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     NEXT MILESTONES
-===================================================== -->
-
-<section class="section">
-
-    <div class="section-number">
-        08 / NEXT MILESTONES
-    </div>
-
-
-    <div class="section-heading">
-
-        <h2>
-            WHAT COMES<br>
-            <span>NEXT.</span>
-        </h2>
-
-        <p>
-            Future milestones will be replaced with real build
-            entries as the project progresses.
-        </p>
-
-    </div>
-
-
-    <div class="roadmap-grid">
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                01
-            </div>
-
-            <div>
-
-                <h3>
-                    DOCUMENT CURRENT CONDITION
-                </h3>
-
-                <p>
-                    Build a clearer baseline of the Lancer in
-                    its current state.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                02
-            </div>
-
-            <div>
-
-                <h3>
-                    SERVICE HISTORY
-                </h3>
-
-                <p>
-                    Start recording confirmed maintenance and
-                    service work.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                03
-            </div>
-
-            <div>
-
-                <h3>
-                    DIAGNOSTIC CASES
-                </h3>
-
-                <p>
-                    Add real diagnostic investigations and
-                    confirmed outcomes.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                04
-            </div>
-
-            <div>
-
-                <h3>
-                    DATA LOGGING
-                </h3>
-
-                <p>
-                    Begin adding useful engine and ECU data to
-                    the project's technical record.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                05
-            </div>
-
-            <div>
-
-                <h3>
-                    FIRST DOCUMENTED MOD
-                </h3>
-
-                <p>
-                    Record future modifications once they're
-                    actually selected and installed.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="roadmap-item">
-
-            <div class="roadmap-number">
-                06
-            </div>
-
-            <div>
-
-                <h3>
-                    BEFORE / AFTER DATA
-                </h3>
-
-                <p>
-                    Compare future changes against the
-                    vehicle's earlier baseline.
-                </p>
-
-            </div>
-
-        </div>
 
     </div>
 
@@ -1394,9 +626,8 @@
 <section class="section section-alt">
 
     <div class="section-number">
-        09 / PROJECT NOTE
+        05 / PROJECT NOTE
     </div>
-
 
     <div class="notice">
 
@@ -1405,86 +636,10 @@
         </strong>
 
         <p>
-            The build log is intended to record actual work,
-            research and milestones from my Lancer project.
-            Future repairs, modifications and performance
-            results will be added when they happen rather than
-            being presented as completed work beforehand.
+            Entries document actual work, research and
+            milestones from my Lancer project. Future work
+            isn't presented as completed before it happens.
         </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     END
-===================================================== -->
-
-<section class="section contact">
-
-    <div class="section-number">
-        10 / L@NC3R BUILD LOG
-    </div>
-
-    <h2>
-        THIS IS ONLY<br>
-        <span>THE BEGINNING.</span>
-    </h2>
-
-    <p>
-        Every service, problem, discovery, modification and
-        milestone will continue building the history of
-        L@NC3R.
-    </p>
-
-
-    <div
-        class="buttons"
-        style="justify-content: center;"
-    >
-
-        <a
-            href="../lancer.html"
-            class="btn btn-primary"
-        >
-            LANCER
-        </a>
-
-        <a
-            href="ecu-project.html"
-            class="btn btn-secondary"
-        >
-            ECU
-        </a>
-
-        <a
-            href="diagnostics.html"
-            class="btn btn-secondary"
-        >
-            DIAGNOSTICS
-        </a>
-
-        <a
-            href="performance.html"
-            class="btn btn-secondary"
-        >
-            PERFORMANCE
-        </a>
-
-        <a
-            href="mechanical.html"
-            class="btn btn-secondary"
-        >
-            MECHANICAL
-        </a>
-
-        <a
-            href="#top"
-            class="btn btn-secondary"
-        >
-            BACK TO TOP
-        </a>
 
     </div>
 
@@ -1502,10 +657,369 @@
     </div>
 
     <div>
-        2009 LANCER • COMPLETE BUILD HISTORY
+        2009 LANCER • LIVE BUILD HISTORY
     </div>
 
 </footer>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://dmtzalwtexsstdynpmuk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_9pbNHhwgcmx1u8ZMsd_NlA_He7Xghwu";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const container =
+    document.getElementById(
+        "build-log-container"
+    );
+
+const counter =
+    document.getElementById(
+        "log-count"
+    );
+
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "NO DATE";
+    }
+
+
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "en-AU",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function formatOdometer(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return Number(value)
+        .toLocaleString("en-AU") +
+        " km";
+
+}
+
+
+async function loadBuildLog() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("build_logs")
+            .select("*")
+            .order(
+                "log_date",
+                {
+                    ascending: false
+                }
+            )
+            .order(
+                "id",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Build log error:",
+            error
+        );
+
+
+        counter.textContent = "—";
+
+
+        container.innerHTML = `
+
+            <div class="log-error">
+
+                <h3>
+                    Build Log Unavailable
+                </h3>
+
+                <p>
+                    The build history couldn't be loaded
+                    right now.
+                </p>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    counter.textContent =
+        data.length;
+
+
+    if (data.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    READY
+                </div>
+
+                <div class="timeline-content">
+
+                    <div class="eyebrow">
+                        BUILD LOG
+                    </div>
+
+                    <h3>
+                        Waiting For The First Entry
+                    </h3>
+
+                    <p>
+                        The database is connected. New build
+                        entries will appear here automatically.
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data.map(
+            (entry, index) => {
+
+
+                const entryNumber =
+                    String(
+                        data.length - index
+                    )
+                    .padStart(
+                        3,
+                        "0"
+                    );
+
+
+                const odometer =
+                    entry.odometer !== null
+                        ? `
+                            <div>
+                                <strong>ODOMETER</strong><br>
+                                ${escapeHTML(
+                                    formatOdometer(
+                                        entry.odometer
+                                    )
+                                )}
+                            </div>
+                        `
+                        : "";
+
+
+                const parts =
+                    Array.isArray(entry.parts) &&
+                    entry.parts.length > 0
+                        ? `
+
+                            <div class="log-parts">
+
+                                <div class="log-parts-title">
+                                    PARTS USED
+                                </div>
+
+                                <p>
+                                    ${entry.parts
+                                        .map(
+                                            part =>
+                                                escapeHTML(part)
+                                        )
+                                        .join(", ")}
+                                </p>
+
+                            </div>
+
+                        `
+                        : "";
+
+
+                const details =
+                    entry.details
+                        ? `
+                            <p>
+                                ${escapeHTML(
+                                    entry.details
+                                )}
+                            </p>
+                        `
+                        : "";
+
+
+                return `
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-date">
+
+                            ENTRY ${entryNumber}
+
+                        </div>
+
+
+                        <div class="timeline-content">
+
+                            <div class="eyebrow">
+
+                                ${escapeHTML(
+                                    entry.category
+                                )}
+
+                                /
+
+                                ${escapeHTML(
+                                    formatDate(
+                                        entry.log_date
+                                    )
+                                )}
+
+                            </div>
+
+
+                            <h3>
+                                ${escapeHTML(
+                                    entry.title
+                                )}
+                            </h3>
+
+
+                            <p>
+                                ${escapeHTML(
+                                    entry.description
+                                )}
+                            </p>
+
+
+                            ${details}
+
+
+                            <div class="log-meta">
+
+                                ${odometer}
+
+                                <div>
+
+                                    <strong>
+                                        CATEGORY
+                                    </strong>
+
+                                    <br>
+
+                                    ${escapeHTML(
+                                        entry.category
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                            ${parts}
+
+
+                            <div class="log-status">
+
+                                ● ${escapeHTML(
+                                    entry.status
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+loadBuildLog();
+
+</script>
+
 
 </body>
 </html>
