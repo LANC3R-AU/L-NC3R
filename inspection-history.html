@@ -165,12 +165,6 @@
             margin-top: 6px;
         }
 
-        .inspection-card p {
-            margin-bottom: 0;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
         .text-block {
             margin-top: 20px;
             padding: 18px;
@@ -187,11 +181,87 @@
             letter-spacing: .08em;
         }
 
+        .text-block p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* SAVED CHECKLIST */
+
+        .saved-checklist {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        .checklist-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .checklist-heading span {
+            color: var(--text-secondary);
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+        }
+
+        .checklist-heading strong {
+            font-size: .75rem;
+        }
+
+        .completed-checks {
+            display: grid;
+            gap: 8px;
+        }
+
+        .completed-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .check-symbol {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #4caf50;
+            color: #4caf50;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+
+        .check-copy {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .empty-checklist {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
         .empty {
             padding: 35px;
             background: var(--card);
             border: 1px solid var(--border);
             color: var(--text-secondary);
+        }
+
+        .empty p {
+            margin-bottom: 0;
+            line-height: 1.7;
         }
 
         .record-grid {
@@ -239,8 +309,10 @@
                 grid-template-columns: 1fr;
             }
 
-            .card-top {
+            .card-top,
+            .checklist-heading {
                 flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -258,6 +330,7 @@
         <li><a href="index.html">PORTFOLIO</a></li>
         <li><a href="lancer.html">LANCER</a></li>
         <li><a href="maintenance-plan.html">MAINTENANCE</a></li>
+        <li><a href="inspection-history.html">INSPECTIONS</a></li>
         <li><a href="service-history.html">SERVICE</a></li>
         <li><a href="projects/build-log.html">BUILD LOG</a></li>
     </ul>
@@ -267,252 +340,198 @@
 
 <main class="page">
 
-    <header>
+<header>
 
-        <div class="eyebrow">
-            L@NC3R / PROJECT 001
+    <div class="eyebrow">
+        L@NC3R / PROJECT 001
+    </div>
+
+    <h1>
+        INSPECTION<br>
+        <span>HISTORY.</span>
+    </h1>
+
+    <p class="hero-copy">
+        Physical inspection records for the 2009 Mitsubishi
+        Lancer. Findings shown here are based on checks that
+        were actually recorded rather than assumptions from
+        vehicle age or mileage.
+    </p>
+
+</header>
+
+
+<section class="section">
+
+    <div class="eyebrow">
+        01 / SUMMARY
+    </div>
+
+    <h2>
+        Inspection Overview
+    </h2>
+
+    <div class="dashboard">
+
+        <div class="metric red">
+            <span>CURRENT ODOMETER</span>
+            <strong id="current-odometer">—</strong>
         </div>
 
-        <h1>
-            INSPECTION<br>
-            <span>HISTORY.</span>
-        </h1>
-
-        <p class="hero-copy">
-            A public record of physical inspections performed on
-            the 2009 Mitsubishi Lancer. Findings shown here are
-            based on recorded checks rather than assumptions from
-            vehicle age or mileage.
-        </p>
-
-    </header>
-
-
-    <!-- SUMMARY -->
-
-    <section class="section">
-
-        <div class="eyebrow">
-            01 / SUMMARY
+        <div class="metric">
+            <span>TOTAL INSPECTIONS</span>
+            <strong id="total-inspections">—</strong>
         </div>
 
-        <h2>
-            Inspection Overview
-        </h2>
-
-        <div class="dashboard">
-
-            <div class="metric red">
-                <span>CURRENT ODOMETER</span>
-                <strong id="current-odometer">
-                    —
-                </strong>
-            </div>
-
-            <div class="metric">
-                <span>TOTAL INSPECTIONS</span>
-                <strong id="total-inspections">
-                    —
-                </strong>
-            </div>
-
-            <div class="metric">
-                <span>PASS</span>
-                <strong id="pass-count">
-                    —
-                </strong>
-            </div>
-
-            <div class="metric red">
-                <span>ATTENTION REQUIRED</span>
-                <strong id="attention-count">
-                    —
-                </strong>
-            </div>
-
+        <div class="metric">
+            <span>PASS</span>
+            <strong id="pass-count">—</strong>
         </div>
 
-    </section>
-
-
-    <!-- HISTORY -->
-
-    <section class="section">
-
-        <div class="eyebrow">
-            02 / RECORDED FINDINGS
+        <div class="metric red">
+            <span>ATTENTION REQUIRED</span>
+            <strong id="attention-count">—</strong>
         </div>
 
-        <h2>
-            Inspection Records
-        </h2>
+    </div>
+
+</section>
 
 
-        <div class="filter-row">
+<section class="section">
 
-            <button
-                class="filter-button active"
-                data-filter="ALL"
-            >
-                ALL
-            </button>
+    <div class="eyebrow">
+        02 / RECORDED FINDINGS
+    </div>
 
-            <button
-                class="filter-button"
-                data-filter="PASS"
-            >
-                PASS
-            </button>
+    <h2>
+        Inspection Records
+    </h2>
 
-            <button
-                class="filter-button"
-                data-filter="MONITOR"
-            >
-                MONITOR
-            </button>
 
-            <button
-                class="filter-button"
-                data-filter="SERVICE_REQUIRED"
-            >
-                SERVICE REQUIRED
-            </button>
+    <div class="filter-row">
 
-            <button
-                class="filter-button"
-                data-filter="REPAIR_REQUIRED"
-            >
-                REPAIR REQUIRED
-            </button>
+        <button class="filter-button active" data-filter="ALL">
+            ALL
+        </button>
 
-            <button
-                class="filter-button"
-                data-filter="UNABLE_TO_VERIFY"
-            >
-                UNABLE TO VERIFY
-            </button>
+        <button class="filter-button" data-filter="PASS">
+            PASS
+        </button>
 
+        <button class="filter-button" data-filter="MONITOR">
+            MONITOR
+        </button>
+
+        <button class="filter-button" data-filter="SERVICE_REQUIRED">
+            SERVICE REQUIRED
+        </button>
+
+        <button class="filter-button" data-filter="REPAIR_REQUIRED">
+            REPAIR REQUIRED
+        </button>
+
+        <button class="filter-button" data-filter="UNABLE_TO_VERIFY">
+            UNABLE TO VERIFY
+        </button>
+
+    </div>
+
+
+    <div class="history-list" id="history-list">
+
+        <div class="empty">
+            Loading inspection history...
         </div>
 
+    </div>
 
-        <div
-            class="history-list"
-            id="history-list"
-        >
-
-            <div class="empty">
-                Loading inspection history...
-            </div>
-
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- CONNECTED SYSTEM -->
+<section class="section">
 
-    <section class="section">
+    <div class="eyebrow">
+        03 / RECORD SYSTEM
+    </div>
 
-        <div class="eyebrow">
-            03 / RECORD SYSTEM
-        </div>
+    <h2>
+        Connected Records
+    </h2>
 
-        <h2>
-            Connected Records
-        </h2>
+    <div class="record-grid">
 
+        <div class="record-card">
 
-        <div class="record-grid">
-
-            <div class="record-card">
-
-                <h3>
-                    Maintenance Plan
-                </h3>
-
-                <p>
-                    Tracks what still needs inspection,
-                    verification or future maintenance.
-                </p>
-
-                <a
-                    href="maintenance-plan.html"
-                    class="btn btn-secondary"
-                >
-                    MAINTENANCE
-                </a>
-
-            </div>
-
-
-            <div class="record-card">
-
-                <h3>
-                    Service History
-                </h3>
-
-                <p>
-                    Records maintenance and repairs that
-                    were actually completed.
-                </p>
-
-                <a
-                    href="service-history.html"
-                    class="btn btn-secondary"
-                >
-                    SERVICE HISTORY
-                </a>
-
-            </div>
-
-
-            <div class="record-card">
-
-                <h3>
-                    Build Log
-                </h3>
-
-                <p>
-                    Tracks the wider Lancer project,
-                    including diagnostics, tuning and
-                    modifications.
-                </p>
-
-                <a
-                    href="projects/build-log.html"
-                    class="btn btn-secondary"
-                >
-                    BUILD LOG
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- NOTICE -->
-
-    <section class="section">
-
-        <div class="notice">
-
-            <h3>
-                INSPECTION RECORD NOTICE
-            </h3>
+            <h3>Maintenance Plan</h3>
 
             <p>
-                An inspection result describes what was recorded
-                during a particular check. It does not replace a
-                professional mechanical diagnosis, and an item
-                passing a visual inspection does not guarantee
-                that every internal component is fault-free.
+                Tracks what still needs inspection,
+                verification or future maintenance.
             </p>
+
+            <a href="maintenance-plan.html" class="btn btn-secondary">
+                MAINTENANCE
+            </a>
 
         </div>
 
-    </section>
+
+        <div class="record-card">
+
+            <h3>Service History</h3>
+
+            <p>
+                Records maintenance and repairs that
+                were actually completed.
+            </p>
+
+            <a href="service-history.html" class="btn btn-secondary">
+                SERVICE HISTORY
+            </a>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <h3>Build Log</h3>
+
+            <p>
+                Tracks the wider Lancer project,
+                including diagnostics, tuning and
+                modifications.
+            </p>
+
+            <a href="projects/build-log.html" class="btn btn-secondary">
+                BUILD LOG
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="notice">
+
+        <h3>
+            INSPECTION RECORD NOTICE
+        </h3>
+
+        <p>
+            Inspection records describe observations made during
+            specific checks. A recorded pass does not guarantee
+            that every internal component is fault-free and does
+            not replace professional diagnosis where required.
+        </p>
+
+    </div>
+
+</section>
 
 </main>
 
@@ -526,9 +545,7 @@
 </footer>
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -565,7 +582,6 @@ function escapeHTML(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-
 }
 
 
@@ -578,12 +594,8 @@ function formatKM(value) {
         return "—";
     }
 
-    return (
-        Number(value)
-            .toLocaleString("en-AU") +
-        " km"
-    );
-
+    return Number(value)
+        .toLocaleString("en-AU") + " km";
 }
 
 
@@ -603,7 +615,6 @@ function formatDate(value) {
             year: "numeric"
         }
     );
-
 }
 
 
@@ -612,7 +623,6 @@ function resultLabel(result) {
     return String(
         result || ""
     ).replaceAll("_", " ");
-
 }
 
 
@@ -622,7 +632,6 @@ function needsAttention(result) {
         result === "SERVICE_REQUIRED" ||
         result === "REPAIR_REQUIRED"
     );
-
 }
 
 
@@ -652,17 +661,13 @@ async function loadVehicle() {
             "UNAVAILABLE";
 
         return;
-
     }
 
 
     document.getElementById(
         "current-odometer"
     ).textContent =
-        formatKM(
-            data.odometer
-        );
-
+        formatKM(data.odometer);
 }
 
 
@@ -704,11 +709,9 @@ async function loadInspections() {
             <div class="empty">
                 Inspection history could not be loaded.
             </div>
-
         `;
 
         return;
-
     }
 
 
@@ -719,7 +722,6 @@ async function loadInspections() {
     renderSummary();
 
     renderHistory();
-
 }
 
 
@@ -732,8 +734,7 @@ function renderSummary() {
     const pass =
         inspectionRecords.filter(
             record =>
-                record.result ===
-                "PASS"
+                record.result === "PASS"
         ).length;
 
 
@@ -748,21 +749,99 @@ function renderSummary() {
 
     document.getElementById(
         "total-inspections"
-    ).textContent =
-        total;
+    ).textContent = total;
 
 
     document.getElementById(
         "pass-count"
-    ).textContent =
-        pass;
+    ).textContent = pass;
 
 
     document.getElementById(
         "attention-count"
-    ).textContent =
-        attention;
+    ).textContent = attention;
+}
 
+
+function renderChecklist(record) {
+
+    const completed =
+        Array.isArray(
+            record.checklist_completed
+        )
+            ? record.checklist_completed
+            : [];
+
+
+    if (!completed.length) {
+
+        return `
+
+            <div class="saved-checklist">
+
+                <div class="checklist-heading">
+
+                    <span>
+                        COMPLETED CHECKS
+                    </span>
+
+                    <strong>
+                        0 RECORDED
+                    </strong>
+
+                </div>
+
+                <div class="empty-checklist">
+                    No completed checklist items were
+                    recorded with this inspection.
+                </div>
+
+            </div>
+        `;
+    }
+
+
+    return `
+
+        <div class="saved-checklist">
+
+            <div class="checklist-heading">
+
+                <span>
+                    COMPLETED CHECKS
+                </span>
+
+                <strong>
+                    ${completed.length} RECORDED
+                </strong>
+
+            </div>
+
+
+            <div class="completed-checks">
+
+                ${completed.map(
+                    item => `
+
+                        <div class="completed-check">
+
+                            <span class="check-symbol">
+                                ✓
+                            </span>
+
+                            <span class="check-copy">
+                                ${escapeHTML(item)}
+                            </span>
+
+                        </div>
+
+                    `
+                ).join("")}
+
+            </div>
+
+        </div>
+    `;
 }
 
 
@@ -788,7 +867,6 @@ function renderHistory() {
                     record.result ===
                     activeFilter
             );
-
     }
 
 
@@ -807,14 +885,13 @@ function renderHistory() {
                     </strong>
 
                     <p>
-                        Inspection results will appear here
-                        after physical checks are completed
-                        and saved through the Inspection
-                        Manager.
+                        Inspection results and completed
+                        checklist items will appear here
+                        after physical checks are performed
+                        and saved.
                     </p>
 
                 </div>
-
             `;
 
         } else {
@@ -824,13 +901,10 @@ function renderHistory() {
                 <div class="empty">
                     No inspection records match this filter.
                 </div>
-
             `;
-
         }
 
         return;
-
     }
 
 
@@ -842,6 +916,14 @@ function renderHistory() {
                     needsAttention(
                         record.result
                     );
+
+
+                const completed =
+                    Array.isArray(
+                        record.checklist_completed
+                    )
+                        ? record.checklist_completed
+                        : [];
 
 
                 return `
@@ -919,6 +1001,19 @@ function renderHistory() {
                                             record.odometer
                                         )
                                     )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    CHECKS COMPLETED
+                                </span>
+
+                                <strong>
+                                    ${completed.length}
                                 </strong>
 
                             </div>
@@ -1034,13 +1129,13 @@ function renderHistory() {
                                 : ""
                         }
 
+
+                        ${renderChecklist(record)}
+
                     </article>
-
                 `;
-
             }
         ).join("");
-
 }
 
 
@@ -1053,16 +1148,14 @@ document.querySelectorAll(
             "click",
             () => {
 
-                document
-                    .querySelectorAll(
-                        ".filter-button"
-                    )
-                    .forEach(
-                        item =>
-                            item.classList.remove(
-                                "active"
-                            )
-                    );
+                document.querySelectorAll(
+                    ".filter-button"
+                ).forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
 
 
                 button.classList.add(
@@ -1075,20 +1168,18 @@ document.querySelectorAll(
 
 
                 renderHistory();
-
             }
         );
-
     }
 );
 
 
 async function initialise() {
 
-    await loadVehicle();
-
-    await loadInspections();
-
+    await Promise.all([
+        loadVehicle(),
+        loadInspections()
+    ]);
 }
 
 
