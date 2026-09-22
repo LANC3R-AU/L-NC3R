@@ -878,6 +878,91 @@
 
 
 
+
+        .notification-button {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: var(--red);
+            border: 2px solid var(--bg);
+            border-radius: 999px;
+            font-size: .52rem;
+            font-weight: 900;
+        }
+
+        .notification-badge.show {
+            display: flex;
+        }
+
+        .notification-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .notification-card {
+            padding: 16px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .notification-card.high {
+            border-color: rgba(226, 27, 35, .65);
+        }
+
+        .notification-card.medium {
+            border-color: rgba(216, 167, 46, .6);
+        }
+
+        .notification-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .notification-card strong {
+            display: block;
+            font-size: .9rem;
+            line-height: 1.35;
+        }
+
+        .notification-card p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: .73rem;
+            line-height: 1.45;
+        }
+
+        .notification-count {
+            margin-bottom: 14px;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 800;
+        }
+
         .vehicle-health-panel {
             margin: 18px 0 22px;
             padding: 18px;
@@ -1115,6 +1200,20 @@
             >
                 CONNECTING
             </span>
+
+            <button
+                class="notification-button hidden"
+                id="notification-button"
+                type="button"
+                aria-label="Open notifications"
+                onclick="openNotifications()"
+            >
+                🔔
+                <span
+                    class="notification-badge"
+                    id="notification-badge"
+                >0</span>
+            </button>
 
             <button
                 class="logout hidden"
@@ -2177,6 +2276,68 @@
     </section>
 
 
+    <!-- NOTIFICATIONS -->
+
+    <section
+        class="screen"
+        id="notifications-screen"
+    >
+        <button
+            class="back"
+            type="button"
+            onclick="garageNav('garage')"
+        >
+            ← GARAGE
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">
+                MAINTENANCE ALERTS
+            </div>
+
+            <h2>
+                GARAGE<br>
+                <span>NOTIFICATIONS.</span>
+            </h2>
+
+            <p>
+                Alerts are generated only from recorded inspections, established service baselines and recorded follow-up targets.
+            </p>
+        </div>
+
+        <div
+            class="notification-count"
+            id="notification-count"
+        >
+            Checking alerts…
+        </div>
+
+        <div
+            class="notification-list"
+            id="notification-list"
+        ></div>
+
+        <div class="subheading">
+            PHONE NOTIFICATIONS
+        </div>
+
+        <div class="panel">
+            <p class="detail-copy" id="notification-permission-copy">
+                Check whether this device supports notifications.
+            </p>
+
+            <button
+                class="button secondary"
+                id="enable-notifications-button"
+                type="button"
+                onclick="enableGarageNotifications()"
+            >
+                ENABLE PHONE NOTIFICATIONS
+            </button>
+        </div>
+    </section>
+
+
     <!-- MORE -->
 
     <section
@@ -2203,6 +2364,26 @@
 
 
         <div class="more-menu">
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="openNotifications()"
+            >
+                <div>
+                    <span class="more-card-title">
+                        Notifications
+                    </span>
+                    <span
+                        class="more-card-description"
+                        id="more-notification-description"
+                    >
+                        Check maintenance and inspection alerts.
+                    </span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
 
             <button
                 class="more-card"
@@ -2340,7 +2521,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • MAINTENANCE INTELLIGENCE v2
+            L@NC3R GARAGE • NOTIFICATIONS v1
         </div>
 
     </section>
@@ -2438,6 +2619,8 @@ const db =
 
 
 let currentUser = null;
+let garageAlerts = [];
+let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
 let maintenanceItems = [];
@@ -2863,7 +3046,7 @@ async function refreshGarage() {
             db
                 .from("inspection_records")
                 .select(
-                    "id, maintenance_item_id, inspection_date, odometer, result"
+                    "id, maintenance_item_id, inspection_date, odometer, result, action_required, follow_up_date, follow_up_odometer"
                 )
                 .eq(
                     "vehicle_key",
@@ -3304,6 +3487,8 @@ async function refreshGarage() {
             "attention"
         );
     }
+
+    refreshGarageAlerts();
 }
 
 
@@ -3390,6 +3575,334 @@ function openNextAttention() {
     }
 
     startInspection(id);
+}
+
+
+function buildGarageAlerts() {
+    const alerts = [];
+    const today = todayLocal();
+
+    maintenanceItems.forEach(item => {
+        const due = maintenanceDueState(item);
+
+        // Unknown history is deliberately NOT treated as overdue.
+        if (due.state === "DUE") {
+            alerts.push({
+                key: `due-${item.id}`,
+                level: "high",
+                title: item.maintenance_item,
+                message: "Established maintenance baseline is due.",
+                maintenanceId: Number(item.id)
+            });
+        } else if (due.state === "DUE SOON") {
+            alerts.push({
+                key: `soon-${item.id}`,
+                level: "medium",
+                title: item.maintenance_item,
+                message: "Established maintenance baseline is due soon.",
+                maintenanceId: Number(item.id)
+            });
+        }
+    });
+
+    const latestByItem = new Map();
+
+    inspectionRecords.forEach(record => {
+        const itemId = Number(record.maintenance_item_id);
+
+        if (itemId && !latestByItem.has(itemId)) {
+            latestByItem.set(itemId, record);
+        }
+    });
+
+    latestByItem.forEach(record => {
+        const result = String(record.result || "").toUpperCase();
+        const item = maintenanceItems.find(
+            row => Number(row.id) === Number(record.maintenance_item_id)
+        );
+        const title = item?.maintenance_item || "Inspection";
+
+        if (result === "REPAIR_REQUIRED") {
+            alerts.push({
+                key: `repair-${record.id}`,
+                level: "high",
+                title,
+                message: record.action_required
+                    ? `Repair required • ${record.action_required}`
+                    : "Latest inspection recorded REPAIR REQUIRED.",
+                maintenanceId: Number(record.maintenance_item_id)
+            });
+        } else if (result === "SERVICE_REQUIRED") {
+            alerts.push({
+                key: `service-${record.id}`,
+                level: "high",
+                title,
+                message: record.action_required
+                    ? `Service required • ${record.action_required}`
+                    : "Latest inspection recorded SERVICE REQUIRED.",
+                maintenanceId: Number(record.maintenance_item_id)
+            });
+        }
+
+        const followDate = record.follow_up_date || null;
+        const followKm = record.follow_up_odometer !== null &&
+            record.follow_up_odometer !== undefined
+                ? Number(record.follow_up_odometer)
+                : null;
+
+        const dateReached =
+            followDate &&
+            today >= followDate;
+
+        const kmReached =
+            followKm !== null &&
+            currentOdometer !== null &&
+            currentOdometer >= followKm;
+
+        if (dateReached || kmReached) {
+            const reasons = [];
+
+            if (dateReached) {
+                reasons.push(`date ${formatDate(followDate)}`);
+            }
+
+            if (kmReached) {
+                reasons.push(`${formatKM(followKm)}`);
+            }
+
+            alerts.push({
+                key: `followup-${record.id}`,
+                level: "medium",
+                title,
+                message: `Recorded inspection follow-up reached: ${reasons.join(" • ")}.`,
+                maintenanceId: Number(record.maintenance_item_id)
+            });
+        }
+    });
+
+    return alerts;
+}
+
+
+function refreshGarageAlerts() {
+    garageAlerts = buildGarageAlerts();
+
+    const badge =
+        document.getElementById("notification-badge");
+
+    const button =
+        document.getElementById("notification-button");
+
+    const moreDescription =
+        document.getElementById("more-notification-description");
+
+    if (currentUser && button) {
+        button.classList.remove("hidden");
+    }
+
+    if (badge) {
+        badge.textContent =
+            garageAlerts.length > 99
+                ? "99+"
+                : String(garageAlerts.length);
+
+        badge.classList.toggle(
+            "show",
+            garageAlerts.length > 0
+        );
+    }
+
+    if (moreDescription) {
+        moreDescription.textContent =
+            garageAlerts.length
+                ? `${garageAlerts.length} active maintenance alert${garageAlerts.length === 1 ? "" : "s"}.`
+                : "No active maintenance alerts.";
+    }
+
+    renderGarageAlerts();
+    updateNotificationPermissionUI();
+    sendGarageNotificationIfNeeded();
+}
+
+
+function renderGarageAlerts() {
+    const list =
+        document.getElementById("notification-list");
+
+    const count =
+        document.getElementById("notification-count");
+
+    if (!list || !count) {
+        return;
+    }
+
+    count.textContent =
+        garageAlerts.length
+            ? `${garageAlerts.length} ACTIVE ALERT${garageAlerts.length === 1 ? "" : "S"}`
+            : "NO ACTIVE ALERTS";
+
+    if (!garageAlerts.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No maintenance alerts are active. Unknown service history is not treated as proof that maintenance is overdue.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML =
+        garageAlerts.map((alert, index) => `
+            <button
+                class="notification-card ${alert.level}"
+                type="button"
+                onclick="openGarageAlert(${index})"
+            >
+                <div class="notification-card-top">
+                    <strong>${escapeHTML(alert.title)}</strong>
+                    <span class="tag ${alert.level === "high" ? "red" : "yellow"}">
+                        ${alert.level === "high" ? "ATTENTION" : "REMINDER"}
+                    </span>
+                </div>
+                <p>${escapeHTML(alert.message)}</p>
+            </button>
+        `).join("");
+}
+
+
+function openNotifications() {
+    renderGarageAlerts();
+    updateNotificationPermissionUI();
+    setActiveNav("more");
+    showScreen("notifications-screen");
+}
+
+
+function openGarageAlert(index) {
+    const alert = garageAlerts[index];
+
+    if (!alert) {
+        return;
+    }
+
+    if (alert.maintenanceId) {
+        openMaintenanceDetail(alert.maintenanceId);
+        return;
+    }
+
+    openNotifications();
+}
+
+
+function notificationSupported() {
+    return (
+        "Notification" in window &&
+        "serviceWorker" in navigator
+    );
+}
+
+
+function updateNotificationPermissionUI() {
+    const copy =
+        document.getElementById("notification-permission-copy");
+
+    const button =
+        document.getElementById("enable-notifications-button");
+
+    if (!copy || !button) {
+        return;
+    }
+
+    if (!notificationSupported()) {
+        copy.textContent =
+            "This browser or installed app does not expose web notification support.";
+        button.classList.add("hidden");
+        return;
+    }
+
+    if (Notification.permission === "granted") {
+        copy.textContent =
+            "Phone notifications are enabled. Garage can surface active recorded maintenance alerts while the app is open.";
+        button.classList.add("hidden");
+    } else if (Notification.permission === "denied") {
+        copy.textContent =
+            "Notifications are blocked for L@NC3R Garage. You can change this in your browser/app site settings.";
+        button.classList.add("hidden");
+    } else {
+        copy.textContent =
+            "Enable notifications to allow Garage to surface active recorded maintenance alerts on this device.";
+        button.classList.remove("hidden");
+    }
+}
+
+
+async function enableGarageNotifications() {
+    if (!notificationSupported()) {
+        updateNotificationPermissionUI();
+        return;
+    }
+
+    const permission =
+        await Notification.requestPermission();
+
+    updateNotificationPermissionUI();
+
+    if (permission === "granted") {
+        sendGarageNotificationIfNeeded(true);
+    }
+}
+
+
+async function sendGarageNotificationIfNeeded(force = false) {
+    if (
+        !notificationSupported() ||
+        Notification.permission !== "granted" ||
+        !garageAlerts.length
+    ) {
+        return;
+    }
+
+    const signature =
+        garageAlerts
+            .map(alert => alert.key)
+            .sort()
+            .join("|");
+
+    if (
+        !force &&
+        signature === lastNotifiedAlertSignature
+    ) {
+        return;
+    }
+
+    lastNotifiedAlertSignature =
+        signature;
+
+    try {
+        const registration =
+            await navigator.serviceWorker.ready;
+
+        await registration.showNotification(
+            "L@NC3R Garage",
+            {
+                body:
+                    garageAlerts.length === 1
+                        ? `${garageAlerts[0].title}: ${garageAlerts[0].message}`
+                        : `${garageAlerts.length} active maintenance alerts need review.`,
+                icon: "/L-NC3R/icons/icon-192.png",
+                badge: "/L-NC3R/icons/icon-192.png",
+                tag: "lanc3r-garage-maintenance",
+                renotify: true,
+                data: {
+                    url: "/L-NC3R/garage.html"
+                }
+            }
+        );
+    } catch (error) {
+        console.error(
+            "Garage notification failed:",
+            error
+        );
+    }
 }
 
 
