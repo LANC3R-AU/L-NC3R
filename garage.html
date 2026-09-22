@@ -13,7 +13,7 @@
 
     <meta
         name="description"
-        content="L@NC3R Garage mobile vehicle management app for the 2009 Mitsubishi Lancer."
+        content="L@NC3R Garage 1.0 — maintenance, diagnostics, fuel, expenses and vehicle records for the 2009 Mitsubishi Lancer."
     >
 
     <meta name="mobile-web-app-capable" content="yes">
@@ -156,6 +156,10 @@
 
         .connection.online {
             color: var(--green);
+        }
+
+        .connection.offline {
+            color: var(--yellow);
         }
 
         .eyebrow {
@@ -3815,7 +3819,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • DOCUMENTS v1
+            L@NC3R GARAGE • 1.0
         </div>
 
     </section>
@@ -4234,7 +4238,25 @@ function parseParts(value) {
 }
 
 
+
+function updateConnectionStatus() {
+    const connection = document.getElementById("connection");
+    if (!connection) return;
+
+    const online = navigator.onLine;
+
+    connection.textContent = online ? "ONLINE" : "OFFLINE";
+    connection.classList.toggle("online", online);
+    connection.classList.toggle("offline", !online);
+}
+
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
+
+
 async function initialise() {
+
+    updateConnectionStatus();
 
     document.getElementById(
         "odometer-date"
@@ -4284,12 +4306,7 @@ async function enterGarage() {
             "connection"
         );
 
-    connection.textContent =
-        "ONLINE";
-
-    connection.classList.add(
-        "online"
-    );
+    updateConnectionStatus();
 
 
     document.getElementById(
@@ -4348,7 +4365,7 @@ async function refreshGarage() {
             db
                 .from("inspection_records")
                 .select(
-                    "id, maintenance_item_id, inspection_date, odometer, result, action_required, follow_up_date, follow_up_odometer"
+                    "id, maintenance_item_id, inspection_date, odometer, result, action_required"
                 )
                 .eq(
                     "vehicle_key",
@@ -4386,6 +4403,23 @@ async function refreshGarage() {
                 .limit(1)
 
         ]);
+
+    const refreshErrors = [
+        vehicleResponse.error,
+        maintenanceResponse.error,
+        inspectionResponse.error,
+        serviceResponse.error
+    ].filter(Boolean);
+
+    if (refreshErrors.length) {
+        console.error("Garage refresh query failed:", refreshErrors);
+        const connection = document.getElementById("connection");
+        if (connection) {
+            connection.textContent = "DATA ERROR";
+            connection.classList.remove("online");
+            connection.classList.add("offline");
+        }
+    }
 
 
     if (
@@ -4944,41 +4978,6 @@ function buildGarageAlerts() {
                 message: record.action_required
                     ? `Service required • ${record.action_required}`
                     : "Latest inspection recorded SERVICE REQUIRED.",
-                maintenanceId: Number(record.maintenance_item_id)
-            });
-        }
-
-        const followDate = record.follow_up_date || null;
-        const followKm = record.follow_up_odometer !== null &&
-            record.follow_up_odometer !== undefined
-                ? Number(record.follow_up_odometer)
-                : null;
-
-        const dateReached =
-            followDate &&
-            today >= followDate;
-
-        const kmReached =
-            followKm !== null &&
-            currentOdometer !== null &&
-            currentOdometer >= followKm;
-
-        if (dateReached || kmReached) {
-            const reasons = [];
-
-            if (dateReached) {
-                reasons.push(`date ${formatDate(followDate)}`);
-            }
-
-            if (kmReached) {
-                reasons.push(`${formatKM(followKm)}`);
-            }
-
-            alerts.push({
-                key: `followup-${record.id}`,
-                level: "medium",
-                title,
-                message: `Recorded inspection follow-up reached: ${reasons.join(" • ")}.`,
                 maintenanceId: Number(record.maintenance_item_id)
             });
         }
@@ -8448,6 +8447,8 @@ if (
                             "L@NC3R Garage service worker registered:",
                             registration.scope
                         );
+
+                        registration.update().catch(() => {});
                     }
                 )
                 .catch(
@@ -8461,6 +8462,18 @@ if (
                 );
         }
     );
+}
+
+
+
+let garageRefreshingForUpdate = false;
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (garageRefreshingForUpdate) return;
+        garageRefreshingForUpdate = true;
+        window.location.reload();
+    });
 }
 
 
@@ -8535,4 +8548,4 @@ if (documentForm) {
 </script>
 
 </body>
-</html>
+</htm
