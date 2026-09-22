@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Log Manager | L@NC3R</title>
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        .manager-wrap {
+            width: min(1100px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 130px 0 80px;
+        }
+
+        .manager-header {
+            margin-bottom: 50px;
+        }
+
+        .manager-header h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 0.9;
+            margin: 10px 0 20px;
+        }
+
+        .manager-header h1 span {
+            color: #e21b23;
+        }
+
+        .manager-header p {
+            max-width: 700px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .manager-panel {
+            background: #101010;
+            border: 1px solid #242424;
+            padding: 32px;
+            margin-bottom: 30px;
+        }
+
+        .manager-panel h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+
+        .manager-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .manager-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .manager-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .manager-field label {
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            font-weight: 700;
+            color: #aaa;
+        }
+
+        .manager-field input,
+        .manager-field select,
+        .manager-field textarea {
+            width: 100%;
+            border: 1px solid #303030;
+            background: #080808;
+            color: #fff;
+            padding: 14px;
+            font: inherit;
+            box-sizing: border-box;
+        }
+
+        .manager-field textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .manager-field input:focus,
+        .manager-field select:focus,
+        .manager-field textarea:focus {
+            outline: 1px solid #e21b23;
+            border-color: #e21b23;
+        }
+
+        .manager-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .manager-message {
+            margin-top: 20px;
+            padding: 14px 16px;
+            border: 1px solid #303030;
+            display: none;
+        }
+
+        .manager-message.success {
+            display: block;
+            border-color: #237a3b;
+        }
+
+        .manager-message.error {
+            display: block;
+            border-color: #e21b23;
+        }
+
+        .manager-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .manager-topbar p {
+            margin: 0;
+            color: #aaa;
+        }
+
+        .manager-logs {
+            display: grid;
+            gap: 16px;
+        }
+
+        .manager-log {
+            background: #0c0c0c;
+            border: 1px solid #242424;
+            padding: 22px;
+        }
+
+        .manager-log-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .manager-log h3 {
+            margin: 4px 0 0;
+        }
+
+        .manager-log-meta {
+            color: #e21b23;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+
+        .manager-log p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .manager-login {
+            max-width: 600px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .danger-button {
+            border-color: #e21b23;
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+
+            .manager-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .manager-field.full {
+                grid-column: auto;
+            }
+
+            .manager-topbar,
+            .manager-log-head {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="site-nav">
+
+    <a href="index.html" class="logo">
+        L<span>@</span>NC3R
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html">
+                PORTFOLIO
+            </a>
+        </li>
+
+        <li>
+            <a href="projects/build-log.html">
+                BUILD LOG
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<main class="manager-wrap">
+
+    <header class="manager-header">
+
+        <div class="eyebrow">
+            L@NC3R / ADMIN
+        </div>
+
+        <h1>
+            LOG<br>
+            <span>MANAGER.</span>
+        </h1>
+
+        <p>
+            Add, edit and delete entries from the L@NC3R
+            build history. Changes are stored in Supabase
+            and can appear on the public Build Log
+            automatically.
+        </p>
+
+    </header>
+
+
+    <!-- ================================================
+         LOGIN
+    ================================================= -->
+
+    <section
+        id="login-section"
+        class="manager-panel manager-login"
+    >
+
+        <h2>
+            OWNER LOGIN
+        </h2>
+
+        <form id="login-form">
+
+            <div class="manager-grid">
+
+                <div class="manager-field full">
+
+                    <label for="login-email">
+                        EMAIL
+                    </label>
+
+                    <input
+                        id="login-email"
+                        type="email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="manager-field full">
+
+                    <label for="login-password">
+                        PASSWORD
+                    </label>
+
+                    <input
+                        id="login-password"
+                        type="password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="manager-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    SIGN IN
+                </button>
+
+            </div>
+
+        </form>
+
+        <div
+            id="login-message"
+            class="manager-message"
+        ></div>
+
+    </section>
+
+
+    <!-- ================================================
+         ADMIN DASHBOARD
+    ================================================= -->
+
+    <div
+        id="dashboard"
+        class="hidden"
+    >
+
+
+        <div class="manager-topbar">
+
+            <p>
+                Signed in as
+                <strong id="current-user"></strong>
+            </p>
+
+            <button
+                id="logout-button"
+                class="btn btn-secondary"
+                type="button"
+            >
+                LOG OUT
+            </button>
+
+        </div>
+
+
+        <!-- ============================================
+             ENTRY FORM
+        ============================================= -->
+
+        <section class="manager-panel">
+
+            <div class="eyebrow">
+                BUILD ENTRY
+            </div>
+
+            <h2 id="form-heading">
+                ADD LOG ENTRY
+            </h2>
+
+
+            <form id="log-form">
+
+                <input
+                    id="entry-id"
+                    type="hidden"
+                >
+
+
+                <div class="manager-grid">
+
+
+                    <div class="manager-field">
+
+                        <label for="log-date">
+                            DATE
+                        </label>
+
+                        <input
+                            id="log-date"
+                            type="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="manager-field">
+
+                        <label for="category">
+                            CATEGORY
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="MAINTENANCE">
+                                Maintenance
+                            </option>
+
+                            <option value="REPAIR">
+                                Repair
+                            </option>
+
+                            <option value="DIAGNOSTICS">
+                                Diagnostics
+                            </option>
+
+                            <option value="ECU">
+                                ECU
+                            </option>
+
+                            <option value="MODIFICATION">
+                                Modification
+                            </option>
+
+                            <option value="PERFORMANCE">
+                                Performance
+                            </option>
+
+                            <option value="MECHANICAL">
+                                Mechanical
+                            </option>
+
+                            <option value="PROJECT">
+                                Project
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="manager-field">
+
+                        <label for="odometer">
+                            ODOMETER (KM)
+                        </label>
+
+                        <input
+                            id="odometer"
+                            type="number"
+                            min="0"
+                            step="1"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <div class="manager-field">
+
+                        <label for="status">
+                            STATUS
+                        </label>
+
+                        <select id="status">
+
+                            <option value="COMPLETED">
+                                Completed
+                            </option>
+
+                            <option value="ACTIVE">
+                                Active
+                            </option>
+
+                            <option value="IN PROGRESS">
+                                In Progress
+                            </option>
+
+                            <option value="RESEARCH">
+                                Research
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="manager-field full">
+
+                        <label for="title">
+                            TITLE
+                        </label>
+
+                        <input
+                            id="title"
+                            type="text"
+                            maxlength="150"
+                            placeholder="Example: Engine Oil & Filter Change"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="manager-field full">
+
+                        <label for="description">
+                            DESCRIPTION
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="What happened?"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="manager-field full">
+
+                        <label for="details">
+                            DETAILS / WHAT I LEARNED
+                        </label>
+
+                        <textarea
+                            id="details"
+                            placeholder="Optional extra information about the work, result or what you learned."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="manager-field full">
+
+                        <label for="parts">
+                            PARTS USED
+                        </label>
+
+                        <input
+                            id="parts"
+                            type="text"
+                            placeholder="Oil filter, engine oil, drain plug washer"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-actions">
+
+                    <button
+                        id="save-button"
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        ADD LOG ENTRY
+                    </button>
+
+                    <button
+                        id="cancel-edit"
+                        type="button"
+                        class="btn btn-secondary hidden"
+                    >
+                        CANCEL EDIT
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="form-message"
+                class="manager-message"
+            ></div>
+
+        </section>
+
+
+        <!-- ============================================
+             EXISTING LOGS
+        ============================================= -->
+
+        <section class="manager-panel">
+
+            <div class="eyebrow">
+                DATABASE
+            </div>
+
+            <h2>
+                EXISTING LOGS
+            </h2>
+
+            <div
+                id="admin-log-list"
+                class="manager-logs"
+            >
+
+                Loading...
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://dmtzalwtexsstdynpmuk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_9pbNHhwgcmx1u8ZMsd_NlA_He7Xghwu";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const loginSection =
+    document.getElementById("login-section");
+
+const dashboard =
+    document.getElementById("dashboard");
+
+const loginForm =
+    document.getElementById("login-form");
+
+const loginMessage =
+    document.getElementById("login-message");
+
+const currentUser =
+    document.getElementById("current-user");
+
+const logoutButton =
+    document.getElementById("logout-button");
+
+const logForm =
+    document.getElementById("log-form");
+
+const formMessage =
+    document.getElementById("form-message");
+
+const logList =
+    document.getElementById("admin-log-list");
+
+const cancelEdit =
+    document.getElementById("cancel-edit");
+
+const saveButton =
+    document.getElementById("save-button");
+
+const formHeading =
+    document.getElementById("form-heading");
+
+
+function showMessage(
+    element,
+    message,
+    type
+) {
+
+    element.textContent = message;
+
+    element.className =
+        "manager-message " + type;
+
+}
+
+
+function clearMessage(element) {
+
+    element.textContent = "";
+
+    element.className =
+        "manager-message";
+
+}
+
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function setDefaultDate() {
+
+    const field =
+        document.getElementById("log-date");
+
+    if (!field.value) {
+
+        const now =
+            new Date();
+
+        const localDate =
+            new Date(
+                now.getTime() -
+                now.getTimezoneOffset() * 60000
+            )
+            .toISOString()
+            .split("T")[0];
+
+        field.value = localDate;
+
+    }
+
+}
+
+
+async function checkSession() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    if (data.session) {
+
+        showDashboard(
+            data.session.user
+        );
+
+    } else {
+
+        showLogin();
+
+    }
+
+}
+
+
+function showLogin() {
+
+    loginSection.classList.remove("hidden");
+
+    dashboard.classList.add("hidden");
+
+}
+
+
+async function showDashboard(user) {
+
+    loginSection.classList.add("hidden");
+
+    dashboard.classList.remove("hidden");
+
+    currentUser.textContent =
+        user.email || "Owner";
+
+    setDefaultDate();
+
+    await loadLogs();
+
+}
+
+
+loginForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        clearMessage(loginMessage);
+
+
+        const email =
+            document
+                .getElementById("login-email")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("login-password")
+                .value;
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth
+                .signInWithPassword({
+                    email,
+                    password
+                });
+
+
+        if (error) {
+
+            showMessage(
+                loginMessage,
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        loginForm.reset();
+
+        await showDashboard(
+            data.user
+        );
+
+    }
+);
+
+
+logoutButton.addEventListener(
+    "click",
+    async () => {
+
+        await supabaseClient.auth.signOut();
+
+        showLogin();
+
+    }
+);
+
+
+async function loadLogs() {
+
+    logList.innerHTML =
+        "Loading build logs...";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("build_logs")
+            .select("*")
+            .order("log_date", {
+                ascending: false
+            })
+            .order("id", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        logList.innerHTML =
+            `<p>${escapeHTML(error.message)}</p>`;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        logList.innerHTML =
+            "<p>No build logs yet.</p>";
+
+        return;
+
+    }
+
+
+    logList.innerHTML =
+        data.map((entry) => {
+
+            const date =
+                entry.log_date
+                    ? new Date(
+                        entry.log_date + "T00:00:00"
+                    ).toLocaleDateString(
+                        "en-AU",
+                        {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric"
+                        }
+                    )
+                    : "NO DATE";
+
+
+            const odometer =
+                entry.odometer !== null
+                    ? `
+                        <p>
+                            <strong>Odometer:</strong>
+                            ${Number(entry.odometer).toLocaleString("en-AU")} km
+                        </p>
+                    `
+                    : "";
+
+
+            return `
+
+                <article class="manager-log">
+
+                    <div class="manager-log-head">
+
+                        <div>
+
+                            <div class="manager-log-meta">
+
+                                ${escapeHTML(entry.category)}
+                                /
+                                ${escapeHTML(date)}
+
+                            </div>
+
+                            <h3>
+                                ${escapeHTML(entry.title)}
+                            </h3>
+
+                        </div>
+
+                        <div class="project-card-status">
+
+                            ● ${escapeHTML(entry.status)}
+
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        ${escapeHTML(entry.description)}
+                    </p>
+
+                    ${odometer}
+
+
+                    <div class="manager-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="editEntry(${entry.id})"
+                        >
+                            EDIT
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary danger-button"
+                            onclick="deleteEntry(${entry.id})"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+async function editEntry(id) {
+
+    clearMessage(formMessage);
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("build_logs")
+            .select("*")
+            .eq("id", id)
+            .single();
+
+
+    if (error) {
+
+        showMessage(
+            formMessage,
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById("entry-id").value =
+        data.id;
+
+    document.getElementById("log-date").value =
+        data.log_date || "";
+
+    document.getElementById("category").value =
+        data.category;
+
+    document.getElementById("title").value =
+        data.title;
+
+    document.getElementById("description").value =
+        data.description;
+
+    document.getElementById("details").value =
+        data.details || "";
+
+    document.getElementById("odometer").value =
+        data.odometer ?? "";
+
+    document.getElementById("parts").value =
+        Array.isArray(data.parts)
+            ? data.parts.join(", ")
+            : "";
+
+    document.getElementById("status").value =
+        data.status;
+
+
+    formHeading.textContent =
+        "EDIT LOG ENTRY";
+
+    saveButton.textContent =
+        "SAVE CHANGES";
+
+    cancelEdit.classList.remove(
+        "hidden"
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function resetForm() {
+
+    logForm.reset();
+
+    document.getElementById("entry-id").value =
+        "";
+
+    formHeading.textContent =
+        "ADD LOG ENTRY";
+
+    saveButton.textContent =
+        "ADD LOG ENTRY";
+
+    cancelEdit.classList.add(
+        "hidden"
+    );
+
+    setDefaultDate();
+
+}
+
+
+cancelEdit.addEventListener(
+    "click",
+    () => {
+
+        resetForm();
+
+        clearMessage(formMessage);
+
+    }
+);
+
+
+logForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        clearMessage(formMessage);
+
+
+        const id =
+            document
+                .getElementById("entry-id")
+                .value;
+
+
+        const partsValue =
+            document
+                .getElementById("parts")
+                .value;
+
+
+        const parts =
+            partsValue
+                .split(",")
+                .map(part => part.trim())
+                .filter(Boolean);
+
+
+        const odometerValue =
+            document
+                .getElementById("odometer")
+                .value;
+
+
+        const entry = {
+
+            log_date:
+                document
+                    .getElementById("log-date")
+                    .value,
+
+            category:
+                document
+                    .getElementById("category")
+                    .value,
+
+            title:
+                document
+                    .getElementById("title")
+                    .value
+                    .trim(),
+
+            description:
+                document
+                    .getElementById("description")
+                    .value
+                    .trim(),
+
+            details:
+                document
+                    .getElementById("details")
+                    .value
+                    .trim() || null,
+
+            odometer:
+                odometerValue
+                    ? Number(odometerValue)
+                    : null,
+
+            parts,
+
+            status:
+                document
+                    .getElementById("status")
+                    .value
+
+        };
+
+
+        let result;
+
+
+        if (id) {
+
+            result =
+                await supabaseClient
+                    .from("build_logs")
+                    .update(entry)
+                    .eq(
+                        "id",
+                        Number(id)
+                    );
+
+        } else {
+
+            result =
+                await supabaseClient
+                    .from("build_logs")
+                    .insert(entry);
+
+        }
+
+
+        if (result.error) {
+
+            showMessage(
+                formMessage,
+                result.error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            formMessage,
+            id
+                ? "Build log updated successfully."
+                : "Build log added successfully.",
+            "success"
+        );
+
+
+        resetForm();
+
+        await loadLogs();
+
+    }
+);
+
+
+async function deleteEntry(id) {
+
+    const confirmed =
+        window.confirm(
+            "Delete this build log entry? This cannot be undone."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("build_logs")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        window.alert(
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    await loadLogs();
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+    (_event, session) => {
+
+        if (!session) {
+
+            showLogin();
+
+        }
+
+    }
+);
+
+
+checkSession();
+
+</script>
+
+
+</body>
+</html>
