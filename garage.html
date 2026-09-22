@@ -877,6 +877,122 @@
         .tag.blue { color:#7eb7ff; border-color:rgba(80,140,220,.55); }
 
 
+
+        .vehicle-health-panel {
+            margin: 18px 0 22px;
+            padding: 18px;
+            background: linear-gradient(145deg, rgba(226, 27, 35, .08), rgba(255,255,255,.02));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .vehicle-health-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .vehicle-health-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: .58rem;
+            font-weight: 900;
+            letter-spacing: .1em;
+        }
+
+        .vehicle-health-state {
+            font-size: 1rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .vehicle-health-badge {
+            flex: 0 0 auto;
+            padding: 6px 8px;
+            border: 1px solid rgba(226, 27, 35, .45);
+            border-radius: 999px;
+            color: var(--red);
+            font-size: .55rem;
+            font-weight: 900;
+            letter-spacing: .06em;
+        }
+
+        .vehicle-health-progress-row {
+            margin-top: 13px;
+        }
+
+        .vehicle-health-progress-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 7px;
+            font-size: .66rem;
+            font-weight: 800;
+        }
+
+        .vehicle-health-progress-head span:last-child {
+            color: var(--muted);
+        }
+
+        .vehicle-health-track {
+            height: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,.07);
+            border-radius: 999px;
+        }
+
+        .vehicle-health-fill {
+            width: 0;
+            height: 100%;
+            background: currentColor;
+            border-radius: inherit;
+            transition: width .35s ease;
+        }
+
+        .vehicle-health-fill.inspections {
+            color: var(--red);
+        }
+
+        .vehicle-health-fill.baselines {
+            color: #fff;
+        }
+
+        .vehicle-result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .vehicle-result {
+            padding: 10px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .vehicle-result strong {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .vehicle-result span {
+            color: var(--muted);
+            font-size: .55rem;
+            font-weight: 800;
+            letter-spacing: .04em;
+        }
+
+        .vehicle-health-note {
+            margin: 14px 0 0;
+            color: var(--muted);
+            font-size: .67rem;
+            line-height: 1.45;
+        }
+
         .health-dashboard {
             margin: 22px 0 20px;
         }
@@ -1162,6 +1278,55 @@
             </div>
 
         </div>
+
+        <section class="vehicle-health-panel" aria-label="Vehicle health progress">
+
+            <div class="vehicle-health-top">
+                <div>
+                    <span class="vehicle-health-label">VEHICLE HEALTH</span>
+                    <div class="vehicle-health-state" id="vehicle-health-state">
+                        BASELINE IN PROGRESS
+                    </div>
+                </div>
+                <span class="vehicle-health-badge" id="vehicle-health-badge">
+                    VERIFYING
+                </span>
+            </div>
+
+            <div class="vehicle-health-progress-row">
+                <div class="vehicle-health-progress-head">
+                    <span>INSPECTIONS</span>
+                    <span id="vehicle-health-inspections">0 / 12</span>
+                </div>
+                <div class="vehicle-health-track">
+                    <div class="vehicle-health-fill inspections" id="vehicle-health-inspection-bar"></div>
+                </div>
+            </div>
+
+            <div class="vehicle-health-progress-row">
+                <div class="vehicle-health-progress-head">
+                    <span>SERVICE BASELINES</span>
+                    <span id="vehicle-health-baselines">0 / 12</span>
+                </div>
+                <div class="vehicle-health-track">
+                    <div class="vehicle-health-fill baselines" id="vehicle-health-baseline-bar"></div>
+                </div>
+            </div>
+
+            <div class="vehicle-result-grid">
+                <div class="vehicle-result"><strong id="health-pass">0</strong><span>PASS</span></div>
+                <div class="vehicle-result"><strong id="health-monitor">0</strong><span>MONITOR</span></div>
+                <div class="vehicle-result"><strong id="health-service">0</strong><span>SERVICE REQUIRED</span></div>
+                <div class="vehicle-result"><strong id="health-repair">0</strong><span>REPAIR REQUIRED</span></div>
+                <div class="vehicle-result"><strong id="health-unverified">0</strong><span>UNABLE TO VERIFY</span></div>
+            </div>
+
+            <p class="vehicle-health-note" id="vehicle-health-note">
+                No overall health score is assigned until the vehicle has enough verified inspection data.
+            </p>
+
+        </section>
+
 
         <section class="health-dashboard" aria-label="Vehicle health">
 
@@ -2698,7 +2863,7 @@ async function refreshGarage() {
             db
                 .from("inspection_records")
                 .select(
-                    "id, maintenance_item_id, inspection_date, result"
+                    "id, maintenance_item_id, inspection_date, odometer, result"
                 )
                 .eq(
                     "vehicle_key",
@@ -2827,6 +2992,168 @@ async function refreshGarage() {
         maintenanceItems.filter(item =>
             String(item.baseline_status || "").toUpperCase() === "ESTABLISHED"
         ).length;
+
+
+    const latestInspectionByItem = new Map();
+
+    inspectionRecords.forEach(record => {
+        const itemId = Number(record.maintenance_item_id);
+
+        if (
+            itemId &&
+            !latestInspectionByItem.has(itemId)
+        ) {
+            latestInspectionByItem.set(
+                itemId,
+                record
+            );
+        }
+    });
+
+    const latestInspectionResults =
+        [...latestInspectionByItem.values()];
+
+    const resultCounts = {
+        PASS: 0,
+        MONITOR: 0,
+        SERVICE_REQUIRED: 0,
+        REPAIR_REQUIRED: 0,
+        UNABLE_TO_VERIFY: 0
+    };
+
+    latestInspectionResults.forEach(record => {
+        const result =
+            String(
+                record.result || ""
+            ).toUpperCase();
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                resultCounts,
+                result
+            )
+        ) {
+            resultCounts[result] += 1;
+        }
+    });
+
+    const totalMaintenance =
+        maintenanceItems.length;
+
+    const inspectionPercent =
+        totalMaintenance
+            ? Math.round(
+                inspected /
+                totalMaintenance *
+                100
+            )
+            : 0;
+
+    const baselinePercent =
+        totalMaintenance
+            ? Math.round(
+                established /
+                totalMaintenance *
+                100
+            )
+            : 0;
+
+    document.getElementById(
+        "vehicle-health-inspections"
+    ).textContent =
+        `${inspected} / ${totalMaintenance}`;
+
+    document.getElementById(
+        "vehicle-health-baselines"
+    ).textContent =
+        `${established} / ${totalMaintenance}`;
+
+    document.getElementById(
+        "vehicle-health-inspection-bar"
+    ).style.width =
+        `${inspectionPercent}%`;
+
+    document.getElementById(
+        "vehicle-health-baseline-bar"
+    ).style.width =
+        `${baselinePercent}%`;
+
+    document.getElementById(
+        "health-pass"
+    ).textContent =
+        resultCounts.PASS;
+
+    document.getElementById(
+        "health-monitor"
+    ).textContent =
+        resultCounts.MONITOR;
+
+    document.getElementById(
+        "health-service"
+    ).textContent =
+        resultCounts.SERVICE_REQUIRED;
+
+    document.getElementById(
+        "health-repair"
+    ).textContent =
+        resultCounts.REPAIR_REQUIRED;
+
+    document.getElementById(
+        "health-unverified"
+    ).textContent =
+        resultCounts.UNABLE_TO_VERIFY;
+
+    const healthState =
+        document.getElementById(
+            "vehicle-health-state"
+        );
+
+    const healthBadge =
+        document.getElementById(
+            "vehicle-health-badge"
+        );
+
+    const healthNote =
+        document.getElementById(
+            "vehicle-health-note"
+        );
+
+    if (
+        totalMaintenance === 0
+    ) {
+        healthState.textContent =
+            "NO BASELINE DATA";
+
+        healthBadge.textContent =
+            "NO DATA";
+
+        healthNote.textContent =
+            "Maintenance baseline data could not be loaded.";
+
+    } else if (
+        inspected < totalMaintenance
+    ) {
+        healthState.textContent =
+            "BASELINE IN PROGRESS";
+
+        healthBadge.textContent =
+            `${inspectionPercent}% INSPECTED`;
+
+        healthNote.textContent =
+            "No overall health score is assigned while baseline inspections are incomplete. Results shown here come only from the latest recorded inspection for each item.";
+
+    } else {
+        healthState.textContent =
+            "BASELINE INSPECTED";
+
+        healthBadge.textContent =
+            "12 / 12 CHECKED";
+
+        healthNote.textContent =
+            established < totalMaintenance
+                ? "Physical baseline inspections are complete. Service history is still being established from real completed service records."
+                : "Physical inspections and service baselines are established. Status remains based on recorded evidence rather than an estimated health score.";
+    }
 
 
     document.getElementById(
