@@ -967,6 +967,64 @@
 
 
 
+
+        .expense-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .expense-summary .stat { margin: 0; }
+
+        .expense-list,
+        .expense-category-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .expense-card,
+        .expense-category-card {
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .expense-card:active { transform: scale(.99); }
+
+        .expense-card-top,
+        .expense-category-card {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .expense-card strong,
+        .expense-category-card strong {
+            display: block;
+            font-size: .9rem;
+            line-height: 1.35;
+        }
+
+        .expense-card p,
+        .expense-category-card span {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: .7rem;
+            line-height: 1.45;
+        }
+
+        .expense-amount {
+            flex: 0 0 auto;
+            color: var(--red);
+            font-weight: 900;
+        }
+
         .fuel-summary {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1102,6 +1160,7 @@
         .timeline-entry.odometer::before { background: #7eb7ff; }
         .timeline-entry.diagnostic::before { background: var(--yellow); }
         .timeline-entry.fuel::before { background: #d7d7d7; }
+        .timeline-entry.expense::before { background: #c68cff; }
 
         .timeline-top {
             display: flex;
@@ -1785,7 +1844,7 @@
         <div class="menu">
 
             <button
-                class="menu-button primary
+                class="menu-button primary"
                 type="button"
                 onclick="garageNav('inspect')"
             >
@@ -2572,6 +2631,122 @@
     </section>
 
 
+    <!-- EXPENSES & OWNERSHIP COSTS -->
+
+    <section class="screen" id="expenses-screen">
+        <button class="back" type="button" onclick="garageNav('more')">← MORE</button>
+
+        <div class="section-title">
+            <div class="eyebrow">OWNERSHIP COSTS</div>
+            <h2>EXPENSES<br><span>& COSTS.</span></h2>
+            <p>Track real ownership spending for the Lancer. Fuel logged in Fuel Tracker is included in ownership totals automatically.</p>
+        </div>
+
+        <div class="expense-summary">
+            <div class="stat"><strong id="expense-total-spend">$0.00</strong><span>TOTAL SPEND</span></div>
+            <div class="stat"><strong id="expense-year-spend">$0.00</strong><span>THIS YEAR</span></div>
+            <div class="stat"><strong id="expense-record-count">0</strong><span>EXPENSES</span></div>
+            <div class="stat"><strong id="expense-fuel-spend">$0.00</strong><span>FUEL</span></div>
+        </div>
+
+        <button class="button" type="button" onclick="openExpenseEditor()">ADD EXPENSE</button>
+
+        <div class="subheading">SPENDING BY CATEGORY</div>
+        <div class="expense-category-list" id="expense-category-list">
+            <div class="empty-state">No expense data yet.</div>
+        </div>
+
+        <div class="subheading">EXPENSE HISTORY</div>
+        <div class="expense-list" id="expense-list">
+            <div class="empty-state">Loading expenses…</div>
+        </div>
+    </section>
+
+    <!-- EXPENSE EDITOR -->
+
+    <section class="screen" id="expense-editor-screen">
+        <button class="back" type="button" onclick="openExpenses()">← EXPENSES</button>
+
+        <div class="section-title">
+            <div class="eyebrow">OWNERSHIP RECORD</div>
+            <h2 id="expense-editor-title">ADD<br><span>EXPENSE.</span></h2>
+            <p>Record only costs that were actually paid or incurred for this vehicle.</p>
+        </div>
+
+        <div class="message" id="expense-message"></div>
+
+        <form id="expense-form">
+            <input id="expense-id" type="hidden">
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="expense-date">DATE</label>
+                    <input id="expense-date" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="expense-odometer">ODOMETER (KM)</label>
+                    <input id="expense-odometer" type="number" min="0" step="1" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="expense-category">CATEGORY</label>
+                <select id="expense-category" required>
+                    <option value="">Select category</option>
+                    <option value="SERVICE">SERVICE</option>
+                    <option value="REPAIR">REPAIR</option>
+                    <option value="PARTS">PARTS</option>
+                    <option value="TYRES">TYRES</option>
+                    <option value="REGISTRATION">REGISTRATION</option>
+                    <option value="INSURANCE">INSURANCE</option>
+                    <option value="MODIFICATION">MODIFICATION</option>
+                    <option value="TOOLS">TOOLS</option>
+                    <option value="CLEANING">CLEANING</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="expense-description">DESCRIPTION</label>
+                <input id="expense-description" type="text" placeholder="What was the expense?" required>
+            </div>
+
+            <div class="field">
+                <label for="expense-amount">AMOUNT ($)</label>
+                <input id="expense-amount" type="number" min="0" step="0.01" inputmode="decimal" required>
+            </div>
+
+            <div class="two-column">
+                <div class="field">
+                    <label for="expense-vendor">VENDOR / STORE</label>
+                    <input id="expense-vendor" type="text" placeholder="Optional">
+                </div>
+
+                <div class="field">
+                    <label for="expense-payment">PAYMENT METHOD</label>
+                    <input id="expense-payment" type="text" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="expense-notes">NOTES</label>
+                <textarea id="expense-notes" placeholder="Optional notes."></textarea>
+            </div>
+
+            <button class="button" id="save-expense-record" type="submit">SAVE EXPENSE</button>
+
+            <button
+                class="button secondary hidden"
+                id="delete-expense-record"
+                type="button"
+                onclick="deleteExpenseRecord()"
+                style="margin-top:10px"
+            >DELETE EXPENSE</button>
+        </form>
+    </section>
+
+
     <!-- FUEL TRACKER -->
 
     <section class="screen" id="fuel-screen">
@@ -2914,6 +3089,7 @@
             <button type="button" data-filter="SERVICE" onclick="setTimelineFilter('SERVICE', this)">SERVICE</button>
             <button type="button" data-filter="DIAGNOSTIC" onclick="setTimelineFilter('DIAGNOSTIC', this)">DIAGNOSTICS</button>
             <button type="button" data-filter="FUEL" onclick="setTimelineFilter('FUEL', this)">FUEL</button>
+            <button type="button" data-filter="EXPENSE" onclick="setTimelineFilter('EXPENSE', this)">EXPENSES</button>
             <button type="button" data-filter="ODOMETER" onclick="setTimelineFilter('ODOMETER', this)">ODOMETER</button>
         </div>
 
@@ -3241,6 +3417,15 @@
 
         <div class="more-menu">
 
+            <button class="more-card" type="button" onclick="openExpenses()">
+                <div>
+                    <span class="more-card-title">Expenses & Ownership Costs</span>
+                    <span class="more-card-description">Track servicing, repairs, parts, registration and other vehicle costs.</span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+
             <button
                 class="more-card"
                 type="button"
@@ -3431,7 +3616,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • FUEL TRACKER v1
+            L@NC3R GARAGE • EXPENSES v1
         </div>
 
     </section>
@@ -3536,6 +3721,7 @@ let vehicleTimeline = [];
 let timelineFilter = "ALL";
 let partsRegistry = [];
 let fuelRecords = [];
+let expenseRecords = [];
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -4824,6 +5010,264 @@ async function sendGarageNotificationIfNeeded(force = false) {
 }
 
 
+async function loadExpenseRecords() {
+    const [expenseResult, fuelResult] = await Promise.all([
+        db
+            .from("vehicle_expenses")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("expense_date", { ascending: false })
+            .order("id", { ascending: false }),
+
+        db
+            .from("fuel_log")
+            .select("id, fill_date, total_cost")
+            .eq("vehicle_key", "lancer-2009")
+            .order("fill_date", { ascending: false })
+    ]);
+
+    if (expenseResult.error) {
+        console.error("Expense load failed:", expenseResult.error);
+        expenseRecords = [];
+    } else {
+        expenseRecords = expenseResult.data || [];
+    }
+
+    const fuelForCosts = fuelResult.error ? [] : (fuelResult.data || []);
+    renderExpenseRecords(fuelForCosts);
+}
+
+function openExpenses() {
+    showScreen("expenses-screen");
+    loadExpenseRecords();
+}
+
+function renderExpenseRecords(fuelForCosts = fuelRecords || []) {
+    const list = document.getElementById("expense-list");
+    const categoryList = document.getElementById("expense-category-list");
+
+    const manualTotal = expenseRecords.reduce(
+        (sum, row) => sum + (Number(row.amount) || 0),
+        0
+    );
+
+    const fuelTotal = fuelForCosts.reduce(
+        (sum, row) => sum + (Number(row.total_cost) || 0),
+        0
+    );
+
+    const currentYear = new Date().getFullYear();
+
+    const manualYear = expenseRecords.reduce((sum, row) => {
+        const year = row.expense_date ? Number(String(row.expense_date).slice(0, 4)) : 0;
+        return year === currentYear ? sum + (Number(row.amount) || 0) : sum;
+    }, 0);
+
+    const fuelYear = fuelForCosts.reduce((sum, row) => {
+        const year = row.fill_date ? Number(String(row.fill_date).slice(0, 4)) : 0;
+        return year === currentYear ? sum + (Number(row.total_cost) || 0) : sum;
+    }, 0);
+
+    document.getElementById("expense-total-spend").textContent =
+        `$${(manualTotal + fuelTotal).toFixed(2)}`;
+
+    document.getElementById("expense-year-spend").textContent =
+        `$${(manualYear + fuelYear).toFixed(2)}`;
+
+    document.getElementById("expense-record-count").textContent =
+        String(expenseRecords.length);
+
+    document.getElementById("expense-fuel-spend").textContent =
+        `$${fuelTotal.toFixed(2)}`;
+
+    const categoryTotals = {};
+
+    expenseRecords.forEach(row => {
+        const category = row.category || "OTHER";
+        categoryTotals[category] =
+            (categoryTotals[category] || 0) + (Number(row.amount) || 0);
+    });
+
+    if (fuelTotal > 0) {
+        categoryTotals.FUEL = fuelTotal;
+    }
+
+    const categories = Object.entries(categoryTotals)
+        .sort((a, b) => b[1] - a[1]);
+
+    if (categoryList) {
+        categoryList.innerHTML = categories.length
+            ? categories.map(([category, amount]) => `
+                <div class="expense-category-card">
+                    <div>
+                        <strong>${escapeHTML(category.replaceAll("_", " "))}</strong>
+                        <span>Recorded ownership spending</span>
+                    </div>
+                    <div class="expense-amount">$${amount.toFixed(2)}</div>
+                </div>
+            `).join("")
+            : `<div class="empty-state">No ownership costs have been recorded yet.</div>`;
+    }
+
+    if (!list) return;
+
+    if (!expenseRecords.length) {
+        list.innerHTML = `<div class="empty-state">No non-fuel expenses recorded yet. Fuel costs are managed through Fuel Tracker.</div>`;
+        return;
+    }
+
+    list.innerHTML = expenseRecords.map(row => `
+        <button class="expense-card" type="button" onclick="openExpenseEditor(${Number(row.id)})">
+            <div class="expense-card-top">
+                <div>
+                    <span class="tag">${escapeHTML((row.category || "OTHER").replaceAll("_", " "))}</span>
+                    <strong style="margin-top:8px">${escapeHTML(row.description || "Expense")}</strong>
+                </div>
+                <div class="expense-amount">$${(Number(row.amount) || 0).toFixed(2)}</div>
+            </div>
+            <p>${escapeHTML(formatDate(row.expense_date))}${row.odometer !== null && row.odometer !== undefined ? ` • ${escapeHTML(formatKM(row.odometer))}` : ""}${row.vendor ? ` • ${escapeHTML(row.vendor)}` : ""}</p>
+        </button>
+    `).join("");
+}
+
+function openExpenseEditor(id = null) {
+    const form = document.getElementById("expense-form");
+    form.reset();
+
+    document.getElementById("expense-id").value = "";
+    document.getElementById("expense-date").value = todayLocal();
+    document.getElementById("expense-editor-title").innerHTML =
+        'ADD<br><span>EXPENSE.</span>';
+    document.getElementById("delete-expense-record").classList.add("hidden");
+
+    if (typeof vehicleStatus !== "undefined" && vehicleStatus?.odometer) {
+        document.getElementById("expense-odometer").value = vehicleStatus.odometer;
+    }
+
+    if (id !== null) {
+        const row = expenseRecords.find(item => Number(item.id) === Number(id));
+
+        if (row) {
+            document.getElementById("expense-id").value = row.id;
+            document.getElementById("expense-date").value = row.expense_date || "";
+            document.getElementById("expense-odometer").value = row.odometer ?? "";
+            document.getElementById("expense-category").value = row.category || "";
+            document.getElementById("expense-description").value = row.description || "";
+            document.getElementById("expense-amount").value = row.amount ?? "";
+            document.getElementById("expense-vendor").value = row.vendor || "";
+            document.getElementById("expense-payment").value = row.payment_method || "";
+            document.getElementById("expense-notes").value = row.notes || "";
+            document.getElementById("expense-editor-title").innerHTML =
+                'EDIT<br><span>EXPENSE.</span>';
+            document.getElementById("delete-expense-record").classList.remove("hidden");
+        }
+    }
+
+    showScreen("expense-editor-screen");
+}
+
+async function saveExpenseRecord(event) {
+    event.preventDefault();
+
+    const id = document.getElementById("expense-id").value;
+    const odometerText = document.getElementById("expense-odometer").value;
+    const amount = Number(document.getElementById("expense-amount").value);
+    const category = document.getElementById("expense-category").value;
+
+    if (!category) {
+        showMessage("expense-message", "Choose an expense category.", "error");
+        return;
+    }
+
+    if (category === "FUEL") {
+        showMessage(
+            "expense-message",
+            "Fuel costs are recorded through Fuel Tracker so they are not counted twice.",
+            "error"
+        );
+        return;
+    }
+
+    if (!Number.isFinite(amount) || amount < 0) {
+        showMessage("expense-message", "Enter a valid expense amount.", "error");
+        return;
+    }
+
+    const payload = {
+        vehicle_key: "lancer-2009",
+        expense_date: document.getElementById("expense-date").value,
+        odometer: odometerText === "" ? null : Number(odometerText),
+        category,
+        description: document.getElementById("expense-description").value.trim(),
+        amount,
+        vendor: document.getElementById("expense-vendor").value.trim() || null,
+        payment_method: document.getElementById("expense-payment").value.trim() || null,
+        notes: document.getElementById("expense-notes").value.trim() || null,
+        updated_at: new Date().toISOString()
+    };
+
+    if (!payload.description) {
+        showMessage("expense-message", "Enter a description.", "error");
+        return;
+    }
+
+    const button = document.getElementById("save-expense-record");
+    button.disabled = true;
+    button.textContent = "SAVING…";
+
+    const result = id
+        ? await db
+            .from("vehicle_expenses")
+            .update(payload)
+            .eq("id", id)
+            .eq("vehicle_key", "lancer-2009")
+        : await db
+            .from("vehicle_expenses")
+            .insert(payload);
+
+    button.disabled = false;
+    button.textContent = "SAVE EXPENSE";
+
+    if (result.error) {
+        console.error(result.error);
+        showMessage(
+            "expense-message",
+            result.error.message || "Unable to save expense.",
+            "error"
+        );
+        return;
+    }
+
+    await loadExpenseRecords();
+    openExpenses();
+}
+
+async function deleteExpenseRecord() {
+    const id = document.getElementById("expense-id").value;
+    if (!id) return;
+
+    if (!confirm("Delete this expense record?")) return;
+
+    const { error } = await db
+        .from("vehicle_expenses")
+        .delete()
+        .eq("id", id)
+        .eq("vehicle_key", "lancer-2009");
+
+    if (error) {
+        showMessage(
+            "expense-message",
+            error.message || "Unable to delete expense.",
+            "error"
+        );
+        return;
+    }
+
+    await loadExpenseRecords();
+    openExpenses();
+}
+
+
 async function loadFuelRecords() {
     const { data, error } =
         await db
@@ -5454,7 +5898,8 @@ async function loadVehicleTimeline() {
         serviceResult,
         diagnosticResult,
         odometerResult,
-        fuelResult
+        fuelResult,
+        expenseResult
     ] = await Promise.all([
         db
             .from("inspection_records")
@@ -5485,7 +5930,13 @@ async function loadVehicleTimeline() {
             .from("fuel_log")
             .select("*")
             .eq("vehicle_key", "lancer-2009")
-            .order("fill_date", { ascending: false })
+            .order("fill_date", { ascending: false }),
+
+        db
+            .from("vehicle_expenses")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("expense_date", { ascending: false })
     ]);
 
     const errors = [
@@ -5493,7 +5944,8 @@ async function loadVehicleTimeline() {
         serviceResult.error,
         diagnosticResult.error,
         odometerResult.error,
-        fuelResult.error
+        fuelResult.error,
+        expenseResult.error
     ].filter(Boolean);
 
     if (errors.length) {
@@ -5505,6 +5957,7 @@ async function loadVehicleTimeline() {
     const diagnostics = diagnosticResult.data || [];
     const odometers = odometerResult.data || [];
     const fuel = fuelResult.data || [];
+    const expenses = expenseResult.data || [];
 
     const events = [];
 
@@ -5547,6 +6000,22 @@ async function loadVehicleTimeline() {
             detail: codes.length
                 ? codes.join(", ")
                 : `CEL ${row.check_engine_light || "UNKNOWN"}`,
+            id: row.id,
+            raw: row
+        });
+    });
+
+    expenses.forEach(row => {
+        events.push({
+            type: "EXPENSE",
+            date: row.expense_date,
+            odometer: row.odometer,
+            title: row.description || "Vehicle Expense",
+            detail: [
+                row.category ? row.category.replaceAll("_", " ") : null,
+                Number.isFinite(Number(row.amount)) ? `$${Number(row.amount).toFixed(2)}` : null,
+                row.vendor || null
+            ].filter(Boolean).join(" • "),
             id: row.id,
             raw: row
         });
@@ -5717,6 +6186,11 @@ function openTimelineEvent(index) {
 
     if (event.type === "SERVICE") {
         window.location.href = "service-history.html";
+        return;
+    }
+
+    if (event.type === "EXPENSE") {
+        openExpenses();
         return;
     }
 
@@ -7531,6 +8005,14 @@ if (fuelForm) {
         "submit",
         saveFuelRecord
     );
+}
+
+
+
+const expenseForm = document.getElementById("expense-form");
+
+if (expenseForm) {
+    expenseForm.addEventListener("submit", saveExpenseRecord);
 }
 
 </script>
