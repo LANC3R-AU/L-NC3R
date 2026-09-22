@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Service History | L@NC3R</title>
+
+    <meta
+        name="description"
+        content="Live service and maintenance history for the L@NC3R 2009 Mitsubishi Lancer CJ project."
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* ============================================
+           SERVICE HISTORY
+        ============================================ */
+
+        .service-summary {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .summary-card {
+            background: var(--card);
+            padding: 30px;
+        }
+
+        .summary-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: .75rem;
+            letter-spacing: .12em;
+            margin-bottom: 12px;
+        }
+
+        .summary-card strong {
+            display: block;
+            font-size: clamp(1.3rem, 2vw, 2rem);
+        }
+
+
+        .maintenance-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .maintenance-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 25px;
+        }
+
+        .maintenance-card h3 {
+            margin: 10px 0;
+        }
+
+        .maintenance-status {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--red);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+
+        .service-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .service-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            cursor: pointer;
+            font: inherit;
+            font-size: .75rem;
+            letter-spacing: .08em;
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            color: var(--text);
+            border-color: var(--red);
+        }
+
+
+        .service-record {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .service-record-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+        }
+
+        .service-record h3 {
+            margin: 8px 0 10px;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+        }
+
+        .service-status {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            white-space: nowrap;
+        }
+
+        .service-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            font-size: .85rem;
+        }
+
+        .service-meta strong {
+            color: var(--text);
+        }
+
+        .service-extra {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .service-extra-item {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 18px;
+        }
+
+        .service-extra-item span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: .7rem;
+            letter-spacing: .1em;
+            margin-bottom: 8px;
+        }
+
+        .service-parts {
+            margin-top: 20px;
+        }
+
+        .part-tag {
+            display: inline-block;
+            padding: 7px 10px;
+            margin: 5px 5px 0 0;
+            border: 1px solid var(--border);
+            font-size: .75rem;
+        }
+
+        .service-notes {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+
+        .due-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .due-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 25px;
+        }
+
+        .due-card h3 {
+            margin: 8px 0;
+        }
+
+        .due-data {
+            margin-top: 15px;
+            color: var(--text-secondary);
+        }
+
+        .due-data strong {
+            color: var(--text);
+        }
+
+
+        .empty-state,
+        .error-state {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+        }
+
+        .error-state {
+            border-color: var(--red);
+        }
+
+
+        @media (max-width: 950px) {
+
+            .service-summary {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .maintenance-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .service-summary,
+            .maintenance-grid,
+            .due-grid,
+            .service-extra {
+                grid-template-columns: 1fr;
+            }
+
+            .service-record-top {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================
+     NAVIGATION
+================================================ -->
+
+<nav class="site-nav">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+        L<span>@</span>NC3R
+    </a>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html">
+                PORTFOLIO
+            </a>
+        </li>
+
+        <li>
+            <a href="lancer.html">
+                LANCER
+            </a>
+        </li>
+
+        <li>
+            <a href="#history">
+                HISTORY
+            </a>
+        </li>
+
+        <li>
+            <a href="#upcoming">
+                UPCOMING
+            </a>
+        </li>
+
+        <li>
+            <a href="projects/build-log.html">
+                BUILD LOG
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- ================================================
+     HERO
+================================================ -->
+
+<section class="project-hero">
+
+    <div class="project-background-text">
+        SERVICE
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            L@NC3R / MAINTENANCE
+        </div>
+
+
+        <h1 class="project-title">
+
+            SERVICE<br>
+
+            <span>
+                HISTORY.
+            </span>
+
+        </h1>
+
+
+        <div class="hero-subtitle">
+            MAINTENANCE • SERVICING • INSPECTIONS
+        </div>
+
+
+        <p class="hero-description">
+
+            A live maintenance record for Project 001 —
+            the 2009 Mitsubishi Lancer CJ.
+
+            Service records are stored in the L@NC3R
+            database and updated through the private
+            Service Manager.
+
+        </p>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+
+                <span>
+                    VEHICLE
+                </span>
+
+                <strong>
+                    2009 LANCER
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    ENGINE
+                </span>
+
+                <strong>
+                    4B11
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    SERVICE RECORDS
+                </span>
+
+                <strong id="hero-record-count">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    STATUS
+                </span>
+
+                <strong>
+                    ACTIVE
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <a
+                href="#history"
+                class="btn btn-primary"
+            >
+                VIEW HISTORY
+            </a>
+
+            <a
+                href="lancer.html"
+                class="btn btn-secondary"
+            >
+                PROJECT 001
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     OVERVIEW
+================================================ -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        01 / OVERVIEW
+    </div>
+
+
+    <div class="overview-grid">
+
+        <div class="overview-title">
+
+            <h2>
+                MAINTAIN.<br>
+
+                <span>
+                    DOCUMENT.
+                </span>
+            </h2>
+
+        </div>
+
+
+        <div class="overview-copy">
+
+            <p>
+                Before focusing on performance,
+                modifications or ECU development, I want
+                to understand and maintain the vehicle
+                properly.
+            </p>
+
+            <p>
+                This page creates a permanent record of
+                maintenance, inspections, replacement
+                parts, fluids and future service targets.
+            </p>
+
+            <p>
+                Records displayed here come directly from
+                the L@NC3R service database.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-summary">
+
+        <div class="summary-card">
+
+            <span>
+                TOTAL RECORDS
+            </span>
+
+            <strong id="total-records">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                LATEST SERVICE
+            </span>
+
+            <strong id="latest-service">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                LATEST ODOMETER
+            </span>
+
+            <strong id="latest-odometer">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                UPCOMING ITEMS
+            </span>
+
+            <strong id="upcoming-count">
+                —
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     MAINTENANCE AREAS
+================================================ -->
+
+<section class="section">
+
+    <div class="section-number">
+        02 / MAINTENANCE AREAS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            VEHICLE<br>
+
+            <span>
+                SYSTEMS.
+            </span>
+        </h2>
+
+        <p>
+            The main maintenance areas being tracked
+            throughout the project.
+        </p>
+
+    </div>
+
+
+    <div class="maintenance-grid">
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                ENGINE
+            </div>
+
+            <h3>
+                Engine Oil
+            </h3>
+
+            <p>
+                Oil changes, oil filters and related
+                engine servicing.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                INTAKE
+            </div>
+
+            <h3>
+                Air Filter
+            </h3>
+
+            <p>
+                Air filter inspection and replacement
+                history.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                IGNITION
+            </div>
+
+            <h3>
+                Spark Plugs
+            </h3>
+
+            <p>
+                Spark plug inspections and replacement
+                records.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                COOLING
+            </div>
+
+            <h3>
+                Cooling System
+            </h3>
+
+            <p>
+                Coolant, hoses and cooling system
+                maintenance.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                DRIVETRAIN
+            </div>
+
+            <h3>
+                CVT
+            </h3>
+
+            <p>
+                CVT fluid and drivetrain servicing
+                records.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+
+        <article class="maintenance-card">
+
+            <div class="eyebrow">
+                CHASSIS
+            </div>
+
+            <h3>
+                Brakes & Tyres
+            </h3>
+
+            <p>
+                Brake, tyre and chassis maintenance
+                records.
+            </p>
+
+            <span class="maintenance-status">
+                TRACKED
+            </span>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     UPCOMING SERVICE
+================================================ -->
+
+<section
+    class="section section-alt"
+    id="upcoming"
+>
+
+    <div class="section-number">
+        03 / UPCOMING
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            NEXT SERVICE<br>
+
+            <span>
+                TARGETS.
+            </span>
+        </h2>
+
+        <p>
+            Future service dates and odometer targets
+            entered through the Service Manager.
+        </p>
+
+    </div>
+
+
+    <div
+        class="due-grid"
+        id="upcoming-container"
+    >
+
+        <div class="due-card">
+
+            <div class="eyebrow">
+                LOADING
+            </div>
+
+            <h3>
+                Checking Service Targets...
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     SERVICE HISTORY
+================================================ -->
+
+<section
+    class="section"
+    id="history"
+>
+
+    <div class="section-number">
+        04 / SERVICE HISTORY
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            COMPLETE<br>
+
+            <span>
+                HISTORY.
+            </span>
+        </h2>
+
+        <p>
+            Recorded servicing, maintenance and
+            inspections for Project 001.
+        </p>
+
+    </div>
+
+
+    <div class="service-controls">
+
+        <div class="service-filter">
+
+            <button
+                class="filter-button active"
+                data-category="ALL"
+            >
+                ALL
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Engine"
+            >
+                ENGINE
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Fluids"
+            >
+                FLUIDS
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Filters"
+            >
+                FILTERS
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="CVT"
+            >
+                CVT
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Brakes"
+            >
+                BRAKES
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Tyres"
+            >
+                TYRES
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="Other"
+            >
+                OTHER
+            </button>
+
+        </div>
+
+
+        <div class="eyebrow">
+
+            <span id="visible-record-count">
+                —
+            </span>
+
+            RECORDS
+
+        </div>
+
+    </div>
+
+
+    <div id="service-history-container">
+
+        <div class="empty-state">
+
+            <div class="eyebrow">
+                DATABASE
+            </div>
+
+            <h3>
+                Loading Service History...
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     BUILD LOG CONNECTION
+================================================ -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        05 / PROJECT HISTORY
+    </div>
+
+
+    <div class="overview-grid">
+
+        <div class="overview-title">
+
+            <div class="eyebrow">
+                PROJECT 006
+            </div>
+
+            <h2>
+                FULL BUILD<br>
+
+                <span>
+                    LOG.
+                </span>
+            </h2>
+
+        </div>
+
+
+        <div class="overview-copy">
+
+            <p>
+                Service History focuses specifically on
+                maintenance and servicing.
+            </p>
+
+            <p>
+                The main Build Log records the wider
+                project including diagnostics, ECU
+                research, repairs, modifications and
+                development milestones.
+            </p>
+
+
+            <div class="buttons">
+
+                <a
+                    href="projects/build-log.html"
+                    class="btn btn-primary"
+                >
+                    OPEN BUILD LOG
+                </a>
+
+                <a
+                    href="lancer.html"
+                    class="btn btn-secondary"
+                >
+                    LANCER PROJECT
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     NOTE
+================================================ -->
+
+<section class="section">
+
+    <div class="notice">
+
+        <strong>
+            SERVICE RECORD NOTE.
+        </strong>
+
+        <p>
+            This is a personal project maintenance
+            history. Records shown here are entries
+            documented through the L@NC3R Service
+            Manager and are not intended to represent
+            a complete manufacturer or dealership
+            service record.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     FOOTER
+================================================ -->
+
+<footer class="site-footer">
+
+    <div>
+        L@NC3R / SERVICE HISTORY
+    </div>
+
+    <div>
+        2009 MITSUBISHI LANCER • 4B11
+    </div>
+
+</footer>
+
+
+<!-- ================================================
+     SUPABASE
+================================================ -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://dmtzalwtexsstdynpmuk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_9pbNHhwgcmx1u8ZMsd_NlA_He7Xghwu";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let serviceRecords = [];
+
+let activeCategory = "ALL";
+
+
+const historyContainer =
+    document.getElementById(
+        "service-history-container"
+    );
+
+const upcomingContainer =
+    document.getElementById(
+        "upcoming-container"
+    );
+
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "en-AU",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function formatOdometer(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "—";
+    }
+
+
+    return (
+        Number(value)
+            .toLocaleString("en-AU") +
+        " km"
+    );
+
+}
+
+
+function updateSummary() {
+
+    const total =
+        serviceRecords.length;
+
+
+    document.getElementById(
+        "total-records"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "hero-record-count"
+    ).textContent =
+        total;
+
+
+    if (total === 0) {
+
+        document.getElementById(
+            "latest-service"
+        ).textContent = "—";
+
+        document.getElementById(
+            "latest-odometer"
+        ).textContent = "—";
+
+        document.getElementById(
+            "upcoming-count"
+        ).textContent = "0";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "latest-service"
+    ).textContent =
+        formatDate(
+            serviceRecords[0].service_date
+        );
+
+
+    const recordWithOdometer =
+        serviceRecords.find(
+            record =>
+                record.odometer !== null
+        );
+
+
+    document.getElementById(
+        "latest-odometer"
+    ).textContent =
+        recordWithOdometer
+            ? formatOdometer(
+                recordWithOdometer.odometer
+            )
+            : "—";
+
+
+    const upcoming =
+        serviceRecords.filter(
+            record =>
+                record.next_service_date ||
+                record.next_service_odometer
+        );
+
+
+    document.getElementById(
+        "upcoming-count"
+    ).textContent =
+        upcoming.length;
+
+}
+
+
+function renderUpcoming() {
+
+    const upcoming =
+        serviceRecords.filter(
+            record =>
+                record.next_service_date ||
+                record.next_service_odometer
+        );
+
+
+    if (upcoming.length === 0) {
+
+        upcomingContainer.innerHTML = `
+
+            <div class="due-card">
+
+                <div class="eyebrow">
+                    NO TARGETS
+                </div>
+
+                <h3>
+                    No Upcoming Services Recorded
+                </h3>
+
+                <p>
+                    Future service targets will appear
+                    here when they are added through the
+                    Service Manager.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    upcomingContainer.innerHTML =
+        upcoming.map(
+            record => {
+
+                const date =
+                    record.next_service_date
+                        ? `
+                            <div class="due-data">
+                                NEXT DATE:
+                                <strong>
+                                    ${escapeHTML(
+                                        formatDate(
+                                            record.next_service_date
+                                        )
+                                    )}
+                                </strong>
+                            </div>
+                        `
+                        : "";
+
+
+                const odometer =
+                    record.next_service_odometer !== null
+                        ? `
+                            <div class="due-data">
+                                NEXT ODOMETER:
+                                <strong>
+                                    ${escapeHTML(
+                                        formatOdometer(
+                                            record.next_service_odometer
+                                        )
+                                    )}
+                                </strong>
+                            </div>
+                        `
+                        : "";
+
+
+                return `
+
+                    <article class="due-card">
+
+                        <div class="eyebrow">
+
+                            ${escapeHTML(
+                                record.category
+                            )}
+
+                        </div>
+
+                        <h3>
+
+                            ${escapeHTML(
+                                record.service_item
+                            )}
+
+                        </h3>
+
+                        ${date}
+
+                        ${odometer}
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+function renderHistory() {
+
+    let records =
+        serviceRecords;
+
+
+    if (
+        activeCategory !== "ALL"
+    ) {
+
+        records =
+            serviceRecords.filter(
+                record =>
+                    record.category ===
+                    activeCategory
+            );
+
+    }
+
+
+    document.getElementById(
+        "visible-record-count"
+    ).textContent =
+        records.length;
+
+
+    if (records.length === 0) {
+
+        historyContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="eyebrow">
+                    NO RECORDS
+                </div>
+
+                <h3>
+                    Nothing Recorded Here Yet
+                </h3>
+
+                <p>
+                    Service records in this category
+                    will appear here automatically.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    historyContainer.innerHTML =
+        records.map(
+            record => {
+
+
+                const fluid =
+                    record.fluid
+                        ? `
+                            <div class="service-extra-item">
+
+                                <span>
+                                    FLUID / PRODUCT
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        record.fluid
+                                    )}
+                                </strong>
+
+                            </div>
+                        `
+                        : "";
+
+
+                const quantity =
+                    record.quantity
+                        ? `
+                            <div class="service-extra-item">
+
+                                <span>
+                                    QUANTITY
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        record.quantity
+                                    )}
+                                </strong>
+
+                            </div>
+                        `
+                        : "";
+
+
+                const nextDate =
+                    record.next_service_date
+                        ? `
+                            <div class="service-extra-item">
+
+                                <span>
+                                    NEXT SERVICE DATE
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        formatDate(
+                                            record.next_service_date
+                                        )
+                                    )}
+                                </strong>
+
+                            </div>
+                        `
+                        : "";
+
+
+                const nextOdometer =
+                    record.next_service_odometer !== null
+                        ? `
+                            <div class="service-extra-item">
+
+                                <span>
+                                    NEXT SERVICE KM
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        formatOdometer(
+                                            record.next_service_odometer
+                                        )
+                                    )}
+                                </strong>
+
+                            </div>
+                        `
+                        : "";
+
+
+                const extra =
+                    fluid ||
+                    quantity ||
+                    nextDate ||
+                    nextOdometer
+                        ? `
+                            <div class="service-extra">
+
+                                ${fluid}
+
+                                ${quantity}
+
+                                ${nextDate}
+
+                                ${nextOdometer}
+
+                            </div>
+                        `
+                        : "";
+
+
+                const parts =
+                    record.parts &&
+                    record.parts.length
+                        ? `
+                            <div class="service-parts">
+
+                                <div class="eyebrow">
+                                    PARTS USED
+                                </div>
+
+                                ${record.parts
+                                    .map(
+                                        part => `
+                                            <span class="part-tag">
+                                                ${escapeHTML(
+                                                    part
+                                                )}
+                                            </span>
+                                        `
+                                    )
+                                    .join("")}
+
+                            </div>
+                        `
+                        : "";
+
+
+                const notes =
+                    record.notes
+                        ? `
+                            <div class="service-notes">
+
+                                <div class="eyebrow">
+                                    NOTES
+                                </div>
+
+                                <p>
+                                    ${escapeHTML(
+                                        record.notes
+                                    )}
+                                </p>
+
+                            </div>
+                        `
+                        : "";
+
+
+                return `
+
+                    <article class="service-record">
+
+                        <div class="service-record-top">
+
+                            <div>
+
+                                <div class="eyebrow">
+
+                                    ${escapeHTML(
+                                        record.category
+                                    )}
+
+                                </div>
+
+
+                                <h3>
+
+                                    ${escapeHTML(
+                                        record.service_item
+                                    )}
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="service-status">
+
+                                ${escapeHTML(
+                                    record.status
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-meta">
+
+                            <span>
+
+                                DATE:
+
+                                <strong>
+
+                                    ${escapeHTML(
+                                        formatDate(
+                                            record.service_date
+                                        )
+                                    )}
+
+                                </strong>
+
+                            </span>
+
+
+                            ${
+                                record.odometer !== null
+                                    ? `
+                                        <span>
+
+                                            ODOMETER:
+
+                                            <strong>
+
+                                                ${escapeHTML(
+                                                    formatOdometer(
+                                                        record.odometer
+                                                    )
+                                                )}
+
+                                            </strong>
+
+                                        </span>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <p>
+
+                            ${escapeHTML(
+                                record.description
+                            )}
+
+                        </p>
+
+
+                        ${extra}
+
+                        ${parts}
+
+                        ${notes}
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+async function loadServiceHistory() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("service_records")
+            .select("*")
+            .order(
+                "service_date",
+                {
+                    ascending: false
+                }
+            )
+            .order(
+                "id",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Service history error:",
+            error
+        );
+
+
+        historyContainer.innerHTML = `
+
+            <div class="error-state">
+
+                <div class="eyebrow">
+                    DATABASE ERROR
+                </div>
+
+                <h3>
+                    Service History Unavailable
+                </h3>
+
+                <p>
+                    The service database could not be
+                    loaded right now.
+                </p>
+
+            </div>
+
+        `;
+
+
+        upcomingContainer.innerHTML = `
+
+            <div class="error-state">
+
+                <h3>
+                    Unable to Load Service Targets
+                </h3>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    serviceRecords =
+        data || [];
+
+
+    updateSummary();
+
+    renderUpcoming();
+
+    renderHistory();
+
+}
+
+
+document
+    .querySelectorAll(
+        ".filter-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".filter-button"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList.remove(
+                                    "active"
+                                )
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    activeCategory =
+                        button.dataset.category;
+
+
+                    renderHistory();
+
+                }
+            );
+
+        }
+    );
+
+
+loadServiceHistory();
+
+</script>
+
+
+</body>
+
+</html>
