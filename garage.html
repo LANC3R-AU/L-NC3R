@@ -18,21 +18,16 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <meta
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
     >
-
     <meta
         name="apple-mobile-web-app-title"
         content="L@NC3R Garage"
     >
 
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
+    <link rel="manifest" href="manifest.json">
 
     <link
         rel="icon"
@@ -81,8 +76,12 @@
 
         body {
             margin: 0;
+            padding-bottom:
+                calc(88px + env(safe-area-inset-bottom));
+
             background: var(--bg);
             color: var(--text);
+
             font-family:
                 Inter,
                 system-ui,
@@ -107,25 +106,31 @@
             width: 100%;
             max-width: 600px;
             min-height: 100vh;
+
             margin: auto;
+
             padding:
                 max(18px, env(safe-area-inset-top))
                 16px
-                max(35px, env(safe-area-inset-bottom));
+                calc(110px + env(safe-area-inset-bottom));
         }
 
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 12px;
+
             margin-bottom: 25px;
         }
 
         .logo {
             color: white;
+
             font-size: 1.45rem;
             font-weight: 900;
+
             letter-spacing: -.05em;
         }
 
@@ -136,13 +141,16 @@
         .topbar-actions {
             display: flex;
             align-items: center;
+
             gap: 8px;
         }
 
         .connection {
             color: var(--muted);
+
             font-size: .68rem;
             font-weight: 800;
+
             letter-spacing: .08em;
         }
 
@@ -152,9 +160,12 @@
 
         .eyebrow {
             margin-bottom: 7px;
+
             color: var(--red);
+
             font-size: .67rem;
             font-weight: 900;
+
             letter-spacing: .12em;
         }
 
@@ -167,7 +178,13 @@
 
         h1 {
             margin-bottom: 10px;
-            font-size: clamp(2.3rem, 10vw, 4rem);
+
+            font-size: clamp(
+                2.3rem,
+                10vw,
+                4rem
+            );
+
             line-height: .92;
             letter-spacing: -.065em;
         }
@@ -179,26 +196,33 @@
 
         .intro {
             margin-bottom: 25px;
+
             color: var(--muted);
+
             line-height: 1.55;
         }
 
         .vehicle-card {
             margin-bottom: 16px;
+
             padding: 22px;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
 
         .vehicle-name {
             margin-bottom: 5px;
+
             font-size: 1.15rem;
             font-weight: 900;
         }
 
         .vehicle-spec {
             color: var(--muted);
+
             font-size: .8rem;
         }
 
@@ -208,69 +232,97 @@
 
         .odo-label {
             display: block;
+
             margin-bottom: 5px;
+
             color: var(--muted);
+
             font-size: .65rem;
             font-weight: 800;
+
             letter-spacing: .1em;
         }
 
         .odo-value {
             color: var(--red);
+
             font-size: 2.2rem;
             font-weight: 900;
+
             letter-spacing: -.04em;
         }
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 8px;
+
             margin-bottom: 20px;
         }
 
         .stat {
             padding: 15px 10px;
+
             text-align: center;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: 14px;
         }
 
         .stat strong {
             display: block;
+
             margin-bottom: 5px;
+
             font-size: 1.3rem;
         }
 
         .stat span {
             color: var(--muted);
+
             font-size: .58rem;
             font-weight: 800;
+
             letter-spacing: .06em;
         }
 
-        .menu {
+        .menu,
+        .more-menu {
             display: grid;
+
             gap: 10px;
         }
 
-        .menu-button {
+        .menu-button,
+        .more-card {
             width: 100%;
+
             min-height: 78px;
+
             padding: 17px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 15px;
+
             text-align: left;
+
             color: var(--text);
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
 
-        .menu-button:active {
+        .menu-button:active,
+        .more-card:active {
             transform: scale(.99);
         }
 
@@ -279,21 +331,36 @@
             border-color: var(--red);
         }
 
-        .menu-title {
+        .menu-title,
+        .more-card-title {
             display: block;
+
             margin-bottom: 4px;
+
             font-size: .95rem;
             font-weight: 900;
         }
 
-        .menu-subtitle {
+        .menu-subtitle,
+        .more-card-description {
             display: block;
+
             color: var(--muted);
+
             font-size: .72rem;
+
+            line-height: 1.4;
         }
 
-        .menu-button.primary .menu-subtitle {
-            color: rgba(255, 255, 255, .75);
+        .menu-button.primary
+        .menu-subtitle {
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .75
+                );
         }
 
         .arrow {
@@ -311,12 +378,17 @@
 
         .back {
             margin-bottom: 20px;
+
             padding: 0;
+
             color: var(--muted);
             background: none;
+
             border: 0;
+
             font-size: .75rem;
             font-weight: 900;
+
             letter-spacing: .08em;
         }
 
@@ -326,13 +398,16 @@
 
         .section-title h2 {
             margin-bottom: 8px;
+
             font-size: 2rem;
+
             line-height: .95;
             letter-spacing: -.05em;
         }
 
         .section-title p {
             color: var(--muted);
+
             line-height: 1.5;
         }
 
@@ -342,10 +417,14 @@
 
         .field label {
             display: block;
+
             margin-bottom: 8px;
+
             color: var(--muted);
+
             font-size: .65rem;
             font-weight: 900;
+
             letter-spacing: .08em;
         }
 
@@ -353,16 +432,21 @@
         select,
         textarea {
             width: 100%;
+
             padding: 15px;
+
             color: var(--text);
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: 12px;
+
             outline: none;
         }
 
         textarea {
             min-height: 110px;
+
             resize: vertical;
         }
 
@@ -374,32 +458,37 @@
 
         .button {
             width: 100%;
+
             min-height: 54px;
+
             padding: 14px;
+
             color: white;
             background: var(--red);
+
             border: 0;
             border-radius: 12px;
-            font-weight: 900;
-        }
 
-        .button.secondary {
-            color: var(--text);
-            background: var(--panel-2);
-            border: 1px solid var(--border);
+            font-weight: 900;
         }
 
         .button:disabled {
             opacity: .45;
+
             cursor: not-allowed;
         }
 
         .message {
             display: none;
+
             margin-bottom: 15px;
+
             padding: 13px;
+
             border-radius: 10px;
+
             font-size: .78rem;
+
             line-height: 1.45;
         }
 
@@ -409,91 +498,153 @@
 
         .message.error {
             color: #ff8b8b;
-            background: rgba(226, 27, 35, .12);
-            border: 1px solid rgba(226, 27, 35, .4);
+
+            background:
+                rgba(
+                    226,
+                    27,
+                    35,
+                    .12
+                );
+
+            border:
+                1px solid
+                rgba(
+                    226,
+                    27,
+                    35,
+                    .4
+                );
         }
 
         .message.success {
             color: #7cda95;
-            background: rgba(63, 164, 91, .12);
-            border: 1px solid rgba(63, 164, 91, .4);
+
+            background:
+                rgba(
+                    63,
+                    164,
+                    91,
+                    .12
+                );
+
+            border:
+                1px solid
+                rgba(
+                    63,
+                    164,
+                    91,
+                    .4
+                );
         }
 
         .maintenance-list {
             display: grid;
+
             gap: 9px;
         }
 
         .maintenance-item {
             width: 100%;
+
             padding: 16px;
+
             text-align: left;
+
             color: var(--text);
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: 14px;
         }
 
         .maintenance-item strong {
             display: block;
+
             margin-bottom: 6px;
         }
 
         .maintenance-meta {
             display: flex;
             flex-wrap: wrap;
+
             gap: 6px;
         }
 
         .tag {
             display: inline-block;
+
             padding: 5px 7px;
+
             color: var(--muted);
+
             border: 1px solid var(--border);
             border-radius: 6px;
+
             font-size: .57rem;
             font-weight: 900;
+
             letter-spacing: .06em;
         }
 
         .tag.red {
             color: #ff767b;
-            border-color: rgba(226, 27, 35, .65);
+
+            border-color:
+                rgba(
+                    226,
+                    27,
+                    35,
+                    .65
+                );
         }
 
         .inspection-head {
             margin-bottom: 18px;
+
             padding: 18px;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
 
         .inspection-head h3 {
             margin: 5px 0 8px;
+
             font-size: 1.35rem;
         }
 
         .inspection-head p {
             margin: 0;
+
             color: var(--muted);
+
             line-height: 1.5;
         }
 
         .progress-info {
             display: flex;
             justify-content: space-between;
+
             margin: 18px 0 8px;
+
             color: var(--muted);
+
             font-size: .68rem;
             font-weight: 900;
         }
 
         .progress-track {
             height: 8px;
+
             margin-bottom: 18px;
+
             overflow: hidden;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: 20px;
         }
@@ -501,47 +652,69 @@
         .progress-bar {
             width: 0;
             height: 100%;
+
             background: var(--red);
-            transition: width .2s ease;
+
+            transition:
+                width .2s ease;
         }
 
         .checklist {
             display: grid;
+
             gap: 8px;
+
             margin-bottom: 20px;
         }
 
         .check {
             display: flex;
             align-items: flex-start;
+
             gap: 12px;
+
             padding: 15px;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: 12px;
         }
 
         .check.complete {
-            border-color: rgba(63, 164, 91, .55);
+            border-color:
+                rgba(
+                    63,
+                    164,
+                    91,
+                    .55
+                );
         }
 
         .check input {
             width: 22px;
             height: 22px;
+
             margin: 0;
+
             flex: 0 0 auto;
+
             accent-color: var(--red);
         }
 
         .check span {
             font-size: .85rem;
+
             line-height: 1.45;
         }
 
         .login-card {
             margin-top: 40px;
+
             padding: 22px;
+
             background: var(--panel);
+
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
@@ -552,16 +725,21 @@
 
         .login-card > p {
             margin-bottom: 20px;
+
             color: var(--muted);
+
             line-height: 1.5;
         }
 
         .logout {
             padding: 8px 10px;
+
             color: var(--muted);
             background: transparent;
+
             border: 1px solid var(--border);
             border-radius: 8px;
+
             font-size: .65rem;
             font-weight: 900;
         }
@@ -570,7 +748,149 @@
             display: none !important;
         }
 
+        .app-version {
+            margin-top: 30px;
+
+            text-align: center;
+
+            color: #555;
+
+            font-size: .58rem;
+            font-weight: 800;
+
+            letter-spacing: .08em;
+        }
+
+
+        /* BOTTOM APP NAVIGATION */
+
+        .bottom-nav {
+            position: fixed;
+
+            left: 50%;
+            bottom: 0;
+
+            z-index: 9999;
+
+            width: 100%;
+            max-width: 600px;
+
+            transform:
+                translateX(-50%);
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            padding:
+                8px
+                8px
+                calc(
+                    8px +
+                    env(
+                        safe-area-inset-bottom
+                    )
+                );
+
+            background:
+                rgba(
+                    8,
+                    8,
+                    8,
+                    .96
+                );
+
+            border-top:
+                1px solid
+                var(--border);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+        }
+
+        .nav-item {
+            position: relative;
+
+            min-width: 0;
+            min-height: 58px;
+
+            padding: 7px 3px;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+
+            color: #777;
+            background: transparent;
+
+            border: 0;
+            border-radius: 12px;
+
+            font-size: .53rem;
+            font-weight: 900;
+
+            letter-spacing: .04em;
+
+            text-align: center;
+        }
+
+        .nav-item:active {
+            background: #151515;
+        }
+
+        .nav-item.active {
+            color: white;
+        }
+
+        .nav-item.active::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 50%;
+
+            width: 22px;
+            height: 3px;
+
+            transform:
+                translateX(-50%);
+
+            background: var(--red);
+
+            border-radius:
+                0 0 4px 4px;
+        }
+
+        .nav-icon {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 24px;
+            height: 24px;
+
+            font-size: 1.2rem;
+
+            line-height: 1;
+        }
+
+        .nav-item.active
+        .nav-icon {
+            color: var(--red);
+        }
+
         @media (max-width: 380px) {
+
             .logo {
                 font-size: 1.2rem;
             }
@@ -587,9 +907,28 @@
                 padding-left: 5px;
                 padding-right: 5px;
             }
+
+            .nav-item {
+                font-size: .48rem;
+            }
+        }
+
+        @media (min-width: 601px) {
+
+            .bottom-nav {
+                border-left:
+                    1px solid var(--border);
+
+                border-right:
+                    1px solid var(--border);
+
+                border-radius:
+                    18px 18px 0 0;
+            }
         }
     </style>
 </head>
+
 
 <body>
 
@@ -645,7 +984,9 @@
 
         <div class="login-card">
 
-            <h2>Sign In</h2>
+            <h2>
+                Sign In
+            </h2>
 
             <p>
                 This app writes directly to the L@NC3R vehicle database.
@@ -702,7 +1043,7 @@
     </section>
 
 
-    <!-- HOME -->
+    <!-- GARAGE HOME -->
 
     <section
         class="screen"
@@ -749,34 +1090,58 @@
 
         </div>
 
+
         <div class="stats">
 
             <div class="stat">
-                <strong id="home-inspected">—</strong>
-                <span>INSPECTED</span>
+
+                <strong id="home-inspected">
+                    —
+                </strong>
+
+                <span>
+                    INSPECTED
+                </span>
+
             </div>
 
             <div class="stat">
-                <strong id="home-remaining">—</strong>
-                <span>REMAINING</span>
+
+                <strong id="home-remaining">
+                    —
+                </strong>
+
+                <span>
+                    REMAINING
+                </span>
+
             </div>
 
             <div class="stat">
-                <strong id="home-due">—</strong>
-                <span>DUE</span>
+
+                <strong id="home-due">
+                    —
+                </strong>
+
+                <span>
+                    DUE
+                </span>
+
             </div>
 
         </div>
+
 
         <div class="menu">
 
             <button
                 class="menu-button primary"
                 type="button"
-                onclick="openInspectionList()"
+                onclick="garageNav('inspect')"
             >
 
                 <div>
+
                     <span class="menu-title">
                         START INSPECTION
                     </span>
@@ -787,9 +1152,12 @@
                     >
                         Load maintenance checklist
                     </span>
+
                 </div>
 
-                <span class="arrow">→</span>
+                <span class="arrow">
+                    →
+                </span>
 
             </button>
 
@@ -797,10 +1165,11 @@
             <button
                 class="menu-button"
                 type="button"
-                onclick="showScreen('odometer-screen')"
+                onclick="showOdometer()"
             >
 
                 <div>
+
                     <span class="menu-title">
                         UPDATE ODOMETER
                     </span>
@@ -808,9 +1177,12 @@
                     <span class="menu-subtitle">
                         Record a new vehicle reading
                     </span>
+
                 </div>
 
-                <span class="arrow">→</span>
+                <span class="arrow">
+                    →
+                </span>
 
             </button>
 
@@ -822,6 +1194,7 @@
             >
 
                 <div>
+
                     <span class="menu-title">
                         MAINTENANCE PLAN
                     </span>
@@ -829,30 +1202,12 @@
                     <span class="menu-subtitle">
                         View the full maintenance dashboard
                     </span>
+
                 </div>
 
-                <span class="arrow">→</span>
-
-            </button>
-
-
-            <button
-                class="menu-button"
-                type="button"
-                onclick="window.location.href='inspection-history.html'"
-            >
-
-                <div>
-                    <span class="menu-title">
-                        INSPECTION HISTORY
-                    </span>
-
-                    <span class="menu-subtitle">
-                        View recorded physical inspections
-                    </span>
-                </div>
-
-                <span class="arrow">→</span>
+                <span class="arrow">
+                    →
+                </span>
 
             </button>
 
@@ -867,14 +1222,6 @@
         class="screen"
         id="inspection-list-screen"
     >
-
-        <button
-            class="back"
-            type="button"
-            onclick="showScreen('home-screen')"
-        >
-            ← GARAGE
-        </button>
 
         <div class="section-title">
 
@@ -911,7 +1258,7 @@
         <button
             class="back"
             type="button"
-            onclick="openInspectionList()"
+            onclick="garageNav('inspect')"
         >
             ← INSPECTIONS
         </button>
@@ -1060,7 +1407,7 @@
         <button
             class="back"
             type="button"
-            onclick="showScreen('home-screen')"
+            onclick="garageNav('garage')"
         >
             ← GARAGE
         </button>
@@ -1083,6 +1430,7 @@
 
         </div>
 
+
         <div class="vehicle-card">
 
             <span class="odo-label">
@@ -1098,10 +1446,12 @@
 
         </div>
 
+
         <div
             class="message"
             id="odometer-message"
         ></div>
+
 
         <form id="odometer-form">
 
@@ -1164,7 +1514,318 @@
 
     </section>
 
+
+    <!-- MORE -->
+
+    <section
+        class="screen"
+        id="more-screen"
+    >
+
+        <div class="section-title">
+
+            <div class="eyebrow">
+                L@NC3R GARAGE
+            </div>
+
+            <h2>
+                MORE<br>
+                <span>TOOLS.</span>
+            </h2>
+
+            <p>
+                Vehicle management, project information and owner controls.
+            </p>
+
+        </div>
+
+
+        <div class="more-menu">
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="showOdometer()"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Update Odometer
+                    </span>
+
+                    <span class="more-card-description">
+                        Record the latest vehicle mileage.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='maintenance-plan.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Maintenance Plan
+                    </span>
+
+                    <span class="more-card-description">
+                        View the complete Lancer maintenance baseline.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='service-history.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Service History
+                    </span>
+
+                    <span class="more-card-description">
+                        View recorded servicing and maintenance work.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='inspection-history.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Inspection History
+                    </span>
+
+                    <span class="more-card-description">
+                        Review previous physical inspections.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='lancer.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Lancer Project
+                    </span>
+
+                    <span class="more-card-description">
+                        Open the main L@NC3R project page.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="window.location.href='index.html'"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        L@NC3R Website
+                    </span>
+
+                    <span class="more-card-description">
+                        Open the main portfolio.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="logoutGarage()"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Log Out
+                    </span>
+
+                    <span class="more-card-description">
+                        Sign out of the Garage owner account.
+                    </span>
+
+                </div>
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="app-version">
+            L@NC3R GARAGE • PWA
+        </div>
+
+    </section>
+
 </div>
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav
+    class="bottom-nav hidden"
+    id="bottom-nav"
+    aria-label="Garage navigation"
+>
+
+    <button
+        class="nav-item active"
+        id="nav-garage"
+        type="button"
+        onclick="garageNav('garage')"
+    >
+
+        <span class="nav-icon">
+            ⌂
+        </span>
+
+        <span>
+            GARAGE
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        id="nav-inspect"
+        type="button"
+        onclick="garageNav('inspect')"
+    >
+
+        <span class="nav-icon">
+            ✓
+        </span>
+
+        <span>
+            INSPECT
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        id="nav-service"
+        type="button"
+        onclick="garageNav('service')"
+    >
+
+        <span class="nav-icon">
+            ⚙
+        </span>
+
+        <span>
+            SERVICE
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        id="nav-history"
+        type="button"
+        onclick="garageNav('history')"
+    >
+
+        <span class="nav-icon">
+            ≡
+        </span>
+
+        <span>
+            HISTORY
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        id="nav-more"
+        type="button"
+        onclick="garageNav('more')"
+    >
+
+        <span class="nav-icon">
+            •••
+        </span>
+
+        <span>
+            MORE
+        </span>
+
+    </button>
+
+</nav>
 
 
 <script>
@@ -1183,8 +1844,10 @@ const db =
 
 let currentUser = null;
 let currentOdometer = null;
+
 let maintenanceItems = [];
 let inspectionRecords = [];
+
 let selectedMaintenance = null;
 
 
@@ -1289,16 +1952,127 @@ function showScreen(id) {
 
     document
         .querySelectorAll(".screen")
-        .forEach(
-            screen =>
-                screen.classList.remove("active")
+        .forEach(screen => {
+            screen.classList.remove(
+                "active"
+            );
+        });
+
+    const screen =
+        document.getElementById(id);
+
+    if (screen) {
+        screen.classList.add(
+            "active"
         );
+    }
+
+    window.scrollTo(
+        0,
+        0
+    );
+}
+
+
+function setActiveNav(name) {
 
     document
-        .getElementById(id)
-        .classList.add("active");
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+            item.classList.remove(
+                "active"
+            );
+        });
 
-    window.scrollTo(0, 0);
+    const active =
+        document.getElementById(
+            `nav-${name}`
+        );
+
+    if (active) {
+        active.classList.add(
+            "active"
+        );
+    }
+}
+
+
+function garageNav(destination) {
+
+    if (destination === "garage") {
+
+        setActiveNav(
+            "garage"
+        );
+
+        showScreen(
+            "home-screen"
+        );
+
+        return;
+    }
+
+
+    if (destination === "inspect") {
+
+        setActiveNav(
+            "inspect"
+        );
+
+        openInspectionList();
+
+        return;
+    }
+
+
+    if (destination === "service") {
+
+        setActiveNav(
+            "service"
+        );
+
+        window.location.href =
+            "service-history.html";
+
+        return;
+    }
+
+
+    if (destination === "history") {
+
+        setActiveNav(
+            "history"
+        );
+
+        window.location.href =
+            "inspection-history.html";
+
+        return;
+    }
+
+
+    if (destination === "more") {
+
+        setActiveNav(
+            "more"
+        );
+
+        showScreen(
+            "more-screen"
+        );
+    }
+}
+
+
+function showOdometer() {
+
+    setActiveNav(
+        "more"
+    );
+
+    showScreen(
+        "odometer-screen"
+    );
 }
 
 
@@ -1325,7 +2099,8 @@ function clearMessage(id) {
 
     box.textContent = "";
 
-    box.className = "message";
+    box.className =
+        "message";
 }
 
 
@@ -1340,7 +2115,9 @@ function formatKM(value) {
 
     return (
         Number(value)
-            .toLocaleString("en-AU") +
+            .toLocaleString(
+                "en-AU"
+            ) +
         " km"
     );
 }
@@ -1348,7 +2125,8 @@ function formatKM(value) {
 
 function todayLocal() {
 
-    const date = new Date();
+    const date =
+        new Date();
 
     const offset =
         date.getTimezoneOffset();
@@ -1361,7 +2139,38 @@ function todayLocal() {
 
     return local
         .toISOString()
-        .slice(0, 10);
+        .slice(
+            0,
+            10
+        );
+}
+
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 }
 
 
@@ -1369,7 +2178,8 @@ async function initialise() {
 
     document.getElementById(
         "odometer-date"
-    ).value = todayLocal();
+    ).value =
+        todayLocal();
 
     const {
         data: {
@@ -1404,14 +2214,15 @@ async function initialise() {
 
 async function enterGarage() {
 
-    document.getElementById(
-        "connection"
-    ).textContent =
+    const connection =
+        document.getElementById(
+            "connection"
+        );
+
+    connection.textContent =
         "ONLINE";
 
-    document.getElementById(
-        "connection"
-    ).classList.add(
+    connection.classList.add(
         "online"
     );
 
@@ -1419,6 +2230,16 @@ async function enterGarage() {
         "logout-button"
     ).classList.remove(
         "hidden"
+    );
+
+    document.getElementById(
+        "bottom-nav"
+    ).classList.remove(
+        "hidden"
+    );
+
+    setActiveNav(
+        "garage"
     );
 
     await refreshGarage();
@@ -1439,7 +2260,9 @@ async function refreshGarage() {
         await Promise.all([
 
             db
-                .from("vehicle_status")
+                .from(
+                    "vehicle_status"
+                )
                 .select(
                     "odometer, odometer_updated_at"
                 )
@@ -1450,7 +2273,9 @@ async function refreshGarage() {
                 .single(),
 
             db
-                .from("maintenance_plan")
+                .from(
+                    "maintenance_plan"
+                )
                 .select("*")
                 .order(
                     "id",
@@ -1460,7 +2285,9 @@ async function refreshGarage() {
                 ),
 
             db
-                .from("inspection_records")
+                .from(
+                    "inspection_records"
+                )
                 .select(
                     "id, maintenance_item_id, inspection_date, result"
                 )
@@ -1480,7 +2307,9 @@ async function refreshGarage() {
                         ascending: false
                     }
                 )
+
         ]);
+
 
     if (
         !vehicleResponse.error &&
@@ -1509,6 +2338,7 @@ async function refreshGarage() {
             );
     }
 
+
     maintenanceItems =
         maintenanceResponse.data ||
         [];
@@ -1517,26 +2347,30 @@ async function refreshGarage() {
         inspectionResponse.data ||
         [];
 
+
     const inspectedIDs =
         new Set(
             inspectionRecords
-                .map(
-                    record =>
-                        Number(
-                            record
-                                .maintenance_item_id
-                        )
+                .map(record =>
+                    Number(
+                        record
+                            .maintenance_item_id
+                    )
                 )
                 .filter(Boolean)
         );
+
 
     const inspected =
         maintenanceItems.filter(
             item =>
                 inspectedIDs.has(
-                    Number(item.id)
+                    Number(
+                        item.id
+                    )
                 )
         ).length;
+
 
     const remaining =
         Math.max(
@@ -1544,6 +2378,7 @@ async function refreshGarage() {
             inspected,
             0
         );
+
 
     const due =
         maintenanceItems.filter(
@@ -1554,20 +2389,24 @@ async function refreshGarage() {
                 "DUE"
         ).length;
 
+
     document.getElementById(
         "home-inspected"
     ).textContent =
         inspected;
+
 
     document.getElementById(
         "home-remaining"
     ).textContent =
         remaining;
 
+
     document.getElementById(
         "home-due"
     ).textContent =
         due;
+
 
     document.getElementById(
         "inspection-menu-subtitle"
@@ -1593,91 +2432,80 @@ function renderMaintenanceList() {
             "maintenance-list"
         );
 
+
     const inspectedIDs =
         new Set(
             inspectionRecords
-                .map(
-                    record =>
-                        Number(
-                            record
-                                .maintenance_item_id
-                        )
+                .map(record =>
+                    Number(
+                        record
+                            .maintenance_item_id
+                    )
                 )
                 .filter(Boolean)
         );
 
+
     container.innerHTML =
         maintenanceItems
-            .map(
-                item => {
+            .map(item => {
 
-                    const inspected =
-                        inspectedIDs.has(
-                            Number(item.id)
-                        );
+                const inspected =
+                    inspectedIDs.has(
+                        Number(
+                            item.id
+                        )
+                    );
 
-                    return `
-                        <button
-                            class="maintenance-item"
-                            type="button"
-                            onclick="startInspection(${Number(item.id)})"
-                        >
 
-                            <strong>
+                return `
+                    <button
+                        class="maintenance-item"
+                        type="button"
+                        onclick="startInspection(${Number(item.id)})"
+                    >
+
+                        <strong>
+                            ${escapeHTML(
+                                item.maintenance_item
+                            )}
+                        </strong>
+
+                        <div class="maintenance-meta">
+
+                            <span class="tag">
                                 ${escapeHTML(
-                                    item.maintenance_item
+                                    item.category
                                 )}
-                            </strong>
+                            </span>
 
-                            <div class="maintenance-meta">
+                            <span class="tag ${
+                                String(
+                                    item.priority
+                                ).toUpperCase() ===
+                                "HIGH"
+                                    ? "red"
+                                    : ""
+                            }">
+                                ${escapeHTML(
+                                    item.priority
+                                )}
+                            </span>
 
-                                <span class="tag">
-                                    ${escapeHTML(
-                                        item.category
-                                    )}
-                                </span>
+                            <span class="tag">
+                                ${
+                                    inspected
+                                        ? "INSPECTED"
+                                        : "NOT INSPECTED"
+                                }
+                            </span>
 
-                                <span class="tag ${
-                                    String(
-                                        item.priority
-                                    ).toUpperCase() ===
-                                    "HIGH"
-                                        ? "red"
-                                        : ""
-                                }">
-                                    ${escapeHTML(
-                                        item.priority
-                                    )}
-                                </span>
+                        </div>
 
-                                <span class="tag">
-                                    ${
-                                        inspected
-                                            ? "INSPECTED"
-                                            : "NOT INSPECTED"
-                                    }
-                                </span>
-
-                            </div>
-
-                        </button>
-                    `;
-                }
-            )
+                    </button>
+                `;
+            })
             .join("");
-}
-
-
-function escapeHTML(value) {
-
-    return String(
-        value ?? ""
-    )
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
 }
 
 
@@ -1686,13 +2514,19 @@ function startInspection(id) {
     selectedMaintenance =
         maintenanceItems.find(
             item =>
-                Number(item.id) ===
+                Number(
+                    item.id
+                ) ===
                 Number(id)
         );
 
-    if (!selectedMaintenance) {
+
+    if (
+        !selectedMaintenance
+    ) {
         return;
     }
+
 
     const checklist =
         checklistMap[
@@ -1700,13 +2534,15 @@ function startInspection(id) {
                 .maintenance_item
         ] || [];
 
+
     document.getElementById(
         "inspection-head"
     ).innerHTML = `
 
         <div class="eyebrow">
             ${escapeHTML(
-                selectedMaintenance.category
+                selectedMaintenance
+                    .category
             )}
         </div>
 
@@ -1726,12 +2562,16 @@ function startInspection(id) {
         </p>
     `;
 
+
     document.getElementById(
         "checklist"
     ).innerHTML =
         checklist
             .map(
-                (text, index) => `
+                (
+                    text,
+                    index
+                ) => `
 
                     <label
                         class="check"
@@ -1754,15 +2594,24 @@ function startInspection(id) {
             )
             .join("");
 
+
     document.getElementById(
         "inspection-form"
     ).reset();
+
 
     clearMessage(
         "inspection-message"
     );
 
+
     updateChecklistProgress();
+
+
+    setActiveNav(
+        "inspect"
+    );
+
 
     showScreen(
         "inspection-screen"
@@ -1779,27 +2628,41 @@ function updateChecklistProgress() {
             )
         ];
 
+
     const complete =
         checks.filter(
-            check => check.checked
+            check =>
+                check.checked
         ).length;
 
-    checks.forEach(
-        (check, index) => {
 
-            document.getElementById(
-                `check-row-${index}`
-            ).classList.toggle(
-                "complete",
-                check.checked
-            );
+    checks.forEach(
+        (
+            check,
+            index
+        ) => {
+
+            const row =
+                document.getElementById(
+                    `check-row-${index}`
+                );
+
+            if (row) {
+
+                row.classList.toggle(
+                    "complete",
+                    check.checked
+                );
+            }
         }
     );
+
 
     document.getElementById(
         "check-progress"
     ).textContent =
         `${complete} / ${checks.length}`;
+
 
     const percent =
         checks.length
@@ -1808,6 +2671,7 @@ function updateChecklistProgress() {
                 checks.length
             ) * 100
             : 0;
+
 
     document.getElementById(
         "check-progress-bar"
@@ -1823,7 +2687,8 @@ function completedChecklist() {
             ".inspection-check:checked"
         )
     ].map(
-        check => check.value
+        check =>
+            check.value
     );
 }
 
@@ -1836,28 +2701,34 @@ document.getElementById(
 
         event.preventDefault();
 
+
         clearMessage(
             "login-message"
         );
+
 
         const email =
             document.getElementById(
                 "login-email"
             ).value.trim();
 
+
         const password =
             document.getElementById(
                 "login-password"
             ).value;
 
+
         const {
             data,
             error
         } =
-            await db.auth.signInWithPassword({
-                email,
-                password
-            });
+            await db.auth
+                .signInWithPassword({
+                    email,
+                    password
+                });
+
 
         if (error) {
 
@@ -1869,26 +2740,31 @@ document.getElementById(
             return;
         }
 
+
         currentUser =
             data.user;
+
 
         await enterGarage();
     }
 );
 
 
+async function logoutGarage() {
+
+    await db.auth.signOut();
+
+    currentUser = null;
+
+    window.location.reload();
+}
+
+
 document.getElementById(
     "logout-button"
 ).addEventListener(
     "click",
-    async () => {
-
-        await db.auth.signOut();
-
-        currentUser = null;
-
-        location.reload();
-    }
+    logoutGarage
 );
 
 
@@ -1900,11 +2776,15 @@ document.getElementById(
 
         event.preventDefault();
 
+
         clearMessage(
             "inspection-message"
         );
 
-        if (!selectedMaintenance) {
+
+        if (
+            !selectedMaintenance
+        ) {
 
             showMessage(
                 "inspection-message",
@@ -1914,18 +2794,22 @@ document.getElementById(
             return;
         }
 
+
         const result =
             document.getElementById(
                 "inspection-result"
             ).value;
 
+
         const completed =
             completedChecklist();
+
 
         const total =
             document.querySelectorAll(
                 ".inspection-check"
             ).length;
+
 
         if (
             result === "PASS" &&
@@ -1940,6 +2824,7 @@ document.getElementById(
             return;
         }
 
+
         if (
             currentOdometer === null
         ) {
@@ -1952,20 +2837,26 @@ document.getElementById(
             return;
         }
 
+
         const button =
             document.getElementById(
                 "save-inspection"
             );
 
+
         button.disabled = true;
+
         button.textContent =
             "SAVING...";
+
 
         const {
             error
         } =
             await db
-                .from("inspection_records")
+                .from(
+                    "inspection_records"
+                )
                 .insert({
 
                     maintenance_item_id:
@@ -2011,13 +2902,18 @@ document.getElementById(
                         completed
                 });
 
+
         button.disabled = false;
+
         button.textContent =
             "SAVE INSPECTION";
 
+
         if (error) {
 
-            console.error(error);
+            console.error(
+                error
+            );
 
             showMessage(
                 "inspection-message",
@@ -2027,17 +2923,24 @@ document.getElementById(
             return;
         }
 
+
         showMessage(
             "inspection-message",
             "Inspection saved successfully.",
             "success"
         );
 
+
         await refreshGarage();
+
 
         setTimeout(
             () => {
-                openInspectionList();
+
+                garageNav(
+                    "inspect"
+                );
+
             },
             700
         );
@@ -2053,9 +2956,11 @@ document.getElementById(
 
         event.preventDefault();
 
+
         clearMessage(
             "odometer-message"
         );
+
 
         const newReading =
             Number(
@@ -2064,18 +2969,23 @@ document.getElementById(
                 ).value
             );
 
+
         const readingDate =
             document.getElementById(
                 "odometer-date"
             ).value;
+
 
         const notes =
             document.getElementById(
                 "odometer-notes"
             ).value.trim();
 
+
         if (
-            !Number.isInteger(newReading) ||
+            !Number.isInteger(
+                newReading
+            ) ||
             newReading < 0
         ) {
 
@@ -2087,9 +2997,11 @@ document.getElementById(
             return;
         }
 
+
         if (
             currentOdometer !== null &&
-            newReading <= currentOdometer
+            newReading <=
+                currentOdometer
         ) {
 
             showMessage(
@@ -2100,21 +3012,27 @@ document.getElementById(
             return;
         }
 
+
         const button =
             document.getElementById(
                 "save-odometer"
             );
 
+
         button.disabled = true;
+
         button.textContent =
             "SAVING...";
+
 
         const {
             data: historyRow,
             error: historyError
         } =
             await db
-                .from("odometer_history")
+                .from(
+                    "odometer_history"
+                )
                 .insert({
 
                     vehicle_key:
@@ -2135,11 +3053,14 @@ document.getElementById(
                 .select("id")
                 .single();
 
+
         if (historyError) {
 
             button.disabled = false;
+
             button.textContent =
                 "SAVE ODOMETER";
+
 
             showMessage(
                 "odometer-message",
@@ -2149,11 +3070,14 @@ document.getElementById(
             return;
         }
 
+
         const {
             error: statusError
         } =
             await db
-                .from("vehicle_status")
+                .from(
+                    "vehicle_status"
+                )
                 .update({
 
                     odometer:
@@ -2168,12 +3092,17 @@ document.getElementById(
                     "lancer-2009"
                 );
 
+
         if (statusError) {
 
-            if (historyRow?.id) {
+            if (
+                historyRow?.id
+            ) {
 
                 await db
-                    .from("odometer_history")
+                    .from(
+                        "odometer_history"
+                    )
                     .delete()
                     .eq(
                         "id",
@@ -2181,9 +3110,12 @@ document.getElementById(
                     );
             }
 
+
             button.disabled = false;
+
             button.textContent =
                 "SAVE ODOMETER";
+
 
             showMessage(
                 "odometer-message",
@@ -2193,19 +3125,25 @@ document.getElementById(
             return;
         }
 
+
         button.disabled = false;
+
         button.textContent =
             "SAVE ODOMETER";
+
 
         document.getElementById(
             "new-odometer"
         ).value = "";
 
+
         document.getElementById(
             "odometer-notes"
         ).value = "";
 
+
         await refreshGarage();
+
 
         showMessage(
             "odometer-message",
@@ -2218,11 +3156,11 @@ document.getElementById(
 
 /*
     PWA SERVICE WORKER
-
-    Registers the L@NC3R Garage service worker
-    from the GitHub Pages project root.
 */
-if ("serviceWorker" in navigator) {
+
+if (
+    "serviceWorker" in navigator
+) {
 
     window.addEventListener(
         "load",
@@ -2240,7 +3178,6 @@ if ("serviceWorker" in navigator) {
                             "L@NC3R Garage service worker registered:",
                             registration.scope
                         );
-
                     }
                 )
                 .catch(
@@ -2250,7 +3187,6 @@ if ("serviceWorker" in navigator) {
                             "L@NC3R Garage service worker registration failed:",
                             error
                         );
-
                     }
                 );
         }
