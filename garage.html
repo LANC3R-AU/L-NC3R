@@ -1934,6 +1934,33 @@
         <div class="more-menu">
 
             <button
+                class="more-card hidden"
+                type="button"
+                id="install-app-button"
+                onclick="installGarageApp()"
+            >
+
+                <div>
+
+                    <span class="more-card-title">
+                        Install L@NC3R Garage
+                    </span>
+
+                    <span
+                        class="more-card-description"
+                        id="install-app-description"
+                    >
+                        Install Garage on this device for quick access.
+                    </span>
+
+                </div>
+
+                <span class="arrow">↓</span>
+
+            </button>
+
+
+            <button
                 class="more-card"
                 type="button"
                 onclick="showOdometer()"
@@ -3990,6 +4017,135 @@ document.getElementById(
         );
     }
 );
+
+
+/* ==============================
+   PWA INSTALL
+   ============================== */
+
+let deferredInstallPrompt = null;
+
+const installAppButton =
+    document.getElementById(
+        "install-app-button"
+    );
+
+const installAppDescription =
+    document.getElementById(
+        "install-app-description"
+    );
+
+function isGarageInstalled() {
+    return (
+        window.matchMedia(
+            "(display-mode: standalone)"
+        ).matches ||
+        window.navigator.standalone === true
+    );
+}
+
+function updateInstallButton() {
+    if (!installAppButton) return;
+
+    if (isGarageInstalled()) {
+        installAppButton.classList.add("hidden");
+        return;
+    }
+
+    installAppButton.classList.remove("hidden");
+
+    installAppDescription.textContent =
+        deferredInstallPrompt
+            ? "Install Garage on your phone or computer."
+            : "Open installation options for this device.";
+}
+
+window.addEventListener(
+    "beforeinstallprompt",
+    event => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        console.log("L@NC3R Garage install prompt available.");
+        updateInstallButton();
+    }
+);
+
+async function installGarageApp() {
+    if (isGarageInstalled()) {
+        alert("L@NC3R Garage is already installed on this device.");
+        return;
+    }
+
+    if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+
+        const { outcome } =
+            await deferredInstallPrompt.userChoice;
+
+        console.log(
+            "L@NC3R Garage install result:",
+            outcome
+        );
+
+        deferredInstallPrompt = null;
+
+        installAppDescription.textContent =
+            outcome === "accepted"
+                ? "Installing L@NC3R Garage..."
+                : "Installation was cancelled.";
+
+        return;
+    }
+
+    const userAgent =
+        navigator.userAgent.toLowerCase();
+
+    const isIOS =
+        /iphone|ipad|ipod/.test(userAgent);
+
+    if (isIOS) {
+        alert(
+            "To install L@NC3R Garage:\n\n" +
+            "1. Open this page in Safari.\n" +
+            "2. Tap the Share button.\n" +
+            "3. Tap Add to Home Screen.\n" +
+            "4. Tap Add."
+        );
+        return;
+    }
+
+    alert(
+        "Your browser has not provided the install prompt yet.\n\n" +
+        "In Chrome, open the browser menu and look for Install app or Add to Home screen.\n\n" +
+        "If those options are missing, keep this page open and reload it once."
+    );
+}
+
+window.addEventListener(
+    "appinstalled",
+    () => {
+        console.log("L@NC3R Garage installed.");
+        deferredInstallPrompt = null;
+
+        if (installAppButton) {
+            installAppButton.classList.add("hidden");
+        }
+    }
+);
+
+const standaloneMediaQuery =
+    window.matchMedia(
+        "(display-mode: standalone)"
+    );
+
+if (standaloneMediaQuery.addEventListener) {
+    standaloneMediaQuery.addEventListener(
+        "change",
+        updateInstallButton
+    );
+}
+
+updateInstallButton();
 
 
 /* ==============================
