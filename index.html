@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>L@NC3R | Automotive Portfolio</title>
+    <meta name="description" content="L@NC3R — Beginner automotive tuner and modder documenting projects, builds and the journey of learning automotive tuning.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #080808;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        nav {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #e21b23;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e21b23;
+        }
+
+        .hero {
+            min-height: calc(100vh - 75px);
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(circle at 80% 50%, #351014 0%, transparent 35%),
+                #080808;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .tag {
+            color: #e21b23;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(65px, 12vw, 150px);
+            line-height: .9;
+            letter-spacing: -5px;
+        }
+
+        h1 span {
+            color: #e21b23;
+        }
+
+        .hero h2 {
+            margin-top: 25px;
+            font-size: clamp(20px, 3vw, 34px);
+            color: #ccc;
+        }
+
+        .hero p {
+            margin-top: 20px;
+            max-width: 650px;
+            color: #888;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .buttons {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .primary {
+            background: #e21b23;
+            color: white;
+        }
+
+        .secondary {
+            border: 1px solid #444;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #b81219;
+        }
+
+        .secondary:hover {
+            border-color: #e21b23;
+        }
+
+        @media (max-width: 700px) {
+            nav ul {
+                display: none;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">L<span>@</span>NC3R</div>
+
+    <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+        <li><a href="#cars">MY CARS</a></li>
+        <li><a href="#gallery">GALLERY</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+
+        <div class="tag">
+            AUTOMOTIVE PORTFOLIO
+        </div>
+
+        <h1>
+            L<span>@</span>NC3R
+        </h1>
+
+        <h2>
+            Beginner Tuner. Modder. Automotive Enthusiast.
+        </h2>
+
+        <p>
+            Documenting my journey into automotive tuning, modifications,
+            diagnostics and hands-on projects. Learning one car, one mod
+            and one mistake at a time.
+        </p>
+
+        <div class="buttons">
+            <a href="#projects" class="btn primary">
+                VIEW MY PROJECTS
+            </a>
+
+            <a href="#about" class="btn secondary">
+                ABOUT ME
+            </a>
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>
