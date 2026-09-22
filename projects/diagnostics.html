@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vehicle Diagnostics Project | L@NC3R</title>
+
+    <meta
+        name="description"
+        content="L@NC3R Project 003 — documenting my journey learning automotive diagnostics, OBD-II, J2534 communication, fault finding and ECU diagnostics."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="site-nav">
+
+    <a href="../index.html" class="logo">
+        L<span>@</span>NC3R
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="../index.html">PORTFOLIO</a>
+        </li>
+
+        <li>
+            <a href="../lancer.html">LANCER</a>
+        </li>
+
+        <li>
+            <a href="#overview">OVERVIEW</a>
+        </li>
+
+        <li>
+            <a href="#tools">TOOLS</a>
+        </li>
+
+        <li>
+            <a href="#skills">SKILLS</a>
+        </li>
+
+        <li>
+            <a href="#progress">PROGRESS</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="project-hero"
+    id="top"
+>
+
+    <div class="project-background-text">
+        OBD
+    </div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            L@NC3R / PROJECT 003
+        </div>
+
+        <h1 class="project-title">
+            VEHICLE<br>
+            DIAG<span>NOSTICS.</span>
+        </h1>
+
+        <div class="hero-subtitle">
+            OBD-II • J2534 • ECU COMMUNICATION • FAULT FINDING
+        </div>
+
+        <p class="hero-description">
+            Documenting my journey learning how modern vehicles
+            communicate, how diagnostic information is retrieved,
+            how faults are investigated and how diagnostic tools
+            interact with vehicle control modules.
+        </p>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+                <span>VEHICLE</span>
+                <strong>2009 LANCER</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>PLATFORM</span>
+                <strong>OBD-II</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>INTERFACE</span>
+                <strong>J2534</strong>
+            </div>
+
+            <div class="hero-stat">
+                <span>STATUS</span>
+                <strong>LEARNING</strong>
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <a
+                href="#overview"
+                class="btn btn-primary"
+            >
+                VIEW PROJECT
+            </a>
+
+            <a
+                href="../lancer.html"
+                class="btn btn-secondary"
+            >
+                ← LANCER BUILD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OVERVIEW
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="overview"
+>
+
+    <div class="section-number">
+        01 / PROJECT OVERVIEW
+    </div>
+
+
+    <div class="overview-grid">
+
+        <div class="overview-title">
+
+            <h2>
+                LEARNING TO<br>
+                <span>FIND THE PROBLEM.</span>
+            </h2>
+
+        </div>
+
+
+        <div class="overview-copy">
+
+            <p>
+                Vehicle diagnostics is one of the core skills
+                I'm developing through the L@NC3R project.
+            </p>
+
+            <p>
+                Instead of immediately replacing parts when
+                something goes wrong, I want to understand how
+                to gather information from the vehicle and use
+                that information to investigate the actual
+                problem.
+            </p>
+
+            <p>
+                That means learning OBD-II, diagnostic trouble
+                codes, live data, ECU communication, J2534
+                interfaces and the relationship between the
+                vehicle's electronic systems.
+            </p>
+
+            <p>
+                My 2009 Mitsubishi Lancer is currently the main
+                vehicle I'm using to build that knowledge.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DIAGNOSTIC PLATFORM
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        02 / DIAGNOSTIC PLATFORM
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            THE<br>
+            <span>PLATFORM.</span>
+        </h2>
+
+        <p>
+            The main vehicle and electronic systems involved in
+            my current diagnostic learning.
+        </p>
+
+    </div>
+
+
+    <div class="spec-grid">
+
+        <div class="spec-card">
+            <span>VEHICLE</span>
+            <strong>2009 Mitsubishi Lancer</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>GENERATION</span>
+            <strong>CJ</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>ENGINE</span>
+            <strong>4B11</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>ENGINE MANAGEMENT</span>
+            <strong>Mitsubishi ECU</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>DIAGNOSTIC PORT</span>
+            <strong>OBD-II</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>PC INTERFACE</span>
+            <strong>J2534</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>ECU PROJECT</span>
+            <strong>SM5220</strong>
+        </div>
+
+        <div class="spec-card">
+            <span>CALIBRATION</span>
+            <strong>52200013</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TOOLS
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="tools"
+>
+
+    <div class="section-number">
+        03 / TOOLS & INTERFACES
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            DIAGNOSTIC<br>
+            <span>TOOLS.</span>
+        </h2>
+
+        <p>
+            Interfaces and software are only part of
+            diagnostics. A major part of this project is
+            learning what the information from those tools
+            actually means.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 01
+            </div>
+
+            <h3>
+                OBD-II
+            </h3>
+
+            <p>
+                Learning how the vehicle's diagnostic connector
+                provides access to diagnostic information and
+                electronic control systems.
+            </p>
+
+            <div class="project-card-status">
+                ● ACTIVE
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 02
+            </div>
+
+            <h3>
+                J2534
+            </h3>
+
+            <p>
+                Learning how a pass-thru interface allows
+                compatible PC software to communicate with
+                vehicle control modules.
+            </p>
+
+            <div class="project-card-status">
+                ● ACTIVE
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 03
+            </div>
+
+            <h3>
+                DIAGNOSTIC SOFTWARE
+            </h3>
+
+            <p>
+                Building experience using computer-based
+                automotive software for communication,
+                identification and diagnostic work.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 04
+            </div>
+
+            <h3>
+                ECU SOFTWARE
+            </h3>
+
+            <p>
+                Exploring the connection between vehicle
+                diagnostics and ECU identification, ROM data
+                and calibration research.
+            </p>
+
+            <div class="project-card-status">
+                ● ACTIVE
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 05
+            </div>
+
+            <h3>
+                LIVE DATA
+            </h3>
+
+            <p>
+                Learning how sensor and engine-management data
+                can help show what the vehicle is doing while
+                operating.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                TOOL / 06
+            </div>
+
+            <h3>
+                FAULT CODES
+            </h3>
+
+            <p>
+                Learning to use diagnostic trouble codes as a
+                starting point for investigation rather than
+                treating the code itself as proof that a part
+                needs replacing.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HARDWARE JOURNEY
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        04 / INTERFACE JOURNEY
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            HARDWARE<br>
+            <span>EXPERIENCE.</span>
+        </h2>
+
+        <p>
+            Part of learning diagnostics has also meant
+            learning about interface compatibility, drivers,
+            hardware reliability and communication problems.
+        </p>
+
+    </div>
+
+
+    <div class="info-panel">
+
+        <div class="info-panel-header">
+
+            <span>
+                DIAGNOSTIC INTERFACE JOURNEY
+            </span>
+
+            <h3>
+                OBD → J2534 → ECU
+            </h3>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <span>CONNECTION</span>
+                <strong>OBD-II</strong>
+            </div>
+
+            <div class="info-item">
+                <span>PC COMMUNICATION</span>
+                <strong>J2534 Pass-Thru</strong>
+            </div>
+
+            <div class="info-item">
+                <span>COMPUTER PLATFORM</span>
+                <strong>Windows</strong>
+            </div>
+
+            <div class="info-item">
+                <span>MAIN VEHICLE</span>
+                <strong>2009 Lancer CJ</strong>
+            </div>
+
+            <div class="info-item">
+                <span>MAIN ECU</span>
+                <strong>SM5220</strong>
+            </div>
+
+            <div class="info-item">
+                <span>PROJECT STATUS</span>
+                <strong>Active Learning</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SKILLS
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="skills"
+>
+
+    <div class="section-number">
+        05 / SKILLS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            WHAT I'M<br>
+            <span>LEARNING.</span>
+        </h2>
+
+        <p>
+            The goal isn't just learning how to connect a scan
+            tool. It's learning how to turn diagnostic
+            information into a structured investigation.
+        </p>
+
+    </div>
+
+
+    <div class="mod-grid">
+
+        <div class="mod-card">
+
+            <h3>
+                <span>01.</span> COMMUNICATION
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    OBD-II
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    J2534
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    ECU Communication
+                    <span>ACTIVE</span>
+                </li>
+
+                <li>
+                    Interface Drivers
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>02.</span> FAULT FINDING
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    DTC Reading
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Code Interpretation
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Root Cause Investigation
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Verification
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>03.</span> DATA
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Live Data
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Sensor Values
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Engine Parameters
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Data Logging
+                    <span>NEXT STAGE</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>04.</span> ECU
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    ECU Identification
+                    <span>ACTIVE</span>
+                </li>
+
+                <li>
+                    ROM Identification
+                    <span>ACTIVE</span>
+                </li>
+
+                <li>
+                    Calibration Research
+                    <span>ACTIVE</span>
+                </li>
+
+                <li>
+                    ECU Definitions
+                    <span>RESEARCH</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DIAGNOSTIC PROCESS
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        06 / PROCESS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            DIAGNOSE.<br>
+            DON'T<br>
+            <span>GUESS.</span>
+        </h2>
+
+        <p>
+            I'm building a repeatable diagnostic mindset rather
+            than assuming a fault code automatically identifies
+            the failed component.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+                <h3>IDENTIFY THE SYMPTOM</h3>
+
+                <p>
+                    Understand what the vehicle is actually
+                    doing before changing anything.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+                <h3>SCAN THE VEHICLE</h3>
+
+                <p>
+                    Retrieve available diagnostic information
+                    and fault codes.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+                <h3>RESEARCH THE SYSTEM</h3>
+
+                <p>
+                    Understand the affected circuit, sensor,
+                    actuator or control system.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+                <h3>CHECK DATA</h3>
+
+                <p>
+                    Compare available live data and other
+                    evidence with expected behaviour.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                05
+            </div>
+
+            <div>
+                <h3>TEST THE CAUSE</h3>
+
+                <p>
+                    Test the suspected cause instead of
+                    replacing parts based only on assumptions.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                06
+            </div>
+
+            <div>
+                <h3>VERIFY THE REPAIR</h3>
+
+                <p>
+                    Confirm that the original problem has
+                    actually been resolved.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROGRESS
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="progress"
+>
+
+    <div class="section-number">
+        07 / PROJECT LOG
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            DIAGNOSTIC<br>
+            <span>PROGRESS.</span>
+        </h2>
+
+        <p>
+            Major stages from my diagnostic and vehicle
+            communication learning journey.
+        </p>
+
+    </div>
+
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 01
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Started OBD Diagnostics
+                </h3>
+
+                <p>
+                    Began learning how diagnostic interfaces
+                    connect to the vehicle and communicate with
+                    electronic control systems.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 02
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    PC Interface Setup
+                </h3>
+
+                <p>
+                    Worked through driver, interface and
+                    compatibility issues involved in connecting
+                    automotive diagnostic hardware to a
+                    computer.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 03
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    J2534 Research
+                </h3>
+
+                <p>
+                    Began learning the role of J2534 pass-thru
+                    communication in PC-based automotive
+                    diagnostics and ECU work.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 04
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    ECU Communication
+                </h3>
+
+                <p>
+                    Expanded the project into ECU identification
+                    and ROM research for the 2009 Lancer.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                CURRENT
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Building Diagnostic Knowledge
+                </h3>
+
+                <p>
+                    Continuing to learn diagnostic procedures,
+                    live data, ECU communication and structured
+                    fault finding.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEXT STEPS
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        08 / ROADMAP
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            WHAT'S<br>
+            <span>NEXT.</span>
+        </h2>
+
+        <p>
+            As the project develops, this page will become a
+            record of real diagnostic jobs and what I learned
+            from each one.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+                <h3>LIVE DATA</h3>
+
+                <p>
+                    Become more confident reading and
+                    interpreting live engine data.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+                <h3>DATA LOGGING</h3>
+
+                <p>
+                    Build repeatable logs for diagnostic and ECU
+                    research.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+                <h3>ELECTRICAL TESTING</h3>
+
+                <p>
+                    Continue developing an understanding of
+                    vehicle electrical testing and circuits.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+                <h3>REAL CASE STUDIES</h3>
+
+                <p>
+                    Document actual faults, diagnostic steps and
+                    final outcomes as they occur.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RELATED PROJECTS
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        09 / RELATED PROJECTS
+    </div>
+
+
+    <div class="cards-grid">
+
+        <a
+            href="../lancer.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 001
+                </div>
+
+                <h3>
+                    2009 LANCER
+                </h3>
+
+                <p>
+                    View the complete vehicle project,
+                    specifications, build information and
+                    project history.
+                </p>
+
+                <div class="project-card-status">
+                    VIEW PROJECT →
+                </div>
+
+            </article>
+
+        </a>
+
+
+        <a
+            href="ecu-project.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 002
+                </div>
+
+                <h3>
+                    ECU TUNING
+                </h3>
+
+                <p>
+                    Follow the SM5220 and 52200013 ECU
+                    definition, calibration and tuning research
+                    project.
+                </p>
+
+                <div class="project-card-status">
+                    VIEW PROJECT →
+                </div>
+
+            </article>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NOTE
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        10 / PROJECT NOTE
+    </div>
+
+
+    <div class="notice">
+
+        <strong>
+            LEARNING PROJECT
+        </strong>
+
+        <p>
+            This project documents my personal process of
+            learning automotive diagnostics. It isn't intended
+            as professional diagnostic or repair advice.
+            Vehicle faults can have multiple causes, so proper
+            testing and manufacturer service information are
+            important before making repairs.
+        </p>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <a
+            href="../index.html"
+            class="btn btn-primary"
+        >
+            ← PORTFOLIO
+        </a>
+
+        <a
+            href="ecu-project.html"
+            class="btn btn-secondary"
+        >
+            ECU PROJECT
+        </a>
+
+        <a
+            href="#top"
+            class="btn btn-secondary"
+        >
+            BACK TO TOP
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div>
+        L@NC3R / PROJECT 003
+    </div>
+
+    <div>
+        VEHICLE DIAGNOSTICS • OBD-II • J2534
+    </div>
+
+</footer>
+
+</body>
+</html>
