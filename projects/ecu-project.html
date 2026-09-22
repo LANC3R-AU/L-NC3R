@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ECU Tuning Project | L@NC3R</title>
+
+    <meta
+        name="description"
+        content="L@NC3R Project 002 — documenting my journey learning the Mitsubishi Lancer 4B11 ECU, calibration 52200013, definitions, logging and ECU tuning."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="site-nav">
+
+    <a
+        href="../index.html"
+        class="logo"
+    >
+        L<span>@</span>NC3R
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="../index.html">
+                PORTFOLIO
+            </a>
+        </li>
+
+        <li>
+            <a href="../lancer.html">
+                LANCER
+            </a>
+        </li>
+
+        <li>
+            <a href="#ecu">
+                ECU
+            </a>
+        </li>
+
+        <li>
+            <a href="#definitions">
+                DEFINITIONS
+            </a>
+        </li>
+
+        <li>
+            <a href="#progress">
+                PROGRESS
+            </a>
+        </li>
+
+        <li>
+            <a href="#roadmap">
+                ROADMAP
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="project-hero"
+    id="top"
+>
+
+    <div class="project-background-text">
+        ECU
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            L@NC3R / PROJECT 002
+        </div>
+
+        <h1 class="project-title">
+            ECU<br>
+            TUNING<br>
+            <span>PROJECT.</span>
+        </h1>
+
+        <div class="hero-subtitle">
+            4B11 • SM5220 • 52200013
+        </div>
+
+        <p class="hero-description">
+            Documenting my journey learning how the Mitsubishi
+            Lancer engine ECU works — from communication and ROM
+            identification to calibration definitions, maps,
+            logging and eventually controlled calibration work.
+        </p>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+
+                <span>
+                    VEHICLE
+                </span>
+
+                <strong>
+                    MY09 LANCER
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    ENGINE
+                </span>
+
+                <strong>
+                    4B11
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    ROM ID
+                </span>
+
+                <strong>
+                    52200013
+                </strong>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <span>
+                    STATUS
+                </span>
+
+                <strong>
+                    RESEARCH
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <a
+                href="#ecu"
+                class="btn btn-primary"
+            >
+                VIEW PROJECT
+            </a>
+
+            <a
+                href="../lancer.html"
+                class="btn btn-secondary"
+            >
+                ← LANCER BUILD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROJECT OVERVIEW
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        01 / PROJECT OVERVIEW
+    </div>
+
+
+    <div class="overview-grid">
+
+        <div class="overview-title">
+
+            <h2>
+                UNDERSTANDING<br>
+                <span>THE ECU.</span>
+            </h2>
+
+        </div>
+
+
+        <div class="overview-copy">
+
+            <p>
+                ECU tuning is one of the main technical areas
+                I'm currently learning through the L@NC3R
+                project.
+            </p>
+
+            <p>
+                Rather than immediately changing calibration
+                values, my first goal is understanding how the
+                factory Mitsubishi ECU works and how its data
+                is structured.
+            </p>
+
+            <p>
+                That includes identifying the ROM correctly,
+                understanding ECU definitions, locating
+                calibration tables, learning data logging and
+                understanding what each engine-management
+                parameter actually does.
+            </p>
+
+            <p>
+                This page records that process from the
+                beginning.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ECU IDENTIFICATION
+===================================================== -->
+
+<section
+    class="section"
+    id="ecu"
+>
+
+    <div class="section-number">
+        02 / ECU IDENTIFICATION
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            CURRENT<br>
+            <span>ECU.</span>
+        </h2>
+
+        <p>
+            Identification information associated with the
+            engine ECU currently being researched for the
+            Lancer project.
+        </p>
+
+    </div>
+
+
+    <div class="info-panel">
+
+        <div class="info-panel-header">
+
+            <span>
+                MITSUBISHI ENGINE CONTROL
+            </span>
+
+            <h3>
+                SM5220 / 52200013
+            </h3>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info-item">
+
+                <span>
+                    VEHICLE
+                </span>
+
+                <strong>
+                    2009 Mitsubishi Lancer CJ
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ENGINE
+                </span>
+
+                <strong>
+                    4B11 2.0L MIVEC
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    TRANSMISSION
+                </span>
+
+                <strong>
+                    CVT
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ECU FAMILY
+                </span>
+
+                <strong>
+                    Mitsubishi E6T72xxx
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ECU ID
+                </span>
+
+                <strong>
+                    SM5220
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ROM / CALIBRATION ID
+                </span>
+
+                <strong>
+                    52200013
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    HARDWARE
+                </span>
+
+                <strong>
+                    1860A913
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    SOFTWARE
+                </span>
+
+                <strong>
+                    1860A91303
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROM ID
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        03 / ROM IDENTIFICATION
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            ROM<br>
+            <span>52200013.</span>
+        </h2>
+
+        <p>
+            Correctly identifying the ROM is critical before
+            interpreting calibration data or definitions.
+        </p>
+
+    </div>
+
+
+    <div class="metric-grid">
+
+        <div class="metric-card">
+
+            <span>
+                ROM / CALIBRATION
+            </span>
+
+            <strong>
+                52200013
+            </strong>
+
+            <small>
+                MY09 4B11 CVT
+            </small>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <span>
+                PROJECT STAGE
+            </span>
+
+            <strong>
+                RESEARCH
+            </strong>
+
+            <small>
+                DEFINITION & MAP IDENTIFICATION
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DEFINITIONS
+===================================================== -->
+
+<section
+    class="section"
+    id="definitions"
+>
+
+    <div class="section-number">
+        04 / ECU DEFINITIONS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            FINDING<br>
+            <span>THE MAPS.</span>
+        </h2>
+
+        <p>
+            ECU definition files describe where calibration
+            tables and parameters are located inside the ROM
+            and how the raw data should be interpreted.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 01
+            </div>
+
+            <h3>
+                ROM IDENTIFICATION
+            </h3>
+
+            <p>
+                Confirm the exact ROM ID before attempting to
+                associate calibration tables or definitions
+                with the binary.
+            </p>
+
+            <div class="project-card-status">
+                ● IDENTIFIED
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 02
+            </div>
+
+            <h3>
+                MAP ADDRESSES
+            </h3>
+
+            <p>
+                Determine where individual calibration tables
+                are stored within the ROM and confirm their
+                structure.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCHING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 03
+            </div>
+
+            <h3>
+                AXES
+            </h3>
+
+            <p>
+                Identify the axes associated with each map so
+                raw calibration data can be interpreted in the
+                correct operating context.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 04
+            </div>
+
+            <h3>
+                DATA TYPES
+            </h3>
+
+            <p>
+                Understand how values are stored, including
+                byte size, signed or unsigned data and
+                endianness.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 05
+            </div>
+
+            <h3>
+                SCALING
+            </h3>
+
+            <p>
+                Determine the conversion required to transform
+                raw ROM values into meaningful engineering
+                units.
+            </p>
+
+            <div class="project-card-status">
+                ● RESEARCHING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                DEFINITION / 06
+            </div>
+
+            <h3>
+                VALIDATION
+            </h3>
+
+            <p>
+                Compare discovered definitions against known
+                information and vehicle behaviour before
+                treating a map as confirmed.
+            </p>
+
+            <div class="project-card-status">
+                ● REQUIRED
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     KNOWN MAP GROUPS
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        05 / CALIBRATION AREAS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            WHAT I'M<br>
+            <span>LEARNING.</span>
+        </h2>
+
+        <p>
+            The Australian 52200013 definition release includes
+            multiple engine-management areas that can be
+            studied as part of understanding the factory ROM.
+        </p>
+
+    </div>
+
+
+    <div class="mod-grid">
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>01.</span> IGNITION
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    High Octane Timing
+                    <span>RESEARCH</span>
+                </li>
+
+                <li>
+                    Low Octane Timing
+                    <span>RESEARCH</span>
+                </li>
+
+                <li>
+                    Timing Strategy
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>02.</span> MIVEC
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Intake Cam Control
+                    <span>RESEARCH</span>
+                </li>
+
+                <li>
+                    Exhaust Cam Control
+                    <span>RESEARCH</span>
+                </li>
+
+                <li>
+                    Map Interpolation
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>03.</span> FUEL
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Fuel Strategy
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    AFR Concepts
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Fuel Trims
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="mod-card">
+
+            <h3>
+                <span>04.</span> ENGINE CONTROL
+            </h3>
+
+            <ul class="mod-list">
+
+                <li>
+                    Load
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    RPM
+                    <span>LEARNING</span>
+                </li>
+
+                <li>
+                    Throttle
+                    <span>LEARNING</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WORKFLOW
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-number">
+        06 / WORKFLOW
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            MY<br>
+            <span>PROCESS.</span>
+        </h2>
+
+        <p>
+            The goal is to learn the system methodically rather
+            than making calibration changes without knowing
+            what they do.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    IDENTIFY
+                </h3>
+
+                <p>
+                    Confirm ECU hardware, software and ROM
+                    identification.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    DEFINE
+                </h3>
+
+                <p>
+                    Understand map locations, axes, data types
+                    and scaling.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    UNDERSTAND
+                </h3>
+
+                <p>
+                    Learn what each calibration area controls
+                    and how different systems interact.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    LOG
+                </h3>
+
+                <p>
+                    Learn how to collect relevant engine data
+                    and establish a baseline.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                05
+            </div>
+
+            <div>
+
+                <h3>
+                    VALIDATE
+                </h3>
+
+                <p>
+                    Verify assumptions and definitions before
+                    relying on them.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                06
+            </div>
+
+            <div>
+
+                <h3>
+                    CALIBRATE
+                </h3>
+
+                <p>
+                    Controlled calibration work comes later,
+                    once the earlier stages are properly
+                    understood.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROGRESS LOG
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="progress"
+>
+
+    <div class="section-number">
+        07 / PROJECT LOG
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            ECU<br>
+            <span>PROGRESS.</span>
+        </h2>
+
+        <p>
+            A record of major milestones as the ECU project
+            develops.
+        </p>
+
+    </div>
+
+
+    <div class="timeline">
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 01
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Started ECU Research
+                </h3>
+
+                <p>
+                    Began researching the Mitsubishi Lancer ECU
+                    and the tools required to communicate with
+                    it.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 02
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    ROM Acquired
+                </h3>
+
+                <p>
+                    Obtained the ECU ROM data required for
+                    further identification and definition
+                    research.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 03
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    ROM Identified
+                </h3>
+
+                <p>
+                    Identified the calibration as 52200013,
+                    associated with the MY09 4B11 CVT
+                    Australian-market Lancer.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                STAGE 04
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Definition Research
+                </h3>
+
+                <p>
+                    Started working toward understanding the
+                    calibration definitions, tables and map
+                    structure associated with the ROM.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                CURRENT
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Map & Calibration Research
+                </h3>
+
+                <p>
+                    Continuing to study how the factory
+                    calibration is structured before moving
+                    toward modification or tuning.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROADMAP
+===================================================== -->
+
+<section
+    class="section"
+    id="roadmap"
+>
+
+    <div class="section-number">
+        08 / NEXT STEPS
+    </div>
+
+
+    <div class="section-heading">
+
+        <h2>
+            PROJECT<br>
+            <span>ROADMAP.</span>
+        </h2>
+
+        <p>
+            The ECU project will move forward as each stage is
+            understood and validated.
+        </p>
+
+    </div>
+
+
+    <div class="roadmap-grid">
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    COMPLETE DEFINITION RESEARCH
+                </h3>
+
+                <p>
+                    Continue documenting known calibration
+                    tables and their structure.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    BUILD A BASELINE
+                </h3>
+
+                <p>
+                    Document the stock vehicle and ECU behaviour
+                    before future calibration changes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    LEARN DATA LOGGING
+                </h3>
+
+                <p>
+                    Understand which parameters are required to
+                    evaluate engine operation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    VERIFY MAPS
+                </h3>
+
+                <p>
+                    Validate map identification and scaling
+                    before relying on the definitions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                05
+            </div>
+
+            <div>
+
+                <h3>
+                    STUDY CALIBRATION STRATEGY
+                </h3>
+
+                <p>
+                    Understand how fuel, ignition, MIVEC and
+                    other control strategies work together.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                06
+            </div>
+
+            <div>
+
+                <h3>
+                    FUTURE CALIBRATION WORK
+                </h3>
+
+                <p>
+                    Only progress to calibration changes after
+                    the definition, logging and validation
+                    stages are understood.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NOTE
+===================================================== -->
+
+<section class="section section-alt">
+
+    <div class="section-number">
+        09 / PROJECT NOTE
+    </div>
+
+
+    <div class="notice">
+
+        <strong>
+            LEARNING PROJECT
+        </strong>
+
+        <p>
+            This page documents my own process of learning
+            automotive ECU systems. It isn't a tuning guide or
+            a set of calibration instructions. ECU programming
+            can damage a vehicle if incorrect data, definitions
+            or procedures are used, so the project focuses on
+            understanding and validation before modification.
+        </p>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <a
+            href="../lancer.html"
+            class="btn btn-primary"
+        >
+            ← LANCER BUILD
+        </a>
+
+        <a
+            href="../index.html"
+            class="btn btn-secondary"
+        >
+            PORTFOLIO
+        </a>
+
+        <a
+            href="#top"
+            class="btn btn-secondary"
+        >
+            BACK TO TOP
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div>
+        L@NC3R / PROJECT 002
+    </div>
+
+    <div>
+        ECU TUNING • 4B11 • 52200013
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
