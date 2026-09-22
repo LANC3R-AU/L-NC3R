@@ -659,6 +659,7 @@
             <form id="login-form">
 
                 <div class="field">
+
                     <label for="login-email">
                         EMAIL
                     </label>
@@ -669,9 +670,11 @@
                         autocomplete="email"
                         required
                     >
+
                 </div>
 
                 <div class="field">
+
                     <label for="login-password">
                         PASSWORD
                     </label>
@@ -682,6 +685,7 @@
                         autocomplete="current-password"
                         required
                     >
+
                 </div>
 
                 <button
@@ -771,6 +775,7 @@
                 type="button"
                 onclick="openInspectionList()"
             >
+
                 <div>
                     <span class="menu-title">
                         START INSPECTION
@@ -785,13 +790,16 @@
                 </div>
 
                 <span class="arrow">→</span>
+
             </button>
+
 
             <button
                 class="menu-button"
                 type="button"
                 onclick="showScreen('odometer-screen')"
             >
+
                 <div>
                     <span class="menu-title">
                         UPDATE ODOMETER
@@ -803,13 +811,16 @@
                 </div>
 
                 <span class="arrow">→</span>
+
             </button>
+
 
             <button
                 class="menu-button"
                 type="button"
                 onclick="window.location.href='maintenance-plan.html'"
             >
+
                 <div>
                     <span class="menu-title">
                         MAINTENANCE PLAN
@@ -821,13 +832,16 @@
                 </div>
 
                 <span class="arrow">→</span>
+
             </button>
+
 
             <button
                 class="menu-button"
                 type="button"
                 onclick="window.location.href='inspection-history.html'"
             >
+
                 <div>
                     <span class="menu-title">
                         INSPECTION HISTORY
@@ -839,6 +853,7 @@
                 </div>
 
                 <span class="arrow">→</span>
+
             </button>
 
         </div>
@@ -907,15 +922,24 @@
         ></div>
 
         <div class="progress-info">
-            <span>CHECKLIST PROGRESS</span>
-            <strong id="check-progress">0 / 0</strong>
+
+            <span>
+                CHECKLIST PROGRESS
+            </span>
+
+            <strong id="check-progress">
+                0 / 0
+            </strong>
+
         </div>
 
         <div class="progress-track">
+
             <div
                 class="progress-bar"
                 id="check-progress-bar"
             ></div>
+
         </div>
 
         <div
@@ -931,6 +955,7 @@
         <form id="inspection-form">
 
             <div class="field">
+
                 <label for="inspection-result">
                     RESULT
                 </label>
@@ -939,6 +964,7 @@
                     id="inspection-result"
                     required
                 >
+
                     <option value="">
                         Select result
                     </option>
@@ -962,10 +988,14 @@
                     <option value="UNABLE_TO_VERIFY">
                         UNABLE TO VERIFY
                     </option>
+
                 </select>
+
             </div>
 
+
             <div class="field">
+
                 <label for="inspection-condition">
                     CONDITION
                 </label>
@@ -975,9 +1005,12 @@
                     type="text"
                     placeholder="e.g. Clean, worn, unknown"
                 >
+
             </div>
 
+
             <div class="field">
+
                 <label for="inspection-findings">
                     FINDINGS
                 </label>
@@ -986,9 +1019,12 @@
                     id="inspection-findings"
                     placeholder="Record only what you actually observed."
                 ></textarea>
+
             </div>
 
+
             <div class="field">
+
                 <label for="inspection-action">
                     ACTION REQUIRED
                 </label>
@@ -997,7 +1033,9 @@
                     id="inspection-action"
                     placeholder="Leave blank if no action is required."
                 ></textarea>
+
             </div>
+
 
             <button
                 class="button"
@@ -1068,6 +1106,7 @@
         <form id="odometer-form">
 
             <div class="field">
+
                 <label for="new-odometer">
                     NEW ODOMETER
                 </label>
@@ -1080,9 +1119,12 @@
                     step="1"
                     required
                 >
+
             </div>
 
+
             <div class="field">
+
                 <label for="odometer-date">
                     READING DATE
                 </label>
@@ -1092,9 +1134,12 @@
                     type="date"
                     required
                 >
+
             </div>
 
+
             <div class="field">
+
                 <label for="odometer-notes">
                     NOTES
                 </label>
@@ -1103,7 +1148,9 @@
                     id="odometer-notes"
                     placeholder="Optional"
                 ></textarea>
+
             </div>
+
 
             <button
                 class="button"
@@ -1133,11 +1180,13 @@ const db =
         SUPABASE_KEY
     );
 
+
 let currentUser = null;
 let currentOdometer = null;
 let maintenanceItems = [];
 let inspectionRecords = [];
 let selectedMaintenance = null;
+
 
 const checklistMap = {
 
@@ -1654,6 +1703,7 @@ function startInspection(id) {
     document.getElementById(
         "inspection-head"
     ).innerHTML = `
+
         <div class="eyebrow">
             ${escapeHTML(
                 selectedMaintenance.category
@@ -1682,6 +1732,7 @@ function startInspection(id) {
         checklist
             .map(
                 (text, index) => `
+
                     <label
                         class="check"
                         id="check-row-${index}"
@@ -1907,7 +1958,6 @@ document.getElementById(
             );
 
         button.disabled = true;
-
         button.textContent =
             "SAVING...";
 
@@ -1962,7 +2012,6 @@ document.getElementById(
                 });
 
         button.disabled = false;
-
         button.textContent =
             "SAVE INSPECTION";
 
@@ -2057,7 +2106,6 @@ document.getElementById(
             );
 
         button.disabled = true;
-
         button.textContent =
             "SAVING...";
 
@@ -2090,7 +2138,6 @@ document.getElementById(
         if (historyError) {
 
             button.disabled = false;
-
             button.textContent =
                 "SAVE ODOMETER";
 
@@ -2135,7 +2182,6 @@ document.getElementById(
             }
 
             button.disabled = false;
-
             button.textContent =
                 "SAVE ODOMETER";
 
@@ -2148,7 +2194,6 @@ document.getElementById(
         }
 
         button.disabled = false;
-
         button.textContent =
             "SAVE ODOMETER";
 
@@ -2169,6 +2214,48 @@ document.getElementById(
         );
     }
 );
+
+
+/*
+    PWA SERVICE WORKER
+
+    Registers the L@NC3R Garage service worker
+    from the GitHub Pages project root.
+*/
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator
+                .serviceWorker
+                .register(
+                    "/L-NC3R/service-worker.js"
+                )
+                .then(
+                    registration => {
+
+                        console.log(
+                            "L@NC3R Garage service worker registered:",
+                            registration.scope
+                        );
+
+                    }
+                )
+                .catch(
+                    error => {
+
+                        console.error(
+                            "L@NC3R Garage service worker registration failed:",
+                            error
+                        );
+
+                    }
+                );
+        }
+    );
+}
 
 
 initialise();
