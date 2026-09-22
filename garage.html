@@ -963,6 +963,85 @@
             font-weight: 800;
         }
 
+
+        .diagnostic-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .diagnostic-stat {
+            padding: 14px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .diagnostic-stat span {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: .58rem;
+            font-weight: 900;
+            letter-spacing: .07em;
+        }
+
+        .diagnostic-stat strong {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .dtc-entry {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+        }
+
+        .dtc-entry .button {
+            width: auto;
+            min-width: 74px;
+        }
+
+        .dtc-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 10px;
+        }
+
+        .dtc-chip {
+            padding: 7px 9px;
+            color: #ff8b8b;
+            background: rgba(226,27,35,.08);
+            border: 1px solid rgba(226,27,35,.45);
+            border-radius: 8px;
+            font-size: .68rem;
+            font-weight: 900;
+        }
+
+        .diagnostic-record {
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .diagnostic-record strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .diagnostic-record p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: .73rem;
+            line-height: 1.45;
+        }
+
         .vehicle-health-panel {
             margin: 18px 0 22px;
             padding: 18px;
@@ -1469,6 +1548,26 @@
         </section>
 
 
+
+        <section class="health-dashboard" aria-label="Diagnostics">
+            <div class="health-dashboard-title">
+                DIAGNOSTICS
+            </div>
+
+            <div class="health-grid">
+                <button
+                    class="health-card"
+                    type="button"
+                    onclick="openDiagnostics()"
+                >
+                    <span class="health-card-label">LATEST SCAN</span>
+                    <strong class="health-card-value" id="latest-diagnostic-title">NO SCAN RECORDED</strong>
+                    <span class="health-card-detail" id="latest-diagnostic-detail">Record an OBD diagnostic scan.</span>
+                </button>
+            </div>
+        </section>
+
+
         <div class="menu">
 
             <button
@@ -1540,6 +1639,24 @@
 
                 <span class="arrow">→</span>
 
+            </button>
+
+        
+
+            <button
+                class="menu-button"
+                type="button"
+                onclick="openDiagnostics()"
+            >
+                <div>
+                    <span class="menu-title">
+                        DIAGNOSTICS
+                    </span>
+                    <span class="menu-subtitle">
+                        Record and review OBD scan results
+                    </span>
+                </div>
+                <span class="arrow">→</span>
             </button>
 
         </div>
@@ -2081,6 +2198,166 @@
     </section>
 
 
+    <!-- DIAGNOSTICS -->
+
+    <section class="screen" id="diagnostics-screen">
+        <button class="back" type="button" onclick="garageNav('garage')">
+            ← GARAGE
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">OBD / ECU RECORDS</div>
+            <h2>
+                VEHICLE<br>
+                <span>DIAGNOSTICS.</span>
+            </h2>
+            <p>
+                Record what the scanner actually reports. A diagnostic trouble code does not by itself prove a component has failed.
+            </p>
+        </div>
+
+        <div class="diagnostic-summary">
+            <div class="diagnostic-stat">
+                <span>TOTAL SCANS</span>
+                <strong id="diagnostic-total-scans">0</strong>
+            </div>
+            <div class="diagnostic-stat">
+                <span>LATEST DTC COUNT</span>
+                <strong id="diagnostic-latest-dtc-count">0</strong>
+            </div>
+        </div>
+
+        <div class="vehicle-card">
+            <span class="odo-label">CURRENT ODOMETER</span>
+            <div class="odo-value" id="diagnostic-current-odometer">—</div>
+        </div>
+
+        <div class="message" id="diagnostic-message"></div>
+
+        <form id="diagnostic-form">
+            <div class="two-column">
+                <div class="field">
+                    <label for="diagnostic-date">SCAN DATE</label>
+                    <input id="diagnostic-date" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="diagnostic-odometer">ODOMETER</label>
+                    <input
+                        id="diagnostic-odometer"
+                        type="number"
+                        inputmode="numeric"
+                        min="0"
+                        step="1"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-cel">CHECK ENGINE LIGHT</label>
+                <select id="diagnostic-cel" required>
+                    <option value="UNKNOWN">UNKNOWN</option>
+                    <option value="OFF">OFF</option>
+                    <option value="ON">ON</option>
+                    <option value="FLASHING">FLASHING</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-dtc-status">DTC STATUS</label>
+                <select id="diagnostic-dtc-status" required>
+                    <option value="NONE">NONE</option>
+                    <option value="STORED">STORED</option>
+                    <option value="PENDING">PENDING</option>
+                    <option value="PERMANENT">PERMANENT</option>
+                    <option value="MIXED">MIXED</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-dtc-input">DTC CODES</label>
+                <div class="dtc-entry">
+                    <input
+                        id="diagnostic-dtc-input"
+                        type="text"
+                        maxlength="10"
+                        autocomplete="off"
+                        placeholder="e.g. P0420"
+                    >
+                    <button
+                        class="button secondary"
+                        type="button"
+                        onclick="addDiagnosticDTC()"
+                    >
+                        ADD
+                    </button>
+                </div>
+                <div class="dtc-chip-list" id="diagnostic-dtc-list"></div>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-cleared">WERE CODES CLEARED?</label>
+                <select id="diagnostic-cleared" required>
+                    <option value="false">NO</option>
+                    <option value="true">YES</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-scanner">SCANNER / INTERFACE</label>
+                <input
+                    id="diagnostic-scanner"
+                    type="text"
+                    placeholder="e.g. scan tool or interface used"
+                >
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-freeze-frame">FREEZE-FRAME DATA</label>
+                <textarea
+                    id="diagnostic-freeze-frame"
+                    placeholder="Optional. Enter only data actually reported by the scanner."
+                ></textarea>
+            </div>
+
+            <div class="field">
+                <label for="diagnostic-notes">NOTES</label>
+                <textarea
+                    id="diagnostic-notes"
+                    placeholder="Optional observations. Avoid guessing the cause of a DTC."
+                ></textarea>
+            </div>
+
+            <button class="button" id="save-diagnostic" type="submit">
+                SAVE DIAGNOSTIC SCAN
+            </button>
+        </form>
+
+        <div class="subheading">RECENT DIAGNOSTIC SCANS</div>
+        <div class="service-list" id="diagnostic-list"></div>
+    </section>
+
+
+    <!-- DIAGNOSTIC DETAIL -->
+
+    <section class="screen" id="diagnostic-detail-screen">
+        <button class="back" type="button" onclick="openDiagnostics()">
+            ← DIAGNOSTICS
+        </button>
+
+        <div class="section-title">
+            <div class="eyebrow">RECORDED SCAN</div>
+            <h2>
+                SCAN<br>
+                <span>DETAILS.</span>
+            </h2>
+        </div>
+
+        <div class="panel" id="diagnostic-detail"></div>
+    </section>
+
+
     <!-- HISTORY -->
 
     <section
@@ -2107,6 +2384,23 @@
 
 
         <div class="more-menu">
+
+            <button
+                class="more-card"
+                type="button"
+                onclick="openDiagnostics()"
+            >
+                <div>
+                    <span class="more-card-title">
+                        Diagnostic History
+                    </span>
+                    <span class="more-card-description">
+                        Review recorded OBD scans and DTCs.
+                    </span>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
 
             <button
                 class="more-card"
@@ -2521,7 +2815,7 @@
 
 
         <div class="app-version">
-            L@NC3R GARAGE • NOTIFICATIONS v1
+            L@NC3R GARAGE • DIAGNOSTICS v1
         </div>
 
     </section>
@@ -2620,6 +2914,8 @@ const db =
 
 let currentUser = null;
 let garageAlerts = [];
+let diagnosticScans = [];
+let diagnosticDTCs = [];
 let lastNotifiedAlertSignature = "";
 let currentOdometer = null;
 
@@ -3488,6 +3784,8 @@ async function refreshGarage() {
         );
     }
 
+    await loadDiagnosticScans();
+
     refreshGarageAlerts();
 }
 
@@ -3903,6 +4201,413 @@ async function sendGarageNotificationIfNeeded(force = false) {
             error
         );
     }
+}
+
+
+async function loadDiagnosticScans() {
+    const { data, error } =
+        await supabaseClient
+            .from("diagnostic_scans")
+            .select("*")
+            .eq("vehicle_key", "lancer-2009")
+            .order("scan_date", { ascending: false })
+            .order("created_at", { ascending: false })
+            .limit(50);
+
+    if (error) {
+        console.error("Diagnostic scan load failed:", error);
+        diagnosticScans = [];
+        renderDiagnosticScans();
+        return;
+    }
+
+    diagnosticScans = data || [];
+    renderDiagnosticScans();
+    updateDiagnosticSummary();
+}
+
+
+function updateDiagnosticSummary() {
+    const latest = diagnosticScans[0] || null;
+    const title = document.getElementById("latest-diagnostic-title");
+    const detail = document.getElementById("latest-diagnostic-detail");
+    const total = document.getElementById("diagnostic-total-scans");
+    const latestCount = document.getElementById("diagnostic-latest-dtc-count");
+
+    if (total) {
+        total.textContent = String(diagnosticScans.length);
+    }
+
+    const dtcs = latest && Array.isArray(latest.dtc_codes)
+        ? latest.dtc_codes
+        : [];
+
+    if (latestCount) {
+        latestCount.textContent = String(dtcs.length);
+    }
+
+    if (!title || !detail) {
+        return;
+    }
+
+    if (!latest) {
+        title.textContent = "NO SCAN RECORDED";
+        detail.textContent = "Record an OBD diagnostic scan.";
+        return;
+    }
+
+    title.textContent =
+        dtcs.length
+            ? `${dtcs.length} DTC${dtcs.length === 1 ? "" : "S"} RECORDED`
+            : "NO DTCs RECORDED";
+
+    detail.textContent =
+        `${formatDate(latest.scan_date)} • ${formatKM(latest.odometer)} • CEL ${latest.check_engine_light || "UNKNOWN"}`;
+}
+
+
+function openDiagnostics() {
+    setActiveNav("more");
+
+    const dateInput =
+        document.getElementById("diagnostic-date");
+
+    const odoInput =
+        document.getElementById("diagnostic-odometer");
+
+    const current =
+        document.getElementById("diagnostic-current-odometer");
+
+    if (dateInput && !dateInput.value) {
+        dateInput.value = todayLocal();
+    }
+
+    if (odoInput && currentOdometer !== null) {
+        odoInput.value = currentOdometer;
+    }
+
+    if (current) {
+        current.textContent =
+            currentOdometer !== null
+                ? formatKM(currentOdometer)
+                : "—";
+    }
+
+    renderDiagnosticDTCs();
+    renderDiagnosticScans();
+    updateDiagnosticSummary();
+    showScreen("diagnostics-screen");
+}
+
+
+function normalizeDTC(value) {
+    return String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+}
+
+
+function addDiagnosticDTC() {
+    const input =
+        document.getElementById("diagnostic-dtc-input");
+
+    if (!input) {
+        return;
+    }
+
+    const code = normalizeDTC(input.value);
+
+    if (!code) {
+        return;
+    }
+
+    if (!/^[A-Z][A-Z0-9]{3,6}$/.test(code)) {
+        showMessage(
+            "diagnostic-message",
+            "Enter a valid scanner code such as P0420.",
+            "error"
+        );
+        return;
+    }
+
+    if (!diagnosticDTCs.includes(code)) {
+        diagnosticDTCs.push(code);
+    }
+
+    input.value = "";
+    renderDiagnosticDTCs();
+}
+
+
+function removeDiagnosticDTC(index) {
+    diagnosticDTCs.splice(index, 1);
+    renderDiagnosticDTCs();
+}
+
+
+function renderDiagnosticDTCs() {
+    const list =
+        document.getElementById("diagnostic-dtc-list");
+
+    if (!list) {
+        return;
+    }
+
+    if (!diagnosticDTCs.length) {
+        list.innerHTML =
+            '<span class="detail-copy">No DTC codes added.</span>';
+        return;
+    }
+
+    list.innerHTML =
+        diagnosticDTCs
+            .map((code, index) => `
+                <button
+                    class="dtc-chip"
+                    type="button"
+                    onclick="removeDiagnosticDTC(${index})"
+                    aria-label="Remove ${escapeHTML(code)}"
+                >
+                    ${escapeHTML(code)} ×
+                </button>
+            `)
+            .join("");
+}
+
+
+function renderDiagnosticScans() {
+    const list =
+        document.getElementById("diagnostic-list");
+
+    if (!list) {
+        return;
+    }
+
+    if (!diagnosticScans.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                No diagnostic scans have been recorded yet.
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML =
+        diagnosticScans.map(scan => {
+            const dtcs =
+                Array.isArray(scan.dtc_codes)
+                    ? scan.dtc_codes
+                    : [];
+
+            const dtcText =
+                dtcs.length
+                    ? dtcs.join(", ")
+                    : "No DTCs recorded";
+
+            return `
+                <button
+                    class="diagnostic-record"
+                    type="button"
+                    onclick="openDiagnosticDetail(${Number(scan.id)})"
+                >
+                    <strong>${escapeHTML(formatDate(scan.scan_date))}</strong>
+                    <div class="maintenance-meta">
+                        <span class="tag">${escapeHTML(formatKM(scan.odometer))}</span>
+                        <span class="tag ${scan.check_engine_light === "FLASHING" || scan.check_engine_light === "ON" ? "red" : ""}">
+                            CEL ${escapeHTML(scan.check_engine_light || "UNKNOWN")}
+                        </span>
+                        <span class="tag">${escapeHTML(scan.dtc_status || "NONE")}</span>
+                    </div>
+                    <p>${escapeHTML(dtcText)}</p>
+                </button>
+            `;
+        }).join("");
+}
+
+
+function openDiagnosticDetail(id) {
+    const scan =
+        diagnosticScans.find(
+            row => Number(row.id) === Number(id)
+        );
+
+    if (!scan) {
+        return;
+    }
+
+    const dtcs =
+        Array.isArray(scan.dtc_codes)
+            ? scan.dtc_codes
+            : [];
+
+    const detail =
+        document.getElementById("diagnostic-detail");
+
+    detail.innerHTML = `
+        <div class="intelligence-grid">
+            <div class="intel-card">
+                <span>SCAN DATE</span>
+                <strong>${escapeHTML(formatDate(scan.scan_date))}</strong>
+            </div>
+            <div class="intel-card">
+                <span>ODOMETER</span>
+                <strong>${escapeHTML(formatKM(scan.odometer))}</strong>
+            </div>
+            <div class="intel-card">
+                <span>CHECK ENGINE LIGHT</span>
+                <strong>${escapeHTML(scan.check_engine_light || "UNKNOWN")}</strong>
+            </div>
+            <div class="intel-card">
+                <span>DTC STATUS</span>
+                <strong>${escapeHTML(scan.dtc_status || "NONE")}</strong>
+            </div>
+            <div class="intel-card">
+                <span>CODES CLEARED</span>
+                <strong>${scan.codes_cleared ? "YES" : "NO"}</strong>
+            </div>
+            <div class="intel-card">
+                <span>SCANNER</span>
+                <strong>${escapeHTML(scan.scanner || "NOT RECORDED")}</strong>
+            </div>
+        </div>
+
+        <div class="subheading">DTC CODES</div>
+        <p class="detail-copy">
+            ${dtcs.length ? dtcs.map(escapeHTML).join(" • ") : "No DTC codes were recorded for this scan."}
+        </p>
+
+        <div class="subheading">FREEZE-FRAME DATA</div>
+        <p class="detail-copy">
+            ${escapeHTML(scan.freeze_frame || "No freeze-frame data recorded.")}
+        </p>
+
+        <div class="subheading">NOTES</div>
+        <p class="detail-copy">
+            ${escapeHTML(scan.notes || "No notes recorded.")}
+        </p>
+
+        <p class="vehicle-health-note">
+            A DTC is evidence reported by the diagnostic system. It is not, by itself, confirmation that a specific component has failed.
+        </p>
+    `;
+
+    showScreen("diagnostic-detail-screen");
+}
+
+
+async function saveDiagnosticScan(event) {
+    event.preventDefault();
+
+    const button =
+        document.getElementById("save-diagnostic");
+
+    const scanDate =
+        document.getElementById("diagnostic-date").value;
+
+    const odometer =
+        Number(document.getElementById("diagnostic-odometer").value);
+
+    const cel =
+        document.getElementById("diagnostic-cel").value;
+
+    let dtcStatus =
+        document.getElementById("diagnostic-dtc-status").value;
+
+    const codesCleared =
+        document.getElementById("diagnostic-cleared").value === "true";
+
+    const scanner =
+        document.getElementById("diagnostic-scanner").value.trim();
+
+    const freezeFrame =
+        document.getElementById("diagnostic-freeze-frame").value.trim();
+
+    const notes =
+        document.getElementById("diagnostic-notes").value.trim();
+
+    if (!scanDate || !Number.isFinite(odometer)) {
+        showMessage(
+            "diagnostic-message",
+            "Scan date and odometer are required.",
+            "error"
+        );
+        return;
+    }
+
+    if (odometer < 0) {
+        showMessage(
+            "diagnostic-message",
+            "Odometer cannot be negative.",
+            "error"
+        );
+        return;
+    }
+
+    if (diagnosticDTCs.length && dtcStatus === "NONE") {
+        showMessage(
+            "diagnostic-message",
+            "Choose the status reported for the recorded DTC codes.",
+            "error"
+        );
+        return;
+    }
+
+    if (!diagnosticDTCs.length) {
+        dtcStatus = "NONE";
+    }
+
+    button.disabled = true;
+    button.textContent = "SAVING…";
+
+    const { error } =
+        await supabaseClient
+            .from("diagnostic_scans")
+            .insert({
+                vehicle_key: "lancer-2009",
+                scan_date: scanDate,
+                odometer,
+                check_engine_light: cel,
+                dtc_codes: diagnosticDTCs,
+                dtc_status: dtcStatus,
+                codes_cleared: codesCleared,
+                scanner: scanner || null,
+                freeze_frame: freezeFrame || null,
+                notes: notes || null
+            });
+
+    button.disabled = false;
+    button.textContent = "SAVE DIAGNOSTIC SCAN";
+
+    if (error) {
+        console.error(error);
+        showMessage(
+            "diagnostic-message",
+            error.message || "Unable to save diagnostic scan.",
+            "error"
+        );
+        return;
+    }
+
+    showMessage(
+        "diagnostic-message",
+        "Diagnostic scan saved.",
+        "success"
+    );
+
+    document.getElementById("diagnostic-form").reset();
+    diagnosticDTCs = [];
+
+    document.getElementById("diagnostic-date").value =
+        todayLocal();
+
+    if (currentOdometer !== null) {
+        document.getElementById("diagnostic-odometer").value =
+            currentOdometer;
+    }
+
+    renderDiagnosticDTCs();
+    await loadDiagnosticScans();
 }
 
 
@@ -5250,6 +5955,33 @@ if (
 
 
 initialise();
+
+
+const diagnosticForm =
+    document.getElementById("diagnostic-form");
+
+if (diagnosticForm) {
+    diagnosticForm.addEventListener(
+        "submit",
+        saveDiagnosticScan
+    );
+}
+
+const diagnosticDtcInput =
+    document.getElementById("diagnostic-dtc-input");
+
+if (diagnosticDtcInput) {
+    diagnosticDtcInput.addEventListener(
+        "keydown",
+        event => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addDiagnosticDTC();
+            }
+        }
+    );
+}
+
 </script>
 
 </body>
