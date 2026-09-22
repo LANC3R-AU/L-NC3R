@@ -876,6 +876,70 @@
         .tag.yellow { color:#f0c65b; border-color:rgba(216,167,46,.6); }
         .tag.blue { color:#7eb7ff; border-color:rgba(80,140,220,.55); }
 
+
+        .health-dashboard {
+            margin: 22px 0 20px;
+        }
+
+        .health-dashboard-title {
+            margin-bottom: 10px;
+            color: white;
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .1em;
+        }
+
+        .health-grid {
+            display: grid;
+            gap: 9px;
+        }
+
+        .health-card {
+            width: 100%;
+            padding: 17px;
+            text-align: left;
+            color: var(--text);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        button.health-card:active {
+            transform: scale(.99);
+        }
+
+        .health-card-label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--muted);
+            font-size: .58rem;
+            font-weight: 900;
+            letter-spacing: .08em;
+        }
+
+        .health-card-value {
+            display: block;
+            font-size: .92rem;
+            font-weight: 900;
+            line-height: 1.35;
+        }
+
+        .health-card-detail {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: .7rem;
+            line-height: 1.4;
+        }
+
+        .health-card.attention {
+            border-color: rgba(226, 27, 35, .55);
+        }
+
+        .health-card.attention .health-card-label {
+            color: var(--red);
+        }
+
         @media (max-width: 430px) {
             .two-column {
                 grid-template-columns: 1fr;
@@ -1099,10 +1163,52 @@
 
         </div>
 
+        <section class="health-dashboard" aria-label="Vehicle health">
+
+            <div class="health-dashboard-title">
+                VEHICLE HEALTH
+            </div>
+
+            <div class="health-grid">
+
+                <button
+                    class="health-card attention"
+                    id="next-attention-card"
+                    type="button"
+                    onclick="openNextAttention()"
+                >
+                    <span class="health-card-label">NEXT ATTENTION</span>
+                    <strong class="health-card-value" id="next-attention-title">Loading…</strong>
+                    <span class="health-card-detail" id="next-attention-detail">Checking maintenance status</span>
+                </button>
+
+                <div class="health-card">
+                    <span class="health-card-label">LATEST INSPECTION</span>
+                    <strong class="health-card-value" id="latest-inspection-title">—</strong>
+                    <span class="health-card-detail" id="latest-inspection-detail">—</span>
+                </div>
+
+                <div class="health-card">
+                    <span class="health-card-label">LATEST SERVICE</span>
+                    <strong class="health-card-value" id="latest-service-title">—</strong>
+                    <span class="health-card-detail" id="latest-service-detail">—</span>
+                </div>
+
+                <div class="health-card">
+                    <span class="health-card-label">MAINTENANCE</span>
+                    <strong class="health-card-value" id="maintenance-summary">—</strong>
+                    <span class="health-card-detail" id="maintenance-summary-detail">—</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
         <div class="menu">
 
             <button
-                class="menu-button primary"
+                class="menu-button primary
                 type="button"
                 onclick="garageNav('inspect')"
             >
@@ -1934,29 +2040,20 @@
         <div class="more-menu">
 
             <button
-                class="more-card hidden"
+                class="more-card"
                 type="button"
                 id="install-app-button"
                 onclick="installGarageApp()"
             >
-
                 <div>
-
                     <span class="more-card-title">
                         Install L@NC3R Garage
                     </span>
-
-                    <span
-                        class="more-card-description"
-                        id="install-app-description"
-                    >
+                    <span class="more-card-description">
                         Install Garage on this device for quick access.
                     </span>
-
                 </div>
-
                 <span class="arrow">↓</span>
-
             </button>
 
 
@@ -2572,7 +2669,8 @@ async function refreshGarage() {
     const [
         vehicleResponse,
         maintenanceResponse,
-        inspectionResponse
+        inspectionResponse,
+        serviceResponse
     ] =
         await Promise.all([
 
@@ -2617,7 +2715,25 @@ async function refreshGarage() {
                     {
                         ascending: false
                     }
+                ),
+
+            db
+                .from("service_records")
+                .select("id, maintenance_item_id, service_date, service_item, odometer, status")
+                .eq("status", "COMPLETED")
+                .order(
+                    "service_date",
+                    {
+                        ascending: false
+                    }
                 )
+                .order(
+                    "id",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(1)
 
         ]);
 
@@ -2740,6 +2856,213 @@ async function refreshGarage() {
         "inspection-menu-subtitle"
     ).textContent =
         `${remaining} of ${maintenanceItems.length} baseline items remaining`;
+
+
+    const latestInspection =
+        inspectionRecords.length
+            ? inspectionRecords[0]
+            : null;
+
+    const latestInspectionItem =
+        latestInspection
+            ? maintenanceItems.find(
+                item =>
+                    Number(item.id) ===
+                    Number(latestInspection.maintenance_item_id)
+            )
+            : null;
+
+    document.getElementById(
+        "latest-inspection-title"
+    ).textContent =
+        latestInspection
+            ? (
+                latestInspectionItem?.maintenance_item ||
+                "Inspection recorded"
+            )
+            : "No inspection recorded yet";
+
+    document.getElementById(
+        "latest-inspection-detail"
+    ).textContent =
+        latestInspection
+            ? `${formatDate(latestInspection.inspection_date)} • ${String(latestInspection.result || "RECORDED").replaceAll("_", " ")}`
+            : "Complete a physical inspection to establish the first record.";
+
+
+    const latestService =
+        !serviceResponse.error &&
+        serviceResponse.data?.length
+            ? serviceResponse.data[0]
+            : null;
+
+    document.getElementById(
+        "latest-service-title"
+    ).textContent =
+        latestService
+            ? latestService.service_item
+            : "No completed service recorded yet";
+
+    document.getElementById(
+        "latest-service-detail"
+    ).textContent =
+        latestService
+            ? `${formatDate(latestService.service_date)}${latestService.odometer !== null && latestService.odometer !== undefined ? ` • ${formatKM(latestService.odometer)}` : ""}`
+            : "Completed servicing will appear here once recorded.";
+
+
+    document.getElementById(
+        "maintenance-summary"
+    ).textContent =
+        `${due} DUE • ${maintenanceItems.length} BASELINE ITEMS`;
+
+    document.getElementById(
+        "maintenance-summary-detail"
+    ).textContent =
+        `${established} established • ${remaining} still need baseline inspection`;
+
+
+    const nextAttention =
+        chooseNextAttention();
+
+    const attentionCard =
+        document.getElementById(
+            "next-attention-card"
+        );
+
+    if (nextAttention) {
+
+        attentionCard.dataset.maintenanceId =
+            String(nextAttention.id);
+
+        document.getElementById(
+            "next-attention-title"
+        ).textContent =
+            nextAttention.maintenance_item;
+
+        const attentionState =
+            maintenanceDueState(nextAttention);
+
+        document.getElementById(
+            "next-attention-detail"
+        ).textContent =
+            attentionState.state === "DUE"
+                ? "SERVICE DUE"
+                : attentionState.state === "DUE SOON"
+                    ? "SERVICE DUE SOON"
+                    : "BASELINE INSPECTION REQUIRED";
+
+        attentionCard.classList.toggle(
+            "attention",
+            attentionState.state === "DUE" ||
+            attentionState.state === "DUE SOON" ||
+            String(nextAttention.baseline_status || "").toUpperCase() !== "ESTABLISHED"
+        );
+
+    } else {
+
+        delete attentionCard.dataset.maintenanceId;
+
+        document.getElementById(
+            "next-attention-title"
+        ).textContent =
+            "No immediate attention";
+
+        document.getElementById(
+            "next-attention-detail"
+        ).textContent =
+            "No due maintenance or unestablished baseline items were found.";
+
+        attentionCard.classList.remove(
+            "attention"
+        );
+    }
+}
+
+
+function chooseNextAttention() {
+
+    if (!maintenanceItems.length) {
+        return null;
+    }
+
+    const dueItems =
+        maintenanceItems.filter(
+            item =>
+                maintenanceDueState(item).state === "DUE"
+        );
+
+    if (dueItems.length) {
+        return dueItems[0];
+    }
+
+
+    const dueSoonItems =
+        maintenanceItems.filter(
+            item =>
+                maintenanceDueState(item).state === "DUE SOON"
+        );
+
+    if (dueSoonItems.length) {
+        return dueSoonItems[0];
+    }
+
+
+    const inspectedIDs =
+        new Set(
+            inspectionRecords
+                .map(record =>
+                    Number(
+                        record.maintenance_item_id
+                    )
+                )
+                .filter(Boolean)
+        );
+
+
+    const uninspected =
+        maintenanceItems.filter(
+            item =>
+                !inspectedIDs.has(
+                    Number(item.id)
+                )
+        );
+
+
+    const highPriority =
+        uninspected.find(
+            item =>
+                String(
+                    item.priority || ""
+                ).toUpperCase() === "HIGH"
+        );
+
+    return (
+        highPriority ||
+        uninspected[0] ||
+        null
+    );
+}
+
+
+function openNextAttention() {
+
+    const card =
+        document.getElementById(
+            "next-attention-card"
+        );
+
+    const id =
+        Number(
+            card?.dataset
+                .maintenanceId
+        );
+
+    if (!id) {
+        return;
+    }
+
+    startInspection(id);
 }
 
 
@@ -4025,127 +4348,25 @@ document.getElementById(
 
 let deferredInstallPrompt = null;
 
-const installAppButton =
-    document.getElementById(
-        "install-app-button"
-    );
-
-const installAppDescription =
-    document.getElementById(
-        "install-app-description"
-    );
-
-function isGarageInstalled() {
-    return (
-        window.matchMedia(
-            "(display-mode: standalone)"
-        ).matches ||
-        window.navigator.standalone === true
-    );
-}
-
-function updateInstallButton() {
-    if (!installAppButton) return;
-
-    if (isGarageInstalled()) {
-        installAppButton.classList.add("hidden");
-        return;
-    }
-
-    installAppButton.classList.remove("hidden");
-
-    installAppDescription.textContent =
-        deferredInstallPrompt
-            ? "Install Garage on your phone or computer."
-            : "Open installation options for this device.";
-}
-
-window.addEventListener(
-    "beforeinstallprompt",
-    event => {
-        event.preventDefault();
-        deferredInstallPrompt = event;
-        console.log("L@NC3R Garage install prompt available.");
-        updateInstallButton();
-    }
-);
+window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+});
 
 async function installGarageApp() {
-    if (isGarageInstalled()) {
-        alert("L@NC3R Garage is already installed on this device.");
+    if (!deferredInstallPrompt) {
+        alert("L@NC3R Garage is already installed, or this browser has not provided an install prompt.");
         return;
     }
 
-    if (deferredInstallPrompt) {
-        deferredInstallPrompt.prompt();
-
-        const { outcome } =
-            await deferredInstallPrompt.userChoice;
-
-        console.log(
-            "L@NC3R Garage install result:",
-            outcome
-        );
-
-        deferredInstallPrompt = null;
-
-        installAppDescription.textContent =
-            outcome === "accepted"
-                ? "Installing L@NC3R Garage..."
-                : "Installation was cancelled.";
-
-        return;
-    }
-
-    const userAgent =
-        navigator.userAgent.toLowerCase();
-
-    const isIOS =
-        /iphone|ipad|ipod/.test(userAgent);
-
-    if (isIOS) {
-        alert(
-            "To install L@NC3R Garage:\n\n" +
-            "1. Open this page in Safari.\n" +
-            "2. Tap the Share button.\n" +
-            "3. Tap Add to Home Screen.\n" +
-            "4. Tap Add."
-        );
-        return;
-    }
-
-    alert(
-        "Your browser has not provided the install prompt yet.\n\n" +
-        "In Chrome, open the browser menu and look for Install app or Add to Home screen.\n\n" +
-        "If those options are missing, keep this page open and reload it once."
-    );
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
 }
 
-window.addEventListener(
-    "appinstalled",
-    () => {
-        console.log("L@NC3R Garage installed.");
-        deferredInstallPrompt = null;
-
-        if (installAppButton) {
-            installAppButton.classList.add("hidden");
-        }
-    }
-);
-
-const standaloneMediaQuery =
-    window.matchMedia(
-        "(display-mode: standalone)"
-    );
-
-if (standaloneMediaQuery.addEventListener) {
-    standaloneMediaQuery.addEventListener(
-        "change",
-        updateInstallButton
-    );
-}
-
-updateInstallButton();
+window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+});
 
 
 /* ==============================
