@@ -159,6 +159,65 @@
             line-height: 1.7;
         }
 
+        .inspection-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .inspection-summary-card {
+            padding: 24px;
+            background: var(--card);
+        }
+
+        .inspection-summary-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+        }
+
+        .inspection-summary-card strong {
+            display: block;
+            margin-top: 10px;
+            font-size: 2rem;
+        }
+
+        .inspection-summary-card.red strong {
+            color: var(--red);
+        }
+
+        .inspection-progress {
+            margin-top: 1px;
+            padding: 25px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .inspection-progress-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .inspection-progress-track {
+            height: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .inspection-progress-bar {
+            height: 100%;
+            width: 0;
+            background: var(--red);
+            transition: width .4s ease;
+        }
+
         .target-list,
         .plan-list {
             display: grid;
@@ -210,6 +269,64 @@
         .badge.red {
             color: var(--red);
             border-color: var(--red);
+        }
+
+        .badge.green {
+            color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .inspection-box {
+            margin-top: 22px;
+            padding: 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        .inspection-box.not-inspected {
+            border-left: 3px solid var(--red);
+        }
+
+        .inspection-box.pass {
+            border-left: 3px solid #4caf50;
+        }
+
+        .inspection-box.attention {
+            border-left: 3px solid var(--red);
+        }
+
+        .inspection-box h4 {
+            margin: 0 0 12px;
+            font-size: .75rem;
+            letter-spacing: .1em;
+        }
+
+        .inspection-box p {
+            margin: 12px 0 0;
+        }
+
+        .inspection-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px 20px;
+            margin-top: 15px;
+        }
+
+        .inspection-meta-item {
+            padding-top: 9px;
+            border-top: 1px solid var(--border);
+        }
+
+        .inspection-meta-item span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: .6rem;
+            letter-spacing: .08em;
+        }
+
+        .inspection-meta-item strong {
+            display: block;
+            margin-top: 5px;
         }
 
         .distance-box {
@@ -296,7 +413,7 @@
 
         .record-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
         }
 
@@ -318,16 +435,27 @@
             border: 1px solid var(--border);
         }
 
+        .empty p {
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
         .loading {
             color: var(--text-secondary);
+        }
+
+        @media (max-width: 950px) {
+            .inspection-summary,
+            .record-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 850px) {
             .dashboard-grid,
             .status-grid,
             .category-grid,
-            .workflow-grid,
-            .record-grid {
+            .workflow-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
@@ -338,12 +466,15 @@
             .category-grid,
             .workflow-grid,
             .record-grid,
-            .details-grid {
+            .details-grid,
+            .inspection-summary,
+            .inspection-meta {
                 grid-template-columns: 1fr;
             }
 
             .plan-top,
-            .progress-header {
+            .progress-header,
+            .inspection-progress-header {
                 flex-direction: column;
             }
         }
@@ -361,6 +492,7 @@
     <ul class="nav-links">
         <li><a href="index.html">PORTFOLIO</a></li>
         <li><a href="lancer.html">LANCER</a></li>
+        <li><a href="inspection-history.html">INSPECTIONS</a></li>
         <li><a href="service-history.html">SERVICE</a></li>
         <li><a href="projects/build-log.html">BUILD LOG</a></li>
     </ul>
@@ -370,398 +502,567 @@
 
 <main class="maintenance-page">
 
-    <header>
+<header>
+
+    <div class="eyebrow">
+        L@NC3R / PROJECT 001
+    </div>
+
+    <h1>
+        MAINTENANCE<br>
+        <span>DASHBOARD.</span>
+    </h1>
+
+    <p class="hero-sub">
+        A live maintenance baseline for the 2009 Mitsubishi
+        Lancer. Maintenance planning, physical inspections and
+        completed service records are tracked separately so
+        unknown history is not treated as verified information.
+    </p>
+
+</header>
+
+
+<!-- VEHICLE STATUS -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+        <div class="eyebrow">
+            01 / VEHICLE STATUS
+        </div>
+
+        <h2>Dashboard</h2>
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="metric red">
+            <span>CURRENT ODOMETER</span>
+            <strong id="current-odometer">—</strong>
+            <small id="odometer-updated">
+                Loading...
+            </small>
+        </div>
+
+        <div class="metric">
+            <span>BASELINE VERIFIED</span>
+            <strong id="verified-count">—</strong>
+            <small>Maintenance items verified</small>
+        </div>
+
+        <div class="metric">
+            <span>PLAN ITEMS</span>
+            <strong id="total-count">—</strong>
+            <small>Tracked maintenance items</small>
+        </div>
+
+        <div class="metric red">
+            <span>INSPECTION REQUIRED</span>
+            <strong id="inspect-count">—</strong>
+            <small>Unknown baseline items</small>
+        </div>
+
+        <div class="metric">
+            <span>HIGH / URGENT</span>
+            <strong id="priority-count">—</strong>
+            <small>Priority maintenance items</small>
+        </div>
+
+        <div class="metric">
+            <span>DUE</span>
+            <strong id="due-count">—</strong>
+            <small>Explicitly due items</small>
+        </div>
+
+    </div>
+
+
+    <div class="progress-panel">
+
+        <div class="progress-header">
+
+            <strong>
+                BASELINE PROGRESS
+            </strong>
+
+            <strong id="progress-label">
+                —
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+            <div
+                class="progress-bar"
+                id="progress-bar"
+            ></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INSPECTION OVERVIEW -->
+
+<section class="section-block">
+
+    <div class="section-heading">
 
         <div class="eyebrow">
-            L@NC3R / PROJECT 001
+            02 / PHYSICAL INSPECTIONS
         </div>
 
-        <h1>
-            MAINTENANCE<br>
-            <span>DASHBOARD.</span>
-        </h1>
+        <h2>
+            Inspection Overview
+        </h2>
 
-        <p class="hero-sub">
-            A live maintenance baseline for the 2009 Mitsubishi
-            Lancer. The system separates known service information
-            from maintenance that still needs to be inspected or
-            verified.
+    </div>
+
+
+    <div class="inspection-summary">
+
+        <div class="inspection-summary-card">
+            <span>ITEMS INSPECTED</span>
+            <strong id="items-inspected">
+                —
+            </strong>
+        </div>
+
+        <div class="inspection-summary-card">
+            <span>PASS</span>
+            <strong id="inspection-pass">
+                —
+            </strong>
+        </div>
+
+        <div class="inspection-summary-card">
+            <span>MONITOR</span>
+            <strong id="inspection-monitor">
+                —
+            </strong>
+        </div>
+
+        <div class="inspection-summary-card red">
+            <span>ATTENTION</span>
+            <strong id="inspection-attention">
+                —
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="inspection-progress">
+
+        <div class="inspection-progress-header">
+
+            <strong>
+                PHYSICAL INSPECTION COVERAGE
+            </strong>
+
+            <strong id="inspection-progress-label">
+                —
+            </strong>
+
+        </div>
+
+        <div class="inspection-progress-track">
+
+            <div
+                class="inspection-progress-bar"
+                id="inspection-progress-bar"
+            ></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PLAN STATUS -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+        <div class="eyebrow">
+            03 / PLAN STATUS
+        </div>
+
+        <h2>Current State</h2>
+    </div>
+
+    <div
+        class="status-grid"
+        id="status-grid"
+    ></div>
+
+</section>
+
+
+<!-- BASELINE -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+        <div class="eyebrow">
+            04 / BASELINE
+        </div>
+
+        <h2>
+            Maintenance Baseline
+        </h2>
+    </div>
+
+    <div
+        class="baseline"
+        id="baseline-panel"
+    >
+
+        <h3>
+            ESTABLISHING MAINTENANCE BASELINE
+        </h3>
+
+        <p>
+            Loading maintenance information...
         </p>
 
-    </header>
+    </div>
+
+</section>
 
 
-    <!-- DASHBOARD -->
+<!-- CATEGORIES -->
 
-    <section class="section-block">
+<section class="section-block">
 
-        <div class="section-heading">
-            <div class="eyebrow">01 / VEHICLE STATUS</div>
-            <h2>Dashboard</h2>
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            05 / SYSTEMS
         </div>
 
+        <h2>Categories</h2>
 
-        <div class="dashboard-grid">
+    </div>
 
-            <div class="metric red">
-                <span>CURRENT ODOMETER</span>
-                <strong id="current-odometer">—</strong>
-                <small id="odometer-updated">Loading...</small>
-            </div>
+    <div
+        class="category-grid"
+        id="category-grid"
+    ></div>
 
-            <div class="metric">
-                <span>BASELINE VERIFIED</span>
-                <strong id="verified-count">—</strong>
-                <small>Maintenance items verified</small>
-            </div>
+</section>
 
-            <div class="metric">
-                <span>PLAN ITEMS</span>
-                <strong id="total-count">—</strong>
-                <small>Tracked maintenance items</small>
-            </div>
 
-            <div class="metric red">
-                <span>INSPECTION REQUIRED</span>
-                <strong id="inspect-count">—</strong>
-                <small>Unknown baseline items</small>
-            </div>
+<!-- TARGETS -->
 
-            <div class="metric">
-                <span>HIGH / URGENT</span>
-                <strong id="priority-count">—</strong>
-                <small>Priority maintenance items</small>
-            </div>
+<section class="section-block">
 
-            <div class="metric">
-                <span>DUE</span>
-                <strong id="due-count">—</strong>
-                <small>Explicitly due items</small>
-            </div>
+    <div class="section-heading">
 
+        <div class="eyebrow">
+            06 / TARGETS
         </div>
 
+        <h2>
+            Upcoming Targets
+        </h2>
 
-        <div class="progress-panel">
+    </div>
 
-            <div class="progress-header">
+    <div
+        class="target-list"
+        id="target-list"
+    >
 
-                <strong>
-                    BASELINE PROGRESS
-                </strong>
+        <p class="loading">
+            Loading targets...
+        </p>
 
-                <strong id="progress-label">
-                    —
-                </strong>
+    </div>
 
-            </div>
+</section>
 
-            <div class="progress-track">
-                <div
-                    class="progress-bar"
-                    id="progress-bar"
-                ></div>
-            </div>
 
+<!-- PLAN -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            07 / LIVE DATABASE
         </div>
 
-    </section>
+        <h2>
+            Maintenance Plan
+        </h2>
+
+    </div>
 
 
-    <!-- STATUS -->
+    <div class="filter-row">
 
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">02 / PLAN STATUS</div>
-            <h2>Current State</h2>
-        </div>
-
-        <div
-            class="status-grid"
-            id="status-grid"
-        ></div>
-
-    </section>
-
-
-    <!-- BASELINE -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">03 / BASELINE</div>
-            <h2>Maintenance Baseline</h2>
-        </div>
-
-        <div
-            class="baseline"
-            id="baseline-panel"
+        <button
+            class="filter-button active"
+            data-filter="ALL"
         >
+            ALL
+        </button>
+
+        <button
+            class="filter-button"
+            data-filter="INSPECT"
+        >
+            INSPECT
+        </button>
+
+        <button
+            class="filter-button"
+            data-filter="PLANNED"
+        >
+            PLANNED
+        </button>
+
+        <button
+            class="filter-button"
+            data-filter="UPCOMING"
+        >
+            UPCOMING
+        </button>
+
+        <button
+            class="filter-button"
+            data-filter="DUE"
+        >
+            DUE
+        </button>
+
+        <button
+            class="filter-button"
+            data-filter="COMPLETED"
+        >
+            COMPLETED
+        </button>
+
+    </div>
+
+
+    <div
+        class="plan-list"
+        id="plan-list"
+    >
+
+        <p class="loading">
+            Loading maintenance plan...
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WORKFLOW -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            08 / PROCESS
+        </div>
+
+        <h2>
+            Maintenance Workflow
+        </h2>
+
+    </div>
+
+
+    <div class="workflow-grid">
+
+        <div class="workflow-card">
+            <strong>01</strong>
+            <h3>Inspect</h3>
+            <p>
+                Perform the physical checklist and
+                record what is actually observed.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <strong>02</strong>
+            <h3>Verify</h3>
+            <p>
+                Confirm previous service information
+                where reliable records are available.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <strong>03</strong>
+            <h3>Plan</h3>
+            <p>
+                Set real kilometre or date targets
+                from a known maintenance baseline.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <strong>04</strong>
+            <h3>Service</h3>
+            <p>
+                Complete required maintenance and
+                record the actual date and odometer.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <strong>05</strong>
+            <h3>Record</h3>
+            <p>
+                Add completed work to the permanent
+                service history.
+            </p>
+        </div>
+
+        <div class="workflow-card">
+            <strong>06</strong>
+            <h3>Develop</h3>
+            <p>
+                Continue modifications and tuning
+                from a better understood baseline.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONNECTED RECORDS -->
+
+<section class="section-block">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            09 / RECORD SYSTEM
+        </div>
+
+        <h2>
+            Connected Records
+        </h2>
+
+    </div>
+
+
+    <div class="record-grid">
+
+        <div class="record-card">
 
             <h3>
-                ESTABLISHING MAINTENANCE BASELINE
+                Maintenance Plan
             </h3>
 
             <p>
-                Loading maintenance information...
+                Future maintenance, targets and
+                unverified baseline items.
             </p>
 
         </div>
 
-    </section>
 
-
-    <!-- CATEGORIES -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">04 / SYSTEMS</div>
-            <h2>Categories</h2>
-        </div>
-
-        <div
-            class="category-grid"
-            id="category-grid"
-        ></div>
-
-    </section>
-
-
-    <!-- TARGETS -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">05 / TARGETS</div>
-            <h2>Upcoming Targets</h2>
-        </div>
-
-        <div
-            class="target-list"
-            id="target-list"
-        >
-
-            <p class="loading">
-                Loading targets...
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- PLAN -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">06 / LIVE DATABASE</div>
-            <h2>Maintenance Plan</h2>
-        </div>
-
-
-        <div class="filter-row">
-
-            <button class="filter-button active" data-filter="ALL">
-                ALL
-            </button>
-
-            <button class="filter-button" data-filter="INSPECT">
-                INSPECT
-            </button>
-
-            <button class="filter-button" data-filter="PLANNED">
-                PLANNED
-            </button>
-
-            <button class="filter-button" data-filter="UPCOMING">
-                UPCOMING
-            </button>
-
-            <button class="filter-button" data-filter="DUE">
-                DUE
-            </button>
-
-            <button class="filter-button" data-filter="COMPLETED">
-                COMPLETED
-            </button>
-
-        </div>
-
-
-        <div
-            class="plan-list"
-            id="plan-list"
-        >
-
-            <p class="loading">
-                Loading maintenance plan...
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- WORKFLOW -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">07 / PROCESS</div>
-            <h2>Maintenance Workflow</h2>
-        </div>
-
-
-        <div class="workflow-grid">
-
-            <div class="workflow-card">
-                <strong>01</strong>
-                <h3>Inspect</h3>
-                <p>
-                    Check the current condition of the vehicle
-                    and establish what is actually known.
-                </p>
-            </div>
-
-            <div class="workflow-card">
-                <strong>02</strong>
-                <h3>Verify</h3>
-                <p>
-                    Confirm previous service information where
-                    reliable records are available.
-                </p>
-            </div>
-
-            <div class="workflow-card">
-                <strong>03</strong>
-                <h3>Plan</h3>
-                <p>
-                    Set real kilometre or date targets from a
-                    known maintenance baseline.
-                </p>
-            </div>
-
-            <div class="workflow-card">
-                <strong>04</strong>
-                <h3>Service</h3>
-                <p>
-                    Complete required maintenance and record
-                    the actual odometer and date.
-                </p>
-            </div>
-
-            <div class="workflow-card">
-                <strong>05</strong>
-                <h3>Record</h3>
-                <p>
-                    Add completed work to the permanent
-                    service history.
-                </p>
-            </div>
-
-            <div class="workflow-card">
-                <strong>06</strong>
-                <h3>Develop</h3>
-                <p>
-                    Continue modifications and tuning from a
-                    better understood mechanical baseline.
-                </p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- RECORD SYSTEM -->
-
-    <section class="section-block">
-
-        <div class="section-heading">
-            <div class="eyebrow">08 / RECORD SYSTEM</div>
-            <h2>Connected Records</h2>
-        </div>
-
-
-        <div class="record-grid">
-
-            <div class="record-card">
-
-                <h3>Maintenance Plan</h3>
-
-                <p>
-                    Future maintenance, inspections and
-                    unverified service items.
-                </p>
-
-            </div>
-
-
-            <div class="record-card">
-
-                <h3>Service History</h3>
-
-                <p>
-                    Work that has actually been completed
-                    or verified on the vehicle.
-                </p>
-
-                <a
-                    href="service-history.html"
-                    class="btn btn-secondary"
-                >
-                    SERVICE HISTORY
-                </a>
-
-            </div>
-
-
-            <div class="record-card">
-
-                <h3>Build Log</h3>
-
-                <p>
-                    Wider development including diagnostics,
-                    modifications, tuning and project work.
-                </p>
-
-                <a
-                    href="projects/build-log.html"
-                    class="btn btn-secondary"
-                >
-                    BUILD LOG
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="section-block">
-
-        <div class="baseline">
+        <div class="record-card">
 
             <h3>
-                MAINTENANCE DATA NOTICE
+                Inspection History
             </h3>
 
             <p>
-                The current odometer does not by itself establish
-                whether maintenance is overdue. Previous service
-                history is incomplete, so items remain marked for
-                inspection until a reliable baseline is established.
-                Kilometre calculations are only displayed when a
-                specific target odometer has been recorded.
+                Physical checks and observations
+                recorded against maintenance items.
             </p>
+
+            <a
+                href="inspection-history.html"
+                class="btn btn-secondary"
+            >
+                INSPECTIONS
+            </a>
 
         </div>
 
-    </section>
+
+        <div class="record-card">
+
+            <h3>
+                Service History
+            </h3>
+
+            <p>
+                Work that has actually been completed
+                or verified on the vehicle.
+            </p>
+
+            <a
+                href="service-history.html"
+                class="btn btn-secondary"
+            >
+                SERVICE HISTORY
+            </a>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <h3>
+                Build Log
+            </h3>
+
+            <p>
+                Diagnostics, modifications, tuning
+                and wider project development.
+            </p>
+
+            <a
+                href="projects/build-log.html"
+                class="btn btn-secondary"
+            >
+                BUILD LOG
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-block">
+
+    <div class="baseline">
+
+        <h3>
+            MAINTENANCE DATA NOTICE
+        </h3>
+
+        <p>
+            The current odometer does not by itself establish
+            whether maintenance is overdue. Previous service
+            history is incomplete. Physical inspection results
+            are recorded separately from completed maintenance,
+            and kilometre calculations are only displayed when
+            a specific target odometer has been recorded.
+        </p>
+
+    </div>
+
+</section>
 
 </main>
 
@@ -796,6 +1097,9 @@ const supabaseClient =
 
 
 let maintenanceItems = [];
+let inspectionRecords = [];
+let latestInspectionByItem = new Map();
+
 let currentOdometer = null;
 let activeFilter = "ALL";
 
@@ -815,7 +1119,6 @@ function escapeHTML(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-
 }
 
 
@@ -834,7 +1137,6 @@ function formatKM(value) {
             .toLocaleString("en-AU") +
         " km"
     );
-
 }
 
 
@@ -854,7 +1156,6 @@ function formatDate(value) {
             year: "numeric"
         }
     );
-
 }
 
 
@@ -869,7 +1170,6 @@ function formatDateTime(value) {
         new Date(value)
             .toLocaleString("en-AU")
     );
-
 }
 
 
@@ -878,7 +1178,23 @@ function normalize(value) {
     return String(
         value || ""
     ).toUpperCase();
+}
 
+
+function resultLabel(value) {
+
+    return String(
+        value || ""
+    ).replaceAll("_", " ");
+}
+
+
+function inspectionNeedsAttention(result) {
+
+    return (
+        result === "SERVICE_REQUIRED" ||
+        result === "REPAIR_REQUIRED"
+    );
 }
 
 
@@ -915,7 +1231,6 @@ async function loadVehicleStatus() {
             "Vehicle status could not be loaded.";
 
         return;
-
     }
 
 
@@ -935,7 +1250,6 @@ async function loadVehicleStatus() {
         formatDateTime(
             data.odometer_updated_at
         );
-
 }
 
 
@@ -968,8 +1282,7 @@ async function loadMaintenance() {
             </div>
         `;
 
-        return;
-
+        return false;
     }
 
 
@@ -977,13 +1290,92 @@ async function loadMaintenance() {
         data || [];
 
 
-    renderDashboard();
-    renderStatus();
-    renderBaseline();
-    renderCategories();
-    renderTargets();
-    renderPlan();
+    return true;
+}
 
+
+async function loadInspections() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("inspection_records")
+            .select(
+                "id, maintenance_item_id, inspection_date, odometer, category, inspection_item, result, condition, findings, action_required, follow_up_date, follow_up_odometer, checklist_completed"
+            )
+            .eq(
+                "vehicle_key",
+                "lancer-2009"
+            )
+            .order(
+                "inspection_date",
+                {
+                    ascending: false
+                }
+            )
+            .order(
+                "id",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        inspectionRecords = [];
+        latestInspectionByItem =
+            new Map();
+
+        return false;
+    }
+
+
+    inspectionRecords =
+        data || [];
+
+
+    latestInspectionByItem =
+        new Map();
+
+
+    /*
+        Records are already newest first.
+
+        Therefore the first inspection encountered
+        for a maintenance_item_id is its latest one.
+    */
+
+    inspectionRecords.forEach(
+        record => {
+
+            const key =
+                Number(
+                    record.maintenance_item_id
+                );
+
+
+            if (
+                !key ||
+                latestInspectionByItem.has(key)
+            ) {
+                return;
+            }
+
+
+            latestInspectionByItem.set(
+                key,
+                record
+            );
+        }
+    );
+
+
+    return true;
 }
 
 
@@ -1018,7 +1410,6 @@ function renderDashboard() {
                     value === "HIGH" ||
                     value === "URGENT"
                 );
-
             }
         ).length;
 
@@ -1079,7 +1470,122 @@ function renderDashboard() {
         "progress-bar"
     ).style.width =
         `${percent}%`;
+}
 
+
+function renderInspectionOverview() {
+
+    const totalPlanItems =
+        maintenanceItems.length;
+
+
+    const inspectedItems =
+        maintenanceItems.filter(
+            item =>
+                latestInspectionByItem.has(
+                    Number(item.id)
+                )
+        );
+
+
+    const pass =
+        inspectedItems.filter(
+            item => {
+
+                const record =
+                    latestInspectionByItem.get(
+                        Number(item.id)
+                    );
+
+                return (
+                    record &&
+                    record.result === "PASS"
+                );
+            }
+        ).length;
+
+
+    const monitor =
+        inspectedItems.filter(
+            item => {
+
+                const record =
+                    latestInspectionByItem.get(
+                        Number(item.id)
+                    );
+
+                return (
+                    record &&
+                    record.result === "MONITOR"
+                );
+            }
+        ).length;
+
+
+    const attention =
+        inspectedItems.filter(
+            item => {
+
+                const record =
+                    latestInspectionByItem.get(
+                        Number(item.id)
+                    );
+
+                return (
+                    record &&
+                    inspectionNeedsAttention(
+                        record.result
+                    )
+                );
+            }
+        ).length;
+
+
+    const percent =
+        totalPlanItems
+            ? Math.round(
+                (
+                    inspectedItems.length /
+                    totalPlanItems
+                ) * 100
+            )
+            : 0;
+
+
+    document.getElementById(
+        "items-inspected"
+    ).textContent =
+        `${inspectedItems.length} / ${totalPlanItems}`;
+
+
+    document.getElementById(
+        "inspection-pass"
+    ).textContent =
+        pass;
+
+
+    document.getElementById(
+        "inspection-monitor"
+    ).textContent =
+        monitor;
+
+
+    document.getElementById(
+        "inspection-attention"
+    ).textContent =
+        attention;
+
+
+    document.getElementById(
+        "inspection-progress-label"
+    ).textContent =
+        `${percent}%`;
+
+
+    document.getElementById(
+        "inspection-progress-bar"
+    ).style.width =
+        `${percent}%`;
 }
 
 
@@ -1122,12 +1628,9 @@ function renderStatus() {
                         </strong>
 
                     </div>
-
                 `;
-
             }
         ).join("");
-
 }
 
 
@@ -1138,6 +1641,15 @@ function renderBaseline() {
             item =>
                 normalize(item.status) ===
                 "INSPECT"
+        ).length;
+
+
+    const physicallyInspected =
+        maintenanceItems.filter(
+            item =>
+                latestInspectionByItem.has(
+                    Number(item.id)
+                )
         ).length;
 
 
@@ -1161,7 +1673,13 @@ function renderBaseline() {
                         ? "item still requires"
                         : "items still require"
                 }
-                inspection or verification.
+                baseline verification.
+
+                ${physicallyInspected} of
+                ${maintenanceItems.length}
+                tracked items currently have a
+                recorded physical inspection.
+
                 The vehicle currently has
                 <strong>
                     ${escapeHTML(
@@ -1171,11 +1689,9 @@ function renderBaseline() {
                     )}
                 </strong>
                 recorded, but unknown previous
-                service history is not being
-                treated as proof that these
-                items are overdue.
+                service history is not being treated
+                as proof that maintenance is overdue.
             </p>
-
         `;
 
     } else {
@@ -1188,15 +1704,13 @@ function renderBaseline() {
 
             <p>
                 All tracked maintenance items have
-                moved beyond the initial inspection
-                stage. Future targets can now be
-                based on verified service information.
+                moved beyond the initial maintenance
+                baseline stage. Inspection and service
+                records remain separate so future work
+                can continue to be documented accurately.
             </p>
-
         `;
-
     }
-
 }
 
 
@@ -1216,7 +1730,6 @@ function renderCategories() {
             counts[category] =
                 (counts[category] || 0) +
                 1;
-
         }
     );
 
@@ -1246,7 +1759,6 @@ function renderCategories() {
         `;
 
         return;
-
     }
 
 
@@ -1267,10 +1779,8 @@ function renderCategories() {
                     </strong>
 
                 </div>
-
             `
         ).join("");
-
 }
 
 
@@ -1291,7 +1801,6 @@ function getDistanceToTarget(item) {
         ) -
         currentOdometer
     );
-
 }
 
 
@@ -1331,9 +1840,7 @@ function renderDistance(item) {
                 </div>
 
             </div>
-
         `;
-
     }
 
 
@@ -1356,9 +1863,7 @@ function renderDistance(item) {
                 </div>
 
             </div>
-
         `;
-
     }
 
 
@@ -1386,9 +1891,7 @@ function renderDistance(item) {
             </div>
 
         </div>
-
     `;
-
 }
 
 
@@ -1425,11 +1928,9 @@ function renderTargets() {
                 </p>
 
             </div>
-
         `;
 
         return;
-
     }
 
 
@@ -1470,7 +1971,6 @@ function renderTargets() {
 
 
                 return 0;
-
             }
         );
 
@@ -1514,13 +2014,18 @@ function renderTargets() {
 
                     </div>
 
+
                     <div class="details-grid">
 
                         ${
                             item.target_date
                                 ? `
                                     <div class="detail">
-                                        <span>TARGET DATE</span>
+
+                                        <span>
+                                            TARGET DATE
+                                        </span>
+
                                         <strong>
                                             ${escapeHTML(
                                                 formatDate(
@@ -1528,16 +2033,22 @@ function renderTargets() {
                                                 )
                                             )}
                                         </strong>
+
                                     </div>
                                 `
                                 : ""
                         }
 
+
                         ${
                             item.target_odometer
                                 ? `
                                     <div class="detail">
-                                        <span>TARGET ODOMETER</span>
+
+                                        <span>
+                                            TARGET ODOMETER
+                                        </span>
+
                                         <strong>
                                             ${escapeHTML(
                                                 formatKM(
@@ -1545,6 +2056,7 @@ function renderTargets() {
                                                 )
                                             )}
                                         </strong>
+
                                     </div>
                                 `
                                 : ""
@@ -1552,13 +2064,223 @@ function renderTargets() {
 
                     </div>
 
+
                     ${renderDistance(item)}
 
                 </article>
-
             `
         ).join("");
+}
 
+
+function renderInspectionForItem(item) {
+
+    const inspection =
+        latestInspectionByItem.get(
+            Number(item.id)
+        );
+
+
+    if (!inspection) {
+
+        return `
+
+            <div class="inspection-box not-inspected">
+
+                <h4>
+                    PHYSICAL INSPECTION
+                </h4>
+
+                <div class="badges">
+
+                    <span class="badge red">
+                        NOT INSPECTED
+                    </span>
+
+                </div>
+
+                <p>
+                    No physical inspection has been
+                    recorded for this maintenance item yet.
+                </p>
+
+            </div>
+        `;
+    }
+
+
+    const completed =
+        Array.isArray(
+            inspection.checklist_completed
+        )
+            ? inspection.checklist_completed
+            : [];
+
+
+    const result =
+        inspection.result ||
+        "UNKNOWN";
+
+
+    let boxClass = "";
+
+
+    if (result === "PASS") {
+        boxClass = "pass";
+    }
+
+
+    if (
+        inspectionNeedsAttention(
+            result
+        )
+    ) {
+        boxClass = "attention";
+    }
+
+
+    let badgeClass = "";
+
+
+    if (result === "PASS") {
+        badgeClass = "green";
+    }
+
+
+    if (
+        inspectionNeedsAttention(
+            result
+        )
+    ) {
+        badgeClass = "red";
+    }
+
+
+    return `
+
+        <div class="inspection-box ${boxClass}">
+
+            <h4>
+                LATEST PHYSICAL INSPECTION
+            </h4>
+
+
+            <div class="badges">
+
+                <span class="badge ${badgeClass}">
+                    ${escapeHTML(
+                        resultLabel(
+                            result
+                        )
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="inspection-meta">
+
+                <div class="inspection-meta-item">
+
+                    <span>
+                        DATE
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            formatDate(
+                                inspection.inspection_date
+                            )
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="inspection-meta-item">
+
+                    <span>
+                        ODOMETER
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            formatKM(
+                                inspection.odometer
+                            )
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="inspection-meta-item">
+
+                    <span>
+                        CHECKS COMPLETED
+                    </span>
+
+                    <strong>
+                        ${completed.length}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            ${
+                inspection.condition
+                    ? `
+                        <p>
+                            <strong>
+                                CONDITION:
+                            </strong>
+
+                            ${escapeHTML(
+                                inspection.condition
+                            )}
+                        </p>
+                    `
+                    : ""
+            }
+
+
+            ${
+                inspection.findings
+                    ? `
+                        <p>
+                            <strong>
+                                FINDINGS:
+                            </strong>
+
+                            ${escapeHTML(
+                                inspection.findings
+                            )}
+                        </p>
+                    `
+                    : ""
+            }
+
+
+            ${
+                inspection.action_required
+                    ? `
+                        <p>
+                            <strong>
+                                ACTION:
+                            </strong>
+
+                            ${escapeHTML(
+                                inspection.action_required
+                            )}
+                        </p>
+                    `
+                    : ""
+            }
+
+        </div>
+    `;
 }
 
 
@@ -1584,7 +2306,6 @@ function renderPlan() {
                     ) ===
                     activeFilter
             );
-
     }
 
 
@@ -1595,11 +2316,9 @@ function renderPlan() {
             <div class="empty">
                 No maintenance items match this filter.
             </div>
-
         `;
 
         return;
-
     }
 
 
@@ -1645,6 +2364,7 @@ function renderPlan() {
 
                             </div>
 
+
                             <div class="badges">
 
                                 <span class="badge">
@@ -1685,7 +2405,11 @@ function renderPlan() {
                                 item.target_odometer
                                     ? `
                                         <div class="detail">
-                                            <span>TARGET ODOMETER</span>
+
+                                            <span>
+                                                TARGET ODOMETER
+                                            </span>
+
                                             <strong>
                                                 ${escapeHTML(
                                                     formatKM(
@@ -1693,16 +2417,22 @@ function renderPlan() {
                                                     )
                                                 )}
                                             </strong>
+
                                         </div>
                                     `
                                     : ""
                             }
 
+
                             ${
                                 item.target_date
                                     ? `
                                         <div class="detail">
-                                            <span>TARGET DATE</span>
+
+                                            <span>
+                                                TARGET DATE
+                                            </span>
+
                                             <strong>
                                                 ${escapeHTML(
                                                     formatDate(
@@ -1710,16 +2440,22 @@ function renderPlan() {
                                                     )
                                                 )}
                                             </strong>
+
                                         </div>
                                     `
                                     : ""
                             }
 
+
                             ${
                                 item.interval_km
                                     ? `
                                         <div class="detail">
-                                            <span>REFERENCE INTERVAL</span>
+
+                                            <span>
+                                                REFERENCE INTERVAL
+                                            </span>
+
                                             <strong>
                                                 ${escapeHTML(
                                                     Number(
@@ -1729,21 +2465,28 @@ function renderPlan() {
                                                     )
                                                 )} km
                                             </strong>
+
                                         </div>
                                     `
                                     : ""
                             }
 
+
                             ${
                                 item.interval_months
                                     ? `
                                         <div class="detail">
-                                            <span>TIME INTERVAL</span>
+
+                                            <span>
+                                                TIME INTERVAL
+                                            </span>
+
                                             <strong>
                                                 ${escapeHTML(
                                                     item.interval_months
                                                 )} months
                                             </strong>
+
                                         </div>
                                     `
                                     : ""
@@ -1755,11 +2498,17 @@ function renderPlan() {
                         ${renderDistance(item)}
 
 
+                        ${renderInspectionForItem(item)}
+
+
                         ${
                             item.notes
                                 ? `
                                     <p>
-                                        <strong>NOTES:</strong>
+                                        <strong>
+                                            NOTES:
+                                        </strong>
+
                                         ${escapeHTML(
                                             item.notes
                                         )}
@@ -1769,12 +2518,9 @@ function renderPlan() {
                         }
 
                     </article>
-
                 `;
-
             }
         ).join("");
-
 }
 
 
@@ -1809,10 +2555,8 @@ document.querySelectorAll(
 
 
                 renderPlan();
-
             }
         );
-
     }
 );
 
@@ -1820,14 +2564,56 @@ document.querySelectorAll(
 async function initialise() {
 
     /*
-        Vehicle status loads first so maintenance
-        calculations have the current odometer.
+        Load the current odometer first.
+
+        Then load both maintenance and inspection
+        data before rendering the connected dashboard.
     */
 
     await loadVehicleStatus();
 
-    await loadMaintenance();
 
+    const [
+        maintenanceLoaded,
+        inspectionsLoaded
+    ] =
+        await Promise.all([
+            loadMaintenance(),
+            loadInspections()
+        ]);
+
+
+    if (!maintenanceLoaded) {
+        return;
+    }
+
+
+    /*
+        Inspection failure should not stop the
+        maintenance plan itself from displaying.
+    */
+
+    if (!inspectionsLoaded) {
+
+        console.warn(
+            "Inspection data unavailable. Maintenance plan will continue without inspection results."
+        );
+    }
+
+
+    renderDashboard();
+
+    renderInspectionOverview();
+
+    renderStatus();
+
+    renderBaseline();
+
+    renderCategories();
+
+    renderTargets();
+
+    renderPlan();
 }
 
 
