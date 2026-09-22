@@ -1,1532 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>L@NC3R | Automotive Portfolio</title>
 
     <meta
         name="description"
-        content="L@NC3R — Beginner automotive tuner and modder documenting projects, builds, diagnostics and the journey of learning automotive tuning."
+        content="L@NC3R — beginner automotive tuner and modder documenting cars, ECU tuning, diagnostics, modifications and automotive projects."
     >
 
-    <style>
-        /* ========================================
-           RESET
-        ======================================== */
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #080808;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-            overflow-x: hidden;
-        }
-
-        ::selection {
-            background: #e21b23;
-            color: white;
-        }
-
-        /* ========================================
-           NAVIGATION
-        ======================================== */
-
-        nav {
-            height: 75px;
-            padding: 0 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            background: rgba(8, 8, 8, 0.95);
-
-            border-bottom: 1px solid #222;
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 3px;
-        }
-
-        .logo span {
-            color: #e21b23;
-        }
-
-        nav ul {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        nav a {
-            color: #888;
-            text-decoration: none;
-
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 1px;
-
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #e21b23;
-        }
-
-        /* ========================================
-           HERO
-        ======================================== */
-
-        .hero {
-            min-height: calc(100vh - 75px);
-
-            padding: 80px 7%;
-
-            display: flex;
-            align-items: center;
-
-            position: relative;
-            overflow: hidden;
-
-            background:
-                radial-gradient(
-                    circle at 80% 50%,
-                    rgba(226, 27, 35, 0.20) 0%,
-                    transparent 35%
-                ),
-                #080808;
-        }
-
-        .hero::before {
-            content: "";
-
-            position: absolute;
-
-            width: 600px;
-            height: 600px;
-
-            border: 1px solid #181818;
-            border-radius: 50%;
-
-            right: -200px;
-            top: 50%;
-
-            transform: translateY(-50%);
-        }
-
-        .hero::after {
-            content: "";
-
-            position: absolute;
-
-            width: 400px;
-            height: 400px;
-
-            border: 1px solid #151515;
-            border-radius: 50%;
-
-            right: -100px;
-            top: 50%;
-
-            transform: translateY(-50%);
-        }
-
-        .hero-content {
-            max-width: 900px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tag {
-            color: #e21b23;
-
-            font-size: 12px;
-            font-weight: bold;
-
-            letter-spacing: 5px;
-
-            margin-bottom: 25px;
-        }
-
-        h1 {
-            font-size: clamp(70px, 13vw, 155px);
-            line-height: 0.85;
-
-            letter-spacing: -7px;
-
-            font-weight: 900;
-        }
-
-        h1 span {
-            color: #e21b23;
-        }
-
-        .hero h2 {
-            margin-top: 35px;
-
-            font-size: clamp(20px, 3vw, 34px);
-
-            color: #d0d0d0;
-
-            max-width: 850px;
-        }
-
-        .hero-description {
-            margin-top: 22px;
-
-            max-width: 670px;
-
-            color: #888;
-
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        .hero-status {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-
-            margin-top: 35px;
-        }
-
-        .status-item {
-            border-left: 2px solid #e21b23;
-            padding-left: 12px;
-        }
-
-        .status-item span {
-            display: block;
-
-            color: #555;
-
-            font-size: 9px;
-            font-weight: bold;
-
-            letter-spacing: 2px;
-
-            margin-bottom: 5px;
-        }
-
-        .status-item strong {
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        .buttons {
-            margin-top: 40px;
-
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-
-            padding: 16px 27px;
-
-            text-decoration: none;
-
-            font-weight: bold;
-
-            font-size: 11px;
-
-            letter-spacing: 2px;
-
-            transition: 0.2s;
-        }
-
-        .primary {
-            background: #e21b23;
-            color: white;
-        }
-
-        .primary:hover {
-            background: #b81219;
-        }
-
-        .secondary {
-            border: 1px solid #444;
-            color: white;
-        }
-
-        .secondary:hover {
-            border-color: #e21b23;
-        }
-
-        /* ========================================
-           GENERAL SECTIONS
-        ======================================== */
-
-        section {
-            scroll-margin-top: 75px;
-        }
-
-        .section-number {
-            color: #e21b23;
-
-            font-size: 11px;
-            font-weight: bold;
-
-            letter-spacing: 4px;
-
-            margin-bottom: 50px;
-        }
-
-        .section-label {
-            color: #e21b23;
-
-            font-size: 11px;
-            font-weight: bold;
-
-            letter-spacing: 4px;
-
-            margin-bottom: 20px;
-        }
-
-        /* ========================================
-           ABOUT
-        ======================================== */
-
-        .about {
-            padding: 110px 7%;
-
-            background: #0c0c0c;
-
-            border-top: 1px solid #1d1d1d;
-        }
-
-        .about-grid {
-            display: grid;
-
-            grid-template-columns: 1fr 1.2fr;
-
-            gap: 80px;
-
-            align-items: center;
-        }
-
-        .about-visual {
-            min-height: 520px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(226, 27, 35, 0.18),
-                    transparent 50%
-                ),
-                #111;
-
-            border: 1px solid #222;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-
-            padding: 40px;
-
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-visual::before {
-            content: "";
-
-            position: absolute;
-
-            width: 320px;
-            height: 320px;
-
-            border: 1px solid #292929;
-            border-radius: 50%;
-
-            top: -120px;
-            right: -120px;
-        }
-
-        .about-visual::after {
-            content: "BEGINNER";
-
-            position: absolute;
-
-            right: -40px;
-            top: 50%;
-
-            transform: rotate(90deg);
-
-            color: #191919;
-
-            font-size: 70px;
-            font-weight: 900;
-
-            letter-spacing: 10px;
-        }
-
-        .visual-text {
-            position: relative;
-            z-index: 2;
-
-            font-size: clamp(45px, 7vw, 85px);
-
-            font-weight: 900;
-
-            letter-spacing: -4px;
-        }
-
-        .visual-text span {
-            color: #e21b23;
-        }
-
-        .about-visual p {
-            position: relative;
-            z-index: 2;
-
-            color: #666;
-
-            letter-spacing: 3px;
-
-            font-size: 10px;
-
-            margin-top: 10px;
-        }
-
-        .about-content h2 {
-            font-size: clamp(38px, 5vw, 67px);
-
-            line-height: 0.98;
-
-            margin-bottom: 35px;
-
-            letter-spacing: -2px;
-        }
-
-        .about-content h2 span {
-            color: #555;
-        }
-
-        .about-content > p {
-            color: #999;
-
-            line-height: 1.8;
-
-            margin-bottom: 18px;
-
-            max-width: 700px;
-
-            font-size: 15px;
-        }
-
-        /* ========================================
-           SKILLS
-        ======================================== */
-
-        .skills {
-            display: grid;
-
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 12px;
-
-            margin-top: 35px;
-        }
-
-        .skill {
-            background: #111;
-
-            border: 1px solid #222;
-
-            padding: 20px;
-
-            display: flex;
-            flex-direction: column;
-
-            gap: 7px;
-
-            transition: 0.2s;
-        }
-
-        .skill:hover {
-            border-color: #e21b23;
-
-            transform: translateY(-2px);
-        }
-
-        .skill strong {
-            font-size: 12px;
-
-            letter-spacing: 2px;
-        }
-
-        .skill span {
-            color: #e21b23;
-
-            font-size: 9px;
-            font-weight: bold;
-
-            letter-spacing: 2px;
-        }
-
-        /* ========================================
-           GARAGE
-        ======================================== */
-
-        .garage {
-            padding: 110px 7%;
-
-            background: #080808;
-
-            border-top: 1px solid #191919;
-        }
-
-        .section-heading {
-            display: flex;
-
-            justify-content: space-between;
-            align-items: flex-end;
-
-            gap: 30px;
-
-            margin-bottom: 50px;
-        }
-
-        .section-heading h2 {
-            font-size: clamp(45px, 7vw, 85px);
-
-            line-height: 0.9;
-
-            letter-spacing: -4px;
-        }
-
-        .section-heading h2 span {
-            color: #555;
-        }
-
-        .section-heading p {
-            color: #666;
-
-            max-width: 400px;
-
-            line-height: 1.7;
-
-            font-size: 13px;
-        }
-
-        .car-card {
-            display: grid;
-
-            grid-template-columns: 1.3fr 1fr;
-
-            min-height: 500px;
-
-            border: 1px solid #222;
-
-            background: #0d0d0d;
-        }
-
-        .car-image {
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(226, 27, 35, 0.12),
-                    transparent
-                ),
-                #111;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            min-height: 450px;
-
-            position: relative;
-            overflow: hidden;
-        }
-
-        .car-image-placeholder {
-            text-align: center;
-        }
-
-        .car-image-placeholder strong {
-            display: block;
-
-            color: #252525;
-
-            font-size: clamp(50px, 8vw, 110px);
-
-            font-weight: 900;
-
-            letter-spacing: -5px;
-        }
-
-        .car-image-placeholder span {
-            color: #555;
-
-            font-size: 10px;
-
-            letter-spacing: 3px;
-        }
-
-        .car-info {
-            padding: 50px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .car-status {
-            color: #e21b23;
-
-            font-size: 10px;
-            font-weight: bold;
-
-            letter-spacing: 3px;
-
-            margin-bottom: 20px;
-        }
-
-        .car-info h3 {
-            font-size: clamp(32px, 4vw, 55px);
-
-            line-height: 1;
-
-            margin-bottom: 10px;
-        }
-
-        .car-info h4 {
-            color: #777;
-
-            font-size: 16px;
-
-            margin-bottom: 30px;
-        }
-
-        .car-info > p {
-            color: #888;
-
-            line-height: 1.8;
-
-            font-size: 14px;
-
-            margin-bottom: 30px;
-        }
-
-        .car-specs {
-            border-top: 1px solid #222;
-
-            margin-bottom: 30px;
-        }
-
-        .spec {
-            display: flex;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid #222;
-
-            font-size: 11px;
-        }
-
-        .spec span {
-            color: #555;
-
-            letter-spacing: 2px;
-        }
-
-        .spec strong {
-            text-align: right;
-
-            letter-spacing: 1px;
-        }
-
-        /* ========================================
-           PROJECTS
-        ======================================== */
-
-        .projects {
-            padding: 110px 7%;
-
-            background: #0c0c0c;
-
-            border-top: 1px solid #191919;
-        }
-
-        .project-grid {
-            display: grid;
-
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 15px;
-        }
-
-        .project-card {
-            background: #101010;
-
-            border: 1px solid #222;
-
-            padding: 30px;
-
-            min-height: 270px;
-
-            display: flex;
-            flex-direction: column;
-
-            transition: 0.2s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-4px);
-
-            border-color: #e21b23;
-        }
-
-        .project-number {
-            color: #444;
-
-            font-size: 11px;
-
-            letter-spacing: 3px;
-
-            margin-bottom: 50px;
-        }
-
-        .project-card h3 {
-            font-size: 22px;
-
-            margin-bottom: 12px;
-        }
-
-        .project-card p {
-            color: #777;
-
-            font-size: 13px;
-
-            line-height: 1.7;
-
-            flex-grow: 1;
-        }
-
-        .project-tag {
-            margin-top: 25px;
-
-            color: #e21b23;
-
-            font-size: 9px;
-            font-weight: bold;
-
-            letter-spacing: 2px;
-        }
-
-        /* ========================================
-           GALLERY
-        ======================================== */
-
-        .gallery {
-            padding: 110px 7%;
-
-            background: #080808;
-
-            border-top: 1px solid #191919;
-        }
-
-        .gallery-grid {
-            display: grid;
-
-            grid-template-columns: 2fr 1fr 1fr;
-
-            grid-auto-rows: 250px;
-
-            gap: 12px;
-        }
-
-        .gallery-item {
-            background:
-                linear-gradient(
-                    135deg,
-                    #151515,
-                    #0d0d0d
-                );
-
-            border: 1px solid #222;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            color: #333;
-
-            font-weight: 900;
-
-            font-size: 20px;
-
-            letter-spacing: 3px;
-        }
-
-        .gallery-item:first-child {
-            grid-row: span 2;
-        }
-
-        /* ========================================
-           CONTACT
-        ======================================== */
-
-        .contact {
-            padding: 120px 7%;
-
-            text-align: center;
-
-            background:
-                radial-gradient(
-                    circle at 50% 100%,
-                    rgba(226, 27, 35, 0.17),
-                    transparent 40%
-                ),
-                #0c0c0c;
-
-            border-top: 1px solid #191919;
-        }
-
-        .contact h2 {
-            font-size: clamp(50px, 9vw, 110px);
-
-            letter-spacing: -5px;
-
-            margin-bottom: 25px;
-        }
-
-        .contact h2 span {
-            color: #e21b23;
-        }
-
-        .contact p {
-            color: #777;
-
-            max-width: 600px;
-
-            margin: auto;
-
-            line-height: 1.8;
-        }
-
-        /* ========================================
-           FOOTER
-        ======================================== */
-
-        footer {
-            padding: 30px 7%;
-
-            border-top: 1px solid #222;
-
-            display: flex;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            color: #444;
-
-            font-size: 10px;
-
-            letter-spacing: 2px;
-
-            background: #080808;
-        }
-
-        /* ========================================
-           MOBILE
-        ======================================== */
-
-        @media (max-width: 900px) {
-
-            .about-grid,
-            .car-card {
-                grid-template-columns: 1fr;
-            }
-
-            .about-grid {
-                gap: 40px;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .gallery-item:first-child {
-                grid-row: auto;
-            }
-
-            .section-heading {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 700px) {
-
-            nav {
-                height: 65px;
-            }
-
-            nav ul {
-                display: none;
-            }
-
-            .hero {
-                min-height: calc(100vh - 65px);
-
-                padding-top: 70px;
-                padding-bottom: 70px;
-            }
-
-            h1 {
-                letter-spacing: -4px;
-            }
-
-            .hero h2 {
-                margin-top: 25px;
-            }
-
-            .hero-status {
-                gap: 20px;
-            }
-
-            .about,
-            .garage,
-            .projects,
-            .gallery,
-            .contact {
-                padding: 75px 7%;
-            }
-
-            .about-visual {
-                min-height: 350px;
-            }
-
-            .skills {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .car-info {
-                padding: 30px 25px;
-            }
-
-            .car-image {
-                min-height: 300px;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 220px;
-            }
-
-            footer {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 430px) {
-
-            .skills {
-                grid-template-columns: 1fr;
-            }
-
-            .buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                text-align: center;
-            }
-        }
-
-    </style>
 </head>
-
 
 <body>
 
-    <!-- ========================================
-         NAVIGATION
-    ========================================= -->
 
-    <nav>
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
-        <div class="logo">
-            L<span>@</span>NC3R
+<nav class="site-nav">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+        L<span>@</span>NC3R
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="#home">
+                HOME
+            </a>
+        </li>
+
+        <li>
+            <a href="#about">
+                ABOUT
+            </a>
+        </li>
+
+        <li>
+            <a href="#garage">
+                GARAGE
+            </a>
+        </li>
+
+        <li>
+            <a href="#projects">
+                PROJECTS
+            </a>
+        </li>
+
+        <li>
+            <a href="#contact">
+                CONTACT
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="portfolio-hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            AUTOMOTIVE PORTFOLIO / AUSTRALIA
         </div>
 
-        <ul>
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#about">ABOUT</a></li>
-            <li><a href="#garage">MY GARAGE</a></li>
-            <li><a href="#projects">PROJECTS</a></li>
-            <li><a href="#gallery">GALLERY</a></li>
-        </ul>
+        <h1 class="portfolio-title">
+            L<span>@</span>NC3R
+        </h1>
 
-    </nav>
+        <div class="hero-subtitle">
+            Beginner Tuner. Modder. Automotive Enthusiast.
+        </div>
 
+        <p class="hero-description">
+            Documenting my journey into automotive tuning,
+            vehicle diagnostics, modifications and hands-on
+            automotive projects.
+        </p>
 
-    <!-- ========================================
-         HERO
-    ========================================= -->
+        <div class="hero-stats">
 
-    <section class="hero" id="home">
+            <div class="hero-stat">
 
-        <div class="hero-content">
+                <span>
+                    EXPERIENCE
+                </span>
 
-            <div class="tag">
-                AUTOMOTIVE PORTFOLIO
+                <strong>
+                    BEGINNER
+                </strong>
+
             </div>
 
-            <h1>
+            <div class="hero-stat">
+
+                <span>
+                    MAIN PROJECT
+                </span>
+
+                <strong>
+                    2009 LANCER
+                </strong>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <span>
+                    CURRENT FOCUS
+                </span>
+
+                <strong>
+                    ECU TUNING
+                </strong>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <span>
+                    LOCATION
+                </span>
+
+                <strong>
+                    AUSTRALIA
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <a
+                href="#projects"
+                class="btn btn-primary"
+            >
+                EXPLORE PROJECTS
+            </a>
+
+            <a
+                href="#about"
+                class="btn btn-secondary"
+            >
+                ABOUT ME
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section
+    class="section section-alt"
+    id="about"
+>
+
+    <div class="section-number">
+        01 / ABOUT
+    </div>
+
+    <div class="about-grid">
+
+        <div class="about-panel">
+
+            <div class="about-brand">
                 L<span>@</span>NC3R
-            </h1>
+            </div>
 
-            <h2>
-                Beginner Tuner. Modder. Automotive Enthusiast.
-            </h2>
-
-            <p class="hero-description">
-                Documenting my journey into automotive tuning,
-                modifications, diagnostics and hands-on projects.
-                Learning one car, one mod and one mistake at a time.
+            <p>
+                LEARNING • BUILDING • MODIFYING
             </p>
 
-            <div class="hero-status">
-
-                <div class="status-item">
-                    <span>LEVEL</span>
-                    <strong>BEGINNER</strong>
-                </div>
-
-                <div class="status-item">
-                    <span>CURRENT PROJECT</span>
-                    <strong>2009 LANCER</strong>
-                </div>
-
-                <div class="status-item">
-                    <span>LOCATION</span>
-                    <strong>AUSTRALIA</strong>
-                </div>
-
-            </div>
-
-            <div class="buttons">
-
-                <a href="#garage" class="btn primary">
-                    VIEW MY GARAGE
-                </a>
-
-                <a href="#about" class="btn secondary">
-                    ABOUT ME
-                </a>
-
-            </div>
-
         </div>
 
-    </section>
 
+        <div class="about-copy">
 
-    <!-- ========================================
-         ABOUT
-    ========================================= -->
-
-    <section class="about" id="about">
-
-        <div class="section-number">
-            01 / ABOUT
-        </div>
-
-        <div class="about-grid">
-
-            <div class="about-visual">
-
-                <div class="visual-text">
-                    L<span>@</span>NC3R
-                </div>
-
-                <p>
-                    LEARNING • BUILDING • MODIFYING
-                </p>
-
+            <div class="eyebrow">
+                WHO I AM
             </div>
-
-
-            <div class="about-content">
-
-                <div class="section-label">
-                    WHO I AM
-                </div>
-
-                <h2>
-                    LEARNING CARS<br>
-                    <span>ONE PROJECT AT A TIME.</span>
-                </h2>
-
-                <p>
-                    I'm L@NC3R, a beginner automotive tuner and
-                    modder from Australia.
-                </p>
-
-                <p>
-                    I created this site to document my journey as
-                    I learn more about automotive tuning,
-                    modifications, diagnostics and hands-on
-                    mechanical work.
-                </p>
-
-                <p>
-                    I'm not a professional tuner. I'm learning by
-                    working on my own cars, researching how
-                    different systems work and taking on new
-                    projects as my knowledge grows.
-                </p>
-
-                <p>
-                    My current main project is my 2009 Mitsubishi
-                    Lancer MIVEC, which I'm using to learn more
-                    about diagnostics, ECU tuning and vehicle
-                    modification.
-                </p>
-
-
-                <div class="skills">
-
-                    <div class="skill">
-                        <strong>ECU TUNING</strong>
-                        <span>LEARNING</span>
-                    </div>
-
-                    <div class="skill">
-                        <strong>MODIFICATION</strong>
-                        <span>LEARNING</span>
-                    </div>
-
-                    <div class="skill">
-                        <strong>DIAGNOSTICS</strong>
-                        <span>LEARNING</span>
-                    </div>
-
-                    <div class="skill">
-                        <strong>MECHANICAL</strong>
-                        <span>LEARNING</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ========================================
-         MY GARAGE
-    ========================================= -->
-
-    <section class="garage" id="garage">
-
-        <div class="section-number">
-            02 / MY GARAGE
-        </div>
-
-        <div class="section-heading">
 
             <h2>
-                THE<br>
-                <span>GARAGE.</span>
+                LEARNING CARS<br>
+                <span>ONE PROJECT AT A TIME.</span>
             </h2>
 
             <p>
-                The cars I'm working on, learning from and
-                modifying. Each vehicle has its own story,
-                projects and future plans.
+                I'm L@NC3R, a beginner automotive tuner and
+                modder from Australia.
             </p>
 
-        </div>
+            <p>
+                I created this portfolio to document my
+                progression as I learn automotive diagnostics,
+                ECU tuning, modifications and hands-on
+                mechanical work.
+            </p>
+
+            <p>
+                I'm not presenting myself as a professional
+                tuner. This site is about showing the learning
+                process from the beginning — including the
+                successes, mistakes, research and problems
+                along the way.
+            </p>
+
+            <p>
+                My current main project is my 2009 Mitsubishi
+                Lancer CJ, which I'm using to learn more about
+                diagnostics, ECU calibration and vehicle
+                modification.
+            </p>
 
 
-        <div class="car-card">
+            <div class="skills-grid">
 
-            <div class="car-image">
+                <div class="skill-card">
 
-                <div class="car-image-placeholder">
-
-                    <strong>LANCER</strong>
+                    <strong>
+                        ECU TUNING
+                    </strong>
 
                     <span>
-                        VEHICLE PHOTO COMING SOON
+                        LEARNING
+                    </span>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <strong>
+                        MODIFICATION
+                    </strong>
+
+                    <span>
+                        LEARNING
+                    </span>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <strong>
+                        DIAGNOSTICS
+                    </strong>
+
+                    <span>
+                        LEARNING
+                    </span>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <strong>
+                        MECHANICAL
+                    </strong>
+
+                    <span>
+                        LEARNING
                     </span>
 
                 </div>
 
             </div>
 
-
-            <div class="car-info">
-
-                <div class="car-status">
-                    ● CURRENT PROJECT
-                </div>
-
-                <h3>
-                    2009 MITSUBISHI LANCER
-                </h3>
-
-                <h4>
-                    MIVEC • AUTOMATIC
-                </h4>
-
-                <p>
-                    My main project car and the vehicle I'm
-                    currently using to learn automotive
-                    diagnostics, ECU tuning and modifications.
-                </p>
-
-
-                <div class="car-specs">
-
-                    <div class="spec">
-                        <span>YEAR</span>
-                        <strong>2009</strong>
-                    </div>
-
-                    <div class="spec">
-                        <span>MAKE</span>
-                        <strong>MITSUBISHI</strong>
-                    </div>
-
-                    <div class="spec">
-                        <span>MODEL</span>
-                        <strong>LANCER</strong>
-                    </div>
-
-                    <div class="spec">
-                        <span>ENGINE</span>
-                        <strong>MIVEC</strong>
-                    </div>
-
-                    <div class="spec">
-                        <span>TRANSMISSION</span>
-                        <strong>AUTOMATIC</strong>
-                    </div>
-
-                    <div class="spec">
-                        <span>STATUS</span>
-                        <strong>ONGOING PROJECT</strong>
-                    </div>
-
-                </div>
-
-                <a href="#projects" class="btn primary">
-                    VIEW PROJECTS
-                </a>
-
-            </div>
-
         </div>
 
-    </section>
+    </div>
 
+</section>
 
-    <!-- ========================================
-         PROJECTS
-    ========================================= -->
 
-    <section class="projects" id="projects">
+<!-- =====================================================
+     GARAGE
+===================================================== -->
 
-        <div class="section-number">
-            03 / PROJECTS
-        </div>
+<section
+    class="section"
+    id="garage"
+>
 
+    <div class="section-number">
+        02 / MY GARAGE
+    </div>
 
-        <div class="section-heading">
 
-            <h2>
-                WHAT I'M<br>
-                <span>LEARNING.</span>
-            </h2>
-
-            <p>
-                A growing collection of the projects, experiments
-                and automotive skills I'm working on.
-            </p>
-
-        </div>
-
-
-        <div class="project-grid">
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 01
-                </div>
-
-                <h3>
-                    ECU TUNING
-                </h3>
-
-                <p>
-                    Learning how vehicle ECUs work, reading
-                    calibration data and understanding the
-                    process behind safe automotive tuning.
-                </p>
-
-                <div class="project-tag">
-                    IN PROGRESS
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 02
-                </div>
-
-                <h3>
-                    VEHICLE DIAGNOSTICS
-                </h3>
-
-                <p>
-                    Learning diagnostic workflows, OBD tools,
-                    fault codes and how vehicle systems
-                    communicate.
-                </p>
-
-                <div class="project-tag">
-                    IN PROGRESS
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 03
-                </div>
-
-                <h3>
-                    LANCER MODIFICATIONS
-                </h3>
-
-                <p>
-                    Documenting modifications, maintenance,
-                    upgrades and future plans for my Mitsubishi
-                    Lancer.
-                </p>
-
-                <div class="project-tag">
-                    ONGOING
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 04
-                </div>
-
-                <h3>
-                    PERFORMANCE
-                </h3>
-
-                <p>
-                    Learning how intake, exhaust, engine
-                    management and other components affect
-                    vehicle performance.
-                </p>
-
-                <div class="project-tag">
-                    LEARNING
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 05
-                </div>
-
-                <h3>
-                    MECHANICAL
-                </h3>
-
-                <p>
-                    Building practical knowledge through
-                    maintenance, repairs and hands-on work.
-                </p>
-
-                <div class="project-tag">
-                    LEARNING
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    PROJECT / 06
-                </div>
-
-                <h3>
-                    FUTURE BUILDS
-                </h3>
-
-                <p>
-                    More cars, modifications and automotive
-                    projects will be added as the L@NC3R
-                    journey grows.
-                </p>
-
-                <div class="project-tag">
-                    COMING SOON
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ========================================
-         GALLERY
-    ========================================= -->
-
-    <section class="gallery" id="gallery">
-
-        <div class="section-number">
-            04 / GALLERY
-        </div>
-
-
-        <div class="section-heading">
-
-            <h2>
-                BUILD<br>
-                <span>GALLERY.</span>
-            </h2>
-
-            <p>
-                Photos from the garage, modifications,
-                projects, meets and everything in between.
-            </p>
-
-        </div>
-
-
-        <div class="gallery-grid">
-
-            <div class="gallery-item">
-                PHOTO 01
-            </div>
-
-            <div class="gallery-item">
-                PHOTO 02
-            </div>
-
-            <div class="gallery-item">
-                PHOTO 03
-            </div>
-
-            <div class="gallery-item">
-                PHOTO 04
-            </div>
-
-            <div class="gallery-item">
-                PHOTO 05
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ========================================
-         CONTACT
-    ========================================= -->
-
-    <section class="contact" id="contact">
-
-        <div class="section-number">
-            05 / L@NC3R
-        </div>
+    <div class="section-heading">
 
         <h2>
-            THE JOURNEY<br>
-            <span>STARTS HERE.</span>
+            THE<br>
+            <span>GARAGE.</span>
         </h2>
 
         <p>
-            This portfolio will continue growing alongside my
-            knowledge, projects and cars. Follow the journey
-            from beginner to wherever it takes me.
+            The vehicles I'm working on, modifying and learning
+            from. Each car can become its own documented
+            project.
         </p>
 
-        <div class="buttons" style="justify-content:center;">
+    </div>
 
-            <a href="#home" class="btn primary">
-                BACK TO TOP
+
+    <div class="vehicle-card">
+
+        <div class="vehicle-visual">
+
+            <div class="vehicle-placeholder">
+
+                <strong>
+                    4B11
+                </strong>
+
+                <span>
+                    PROJECT 001
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="vehicle-info">
+
+            <div class="status-label">
+                ● CURRENT PROJECT
+            </div>
+
+            <h3>
+                2009 MITSUBISHI LANCER
+            </h3>
+
+            <h4>
+                CJ • 2.0L 4B11 MIVEC • CVT
+            </h4>
+
+            <p>
+                My primary project car and the platform I'm
+                currently using to learn automotive diagnostics,
+                ECU calibration, maintenance and modification.
+            </p>
+
+
+            <div class="vehicle-specs">
+
+                <div class="vehicle-spec">
+
+                    <span>
+                        ENGINE
+                    </span>
+
+                    <strong>
+                        4B11
+                    </strong>
+
+                </div>
+
+                <div class="vehicle-spec">
+
+                    <span>
+                        CAPACITY
+                    </span>
+
+                    <strong>
+                        2.0L
+                    </strong>
+
+                </div>
+
+                <div class="vehicle-spec">
+
+                    <span>
+                        TRANSMISSION
+                    </span>
+
+                    <strong>
+                        CVT
+                    </strong>
+
+                </div>
+
+                <div class="vehicle-spec">
+
+                    <span>
+                        STATUS
+                    </span>
+
+                    <strong>
+                        ACTIVE PROJECT
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="lancer.html"
+                class="btn btn-primary"
+            >
+                VIEW FULL BUILD
             </a>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- ========================================
-         FOOTER
-    ========================================= -->
+<!-- =====================================================
+     PROJECTS
+===================================================== -->
 
-    <footer>
+<section
+    class="section section-alt"
+    id="projects"
+>
 
-        <div>
-            L@NC3R AUTOMOTIVE PORTFOLIO
-        </div>
+    <div class="section-number">
+        03 / PROJECTS
+    </div>
 
-        <div>
-            BUILT IN AUSTRALIA
-        </div>
 
-    </footer>
+    <div class="section-heading">
+
+        <h2>
+            CURRENT<br>
+            <span>PROJECTS.</span>
+        </h2>
+
+        <p>
+            A growing collection of automotive projects,
+            experiments and skills I'm developing.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <a
+            href="lancer.html"
+            class="card-link"
+        >
+
+            <article class="project-card">
+
+                <div class="project-card-number">
+                    PROJECT / 001
+                </div>
+
+                <h3>
+                    2009 LANCER
+                </h3>
+
+                <p>
+                    The main L@NC3R project covering the car,
+                    modifications, maintenance, diagnostics and
+                    future plans.
+                </p>
+
+                <div class="project-card-status">
+                    ● ACTIVE
+                </div>
+
+            </article>
+
+        </a>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                PROJECT / 002
+            </div>
+
+            <h3>
+                ECU TUNING
+            </h3>
+
+            <p>
+                Learning the Mitsubishi ECU, calibration
+                definitions, data logging and the fundamentals
+                behind safe ECU tuning.
+            </p>
+
+            <div class="project-card-status">
+                ● PAGE COMING NEXT
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                PROJECT / 003
+            </div>
+
+            <h3>
+                DIAGNOSTICS
+            </h3>
+
+            <p>
+                Building experience with OBD diagnostics,
+                vehicle communication, fault finding and
+                automotive diagnostic tools.
+            </p>
+
+            <div class="project-card-status">
+                ● IN PROGRESS
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                PROJECT / 004
+            </div>
+
+            <h3>
+                PERFORMANCE
+            </h3>
+
+            <p>
+                Learning how engine management, airflow,
+                exhaust and supporting systems affect vehicle
+                performance.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                PROJECT / 005
+            </div>
+
+            <h3>
+                MECHANICAL
+            </h3>
+
+            <p>
+                Building practical experience through
+                maintenance, repairs and hands-on automotive
+                work.
+            </p>
+
+            <div class="project-card-status">
+                ● LEARNING
+            </div>
+
+        </article>
+
+
+        <article class="project-card">
+
+            <div class="project-card-number">
+                PROJECT / 006
+            </div>
+
+            <h3>
+                FUTURE BUILDS
+            </h3>
+
+            <p>
+                Future vehicles, modifications and automotive
+                projects will be added as L@NC3R grows.
+            </p>
+
+            <div class="project-card-status">
+                ● FUTURE
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section
+    class="section contact"
+    id="contact"
+>
+
+    <div class="section-number">
+        04 / L@NC3R
+    </div>
+
+    <h2>
+        JUST GETTING<br>
+        <span>STARTED.</span>
+    </h2>
+
+    <p>
+        L@NC3R will continue growing alongside my knowledge,
+        cars and projects. This portfolio is the record of that
+        journey from the beginning.
+    </p>
+
+    <div
+        class="buttons"
+        style="justify-content:center;"
+    >
+
+        <a
+            href="#home"
+            class="btn btn-primary"
+        >
+            BACK TO TOP
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div>
+        L@NC3R AUTOMOTIVE PORTFOLIO
+    </div>
+
+    <div>
+        BEGINNER TUNER • MODDER • AUSTRALIA
+    </div>
+
+</footer>
+
 
 </body>
+
 </html>
